@@ -1,0 +1,15 @@
+# Mod rewrite rules
+RewriteEngine on
+Options All -Indexes
+
+# Generic
+RewriteRule ^([0-9]+)/page(/)?$    page.php?book_id=1 [L]
+
+# Section
+RewriteRule ^([0-9]+)/section/save(/)?$    section/save.php?book_id=1 [L]
+RewriteRule ^([0-9]+)/section/insert(/)?$  section/insert.php?book_id=1 [L]
+RewriteRule ^([0-9]+)/section/delete(/)?$  section/delete.php?book_id=1 [L]
+
+# Chapter
+RewriteRule ^([0-9]+)/chapter/insert(/)?$  chapter/insert.php?book_id=1 [L]
+RewriteRule ^([0-9]+)/chapter/delete(/)?$  chapter/delete.php?book_id=1 [L]

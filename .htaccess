@@ -1,0 +1,32 @@
+# Set content type
+AddDefaultCharset UTF-8
+
+# Error handler
+ErrorDocument 404 /404.php
+
+# Make things a little more secure
+php_flag  magic_quotes_gpc off
+php_flag  register_globals off
+php_flag  display_errors on
+php_value log_errors 1
+
+# Setting the environment variables
+SetEnv HASH "webBook_jni*bBJ0hhGt9*Y5B&67v2xb7n^t6r2eh8HGsp*^sj39Jdj2hdhc8ucxnhO89f9786&*n2MNYFw4e58f76gu9r(&TRE(p9y8ohid(*&^*^ESDFNMY5^d"
+SetEnv VERSION "0.0.1"
+
+SetEnv SITE "/"
+SetEnv ACCOUNT "/"
+SetEnv EMAIL "you@example.org"
+
+# Mod rewrite rules
+RewriteEngine on
+Options All -Indexes
+
+# User editing a book
+RewriteRule ^book/([0-9]+)/(.*)?(/)?$                  index.php?book_id=$1&book_title=$2 [L]
+
+# A snapshot
+RewriteRule ^snap/([0-9]+)/([0-9]+)/(.*)?(/)?$         snapshot.php?book_id=$1&snapshot_id=$2&book_title=$3 [L]
+
+# View book, but only for people they tell
+RewriteRule ^read/([0-9]+)/([a-z0-9]+)/(.*)?(/)?$      snapshot.php?book_id=$1&book_distribution=$2&book_title=$3 [L]

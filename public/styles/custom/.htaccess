@@ -1,0 +1,8 @@
+# Parse CSS as PHP
+AddHandler application/x-httpd-php .css
+
+# Mod rewrite rules
+RewriteEngine on
+Options All -Indexes
+
+RewriteRule ^([0-9]+).css    custom.css?book_id=1 [L]
