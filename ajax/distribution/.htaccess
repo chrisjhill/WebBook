@@ -1,6 +1,0 @@
-# Mod rewrite rules
-RewriteEngine on
-Options All -Indexes
-
-RewriteRule ^([0-9]+)/page(/)?$    page.php?book_id=1 [L]
-RewriteRule ^([0-9]+)/save(/)?$    save.php?book_id=1 [L]
