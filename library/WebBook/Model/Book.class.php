@@ -10,7 +10,7 @@ use Core;
  * @version   0.1
  * @since     22/10/2012
  */
-class Book implements IteratorAggregate
+class Book
 {
 	/**
 	 * Information on the book.
@@ -35,7 +35,7 @@ class Book implements IteratorAggregate
 	 * @param  int    $bookId The ID of the book we wish to load.
 	 */
 	public function __construct($bookId) {
-		$this->_chapterList = new ChapterList();
+		$this->_chapterList = new Chapter\Collection();
 		$this->setInfo($bookId);
 	}
 

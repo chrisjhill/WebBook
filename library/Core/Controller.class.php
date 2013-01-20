@@ -45,6 +45,12 @@ class Controller
 	 * @throws Exception      If the layout does not exist.
 	 */
 	public function setLayout($layout) {
+		// Do we actually want a layout?
+		if ($layout === false) {
+			$this->view->layout = false;
+			return true;
+		}
+
 		// The location of the layout
 		$templateUrlLayout = Config::get('path', 'base') . Config::get('path', 'project')
 			. 'layout/' . $this->layout . '.phtml';
@@ -89,7 +95,7 @@ class Controller
 	 *
 	 * This will perform a header redirect, so we will change the URL, and we can also
 	 * pass variables.
-	 * 
+	 *
 	 * @access public
 	 * @param  array $param Parameters for the URL View Helper.
 	 */

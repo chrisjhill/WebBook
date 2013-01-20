@@ -11,6 +11,5 @@ class Error extends Core\Controller
 	 */
 	public function notFoundAction() {
 		// Do nothing
-		$this->setLayout(false);
 	}
 }

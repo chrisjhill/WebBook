@@ -1,6 +1,6 @@
 <?php
 namespace WebBook\Controller;
-use Core;
+use Core, WebBook\Model;
 
 class Book extends Core\Controller
 {
