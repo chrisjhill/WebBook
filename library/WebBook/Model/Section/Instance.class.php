@@ -12,5 +12,13 @@ use Core;
  */
 class Instance extends Repository
 {
-
+	/**
+	 * Create a new Section\Instance.
+	 *
+	 * @access public
+	 * @param  array  $data All of the information on this section.
+	 */
+	public function __construct($data = array()) {
+		$this->import($data);
+	}
 }

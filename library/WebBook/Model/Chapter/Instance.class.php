@@ -1,6 +1,6 @@
 <?php
-namespace WebBook\Model;
-use Core;
+namespace WebBook\Model\Chapter;
+use Core, WebBook\Model\Section;
 
 /**
  * Contains information on a chapter.
@@ -12,51 +12,43 @@ use Core;
  *
  * @todo Needs a setInfo() function.
  */
-class Instance
+class Instance extends Repository implements \IteratorAggregate
 {
 	/**
-	 * Information on the book.
+	 * A collection of sections.
 	 *
 	 * @access private
-	 * @var    array
+	 * @var    Section\Collection
 	 */
-	private $_store = array();
+	private $_sectionCollection;
 
 	/**
-	 * Creates a single chapter.
+	 * Setup a chapter.
 	 *
 	 * @access public
-	 * @param  int    $chapterId The chapter ID that we wish to load.
-	 * @param  int    $bookId    The book ID that the chapter belongs to.
 	 */
-	public function __construct($chapterId, $bookId) {
-		$this->setInfo($bookId);
+	public function __construct($bookId = 1, $chapterId = 1) {
+		// Create a collection of sections
+		$this->_sectionCollection = new Section\Collection();
+
+		// Get the sections in this chapter
+		$this->book_id    = $bookId;
+		$this->chapter_id = $chapterId;
+		$sections         = $this->getAllSections();
+
+		// Loop over each section and add the instance
+		while ($section = $sections->fetch()) {
+			$this->_sectionCollection->add(new Section\Instance($section));
+		}
 	}
 
 	/**
-	 * Delete a chapter.
+	 * Allow scripts to iterate over the sections.
 	 *
 	 * @access public
-	 * @return boolean If the removal was successful.
+	 * @return Instance
 	 */
-	public function remove() {
-		// Get PDO
-		$pdo = Model_Database::getPdoConnection();
-
-		// Set query string
-		$query = Database::get()->prepare("
-			UPDATE `section` s
-			SET	s.section_removed = :section_removed
-			WHERE  s.book_id      = :book_id
-				   AND
-				   s.chapter_id	  = :chapter_id
-		");
-
-		// And execute query
-		$query->execute(array(
-			':book_id'		 => $param['book']->getInfo('book_id'),
-			':chapter_id'	  => $param['chapter_id'],
-			':section_removed' => $_SERVER['REQUEST_TIME']
-		));
+	public function getIterator() {
+		return new \ArrayIterator($this->_sectionCollection->store);
 	}
 }

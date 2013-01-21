@@ -24,7 +24,7 @@ class Repository extends Core\Repository
 	 * @return mixed
 	 */
 	public function save() {
-		return ! isset($this->id)
+		return ! isset($this->section_id)
 			? $this->insert()
 			: $this->update();
 	}
@@ -37,26 +37,23 @@ class Repository extends Core\Repository
 	 */
 	public function insert() {
 		$query = Model\Database::get()->prepare("
-			INSERT INTO `section`
-				(
-					`book_id`,
-					`chapter_id`,
-					`section_order`,
-					`section_type`,
-					`section_content`,
-					`section_word_count`,
-					`section_created`
-				)
-			VALUES
-				(
-					:book_id,
-					:chapter_id,
-					:section_order,
-					:section_type,
-					:section_content,
-					:section_word_count,
-					:section_created
-				)
+			INSERT INTO `section` (
+				`book_id`,
+				`chapter_id`,
+				`section_order`,
+				`section_type`,
+				`section_content`,
+				`section_word_count`,
+				`section_created`
+			) VALUES (
+				:book_id,
+				:chapter_id,
+				:section_order,
+				:section_type,
+				:section_content,
+				:section_word_count,
+				:section_created
+			)
 		");
 
 		// And execute query
@@ -82,13 +79,13 @@ class Repository extends Core\Repository
 	public function update() {
 		$query = Model\Database::get()->prepare("
 			UPDATE `section` s
-			SET    s.section_order	    = :section_order,
-			       s.section_content	= :section_content,
+			SET    s.section_order      = :section_order,
+			       s.section_content    = :section_content,
 			       s.section_word_count = :section_word_count,
-			       s.section_updated	= :section_updated
-			WHERE  s.book_id			= :book_id
+			       s.section_updated    = :section_updated
+			WHERE  s.book_id            = :book_id
 			       AND
-			       s.section_id		    = :section_id
+			       s.section_id         = :section_id
 			LIMIT  1
 		");
 
@@ -98,7 +95,31 @@ class Repository extends Core\Repository
 			':section_content'    => $this->section_content,
 			':section_word_count' => $this->section_word_count,
 			':section_updated'    => $this->section_updated,
+			':book_id'            => $this->book_id,
 			':section_id'         => $this->section_id
+		));
+	}
+
+	/**
+	 * Delete a section from a chapter.
+	 *
+	 * @access public
+	 * @return boolean
+	 */
+	public function delete() {
+		$query = Model\Database::get()->prepare("
+			UPDATE `section` s
+			SET    s.section_removed = :section_removed
+			WHERE  s.book_id         = :book_id
+			       AND
+			       s.section_id      = :section_id
+		");
+
+		// And execute query
+		return $query->execute(array(
+			':book_id'         => $this->book_id,
+			':section_id'      => $this->section_id,
+			':section_removed' => $this->section_removed
 		));
 	}
 
@@ -112,42 +133,16 @@ class Repository extends Core\Repository
 		$query = Model\Database::get()->prepare("
 			SELECT *
 			FROM   `section` s
-			WHERE  s.id = :id
+			WHERE  s.section_id      = :section_id
 			       AND
 			       s.section_removed = 0
 			LIMIT  1
 		");
 
 		// And execute query
-		$query->execute(array(':id' => $this->id));
+		$query->execute(array(':section_id' => $this->section_id));
 
 		return $query->fetch();
-	}
-
-	/**
-	 * Get all the records in a chapter.
-	 *
-	 * @access public
-	 * @return mixed  Array on success, false on failure.
-	 */
-	public function getAllInChapter() {
-		$query = Model\Database::get()->prepare("
-			SELECT *
-			FROM   `section` s
-			WHERE  s.book_id         = :book_id
-			       AND
-			       s.chapter_id      = :chapter_id
-			       AND
-			       s.section_removed = 0
-		");
-
-		// And execute query
-		$query->execute(array(
-			':chapter_id' => $this->chapter_id,
-			'book_id' => $this->book_id
-		));
-
-		return $query;
 	}
 
 	/**
@@ -160,7 +155,7 @@ class Repository extends Core\Repository
 		$query = Model\Database::get()->prepare("
 			SELECT *
 			FROM   `section` s
-			WHERE  s.book_id      = :book_id
+			WHERE  s.book_id         = :book_id
 			       AND
 			       s.section_removed = 0
 		");
