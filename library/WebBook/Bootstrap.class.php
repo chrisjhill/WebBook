@@ -28,7 +28,7 @@ class Bootstrap
 		Core\StoreRequest::put('user', new Model\User(1));
 
 		// Set the book
-		Core\StoreRequest::put('book', new Model\Book(Core\Request::get('book-id')));
+		Core\StoreRequest::put('book', new Model\Book\Instance(Core\Request::get('book-id')));
 	}
 
 	/**

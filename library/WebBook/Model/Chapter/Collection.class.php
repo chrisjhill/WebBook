@@ -7,6 +7,7 @@ use Core;
  *
  * @copyright   2012 Christopher Hill <cjhill@gmail.com>
  * @author      Christopher Hill <cjhill@gmail.com>
+ * @version     0.2
  * @since       20/01/2013
  */
 class Collection implements \IteratorAggregate
@@ -14,48 +15,39 @@ class Collection implements \IteratorAggregate
 	/**
 	 * An array of the chapters.
 	 *
-	 * @access private
-	 * @var    array   An collection of Model\Chapter's
+	 * @access public
+	 * @var    array   An collection of Chapter\Instance's
 	 */
-	private $_chapter = array();
+	public $store = array();
 
 	/**
-	 * Add a chapter to this list.
+	 * Add a section to this list.
 	 *
 	 * @access public
-	 * @param  Model\Chapter $chapter A chapter to add to this book.
-	 * @throws Exception              If Model\Chapter is not passed in.
+	 * @param  Section\Instance $section A section to add to this chapter.
+	 * @throws Exception                 If Section\Instance is not passed in.
 	 */
-	public function add($chapter) {
-		if (get_class($chapter) != 'Chapter') {
-			throw new Exception('Expecting a Chapter class.');
+	public function add($section) {
+		if (get_class($section) != 'WebBook\Model\Section\Instance') {
+			throw new \Exception('Expecting a Section class.');
 		}
 
-		$this->_chapter[$chapter->getInfo('chapter_id')] = $chapter;
-	}
-
-	/**
-	 * Return a chapter.
-	 *
-	 * @access public
-	 * @param  int           $chapterId The chapter that we wish to return.
-	 * @return Model\Chapter
-	 */
-	public function get($chapterId) {
-		if (! isset($this->_chapter[chapterId])) {
-			throw new Exception('Chapter does not exist.');
+		// Does the chapter already exist?
+		if (! isset($this->store[$section->chapter_id])) {
+			$this->store[$section->chapter_id] = new Instance();
 		}
 
-		return $this->_chapter[chapterId];
+		// And add to the store
+		$this->store[$section->chapter_id]->add($section);
 	}
 
 	/**
 	 * Allow scripts to iterate over the chapters.
 	 *
 	 * @access public
-	 * @return Model\Chapter
+	 * @return Chapter\Instance
 	 */
 	public function getIterator() {
-		return new ArrayIterator($this->_chapter);
+		return new ArrayIterator($this->store);
 	}
 }

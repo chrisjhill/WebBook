@@ -9,8 +9,6 @@ use Core, WebBook\Model\Section;
  * @author    Christopher Hill <cjhill@gmail.com>
  * @version   0.2
  * @since     22/10/2012
- *
- * @todo Needs a setInfo() function.
  */
 class Instance extends Repository implements \IteratorAggregate
 {
@@ -23,30 +21,34 @@ class Instance extends Repository implements \IteratorAggregate
 	private $_sectionCollection;
 
 	/**
-	 * Setup a chapter.
+	 * Sets up the chapter, allowing it to contain one or many Section\Instance's.
 	 *
 	 * @access public
 	 */
-	public function __construct($bookId = 1, $chapterId = 1) {
-		// Create a collection of sections
+	public function __construct() {
 		$this->_sectionCollection = new Section\Collection();
+	}
 
-		// Get the sections in this chapter
-		$this->book_id    = $bookId;
-		$this->chapter_id = $chapterId;
-		$sections         = $this->getAllSections();
-
-		// Loop over each section and add the instance
-		while ($section = $sections->fetch()) {
-			$this->_sectionCollection->add(new Section\Instance($section));
+	/**
+	 * Add a section to this collection.
+	 *
+	 * @access public
+	 * @param  Section\Instance $section A section to add to this chapter.
+	 * @throws Exception                 If Section\Instance is not passed in.
+	 */
+	public function add($section) {
+		if (get_class($section) != 'WebBook\Model\Section\Instance') {
+			throw new \Exception('Expecting a Section class.');
 		}
+
+		$this->_sectionCollection->add($section);
 	}
 
 	/**
 	 * Allow scripts to iterate over the sections.
 	 *
 	 * @access public
-	 * @return Instance
+	 * @return Section\Instance
 	 */
 	public function getIterator() {
 		return new \ArrayIterator($this->_sectionCollection->store);

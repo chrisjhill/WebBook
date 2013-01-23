@@ -15,7 +15,7 @@ class Collection
 	 * An array of the chapter's sections.
 	 *
 	 * @access public
-	 * @var    array  An collection of Model\Chapter's
+	 * @var    array  An collection of Section\Instance's
 	 */
 	public $store = array();
 
@@ -23,14 +23,14 @@ class Collection
 	 * Add a section to the chapter.
 	 *
 	 * @access public
-	 * @param  Instance  $section The section to add.
-	 * @throws Exception          If $section is not a Section.
+	 * @param  Section\Instance  $section The section to add.
+	 * @throws Exception                  If $section is not a Section\Instance.
 	 */
 	public function add($section) {
 		if (get_class($section) != 'WebBook\Model\Section\Instance') {
-			throw new Exception('Expecting a Section class.');
+			throw new \Exception('Expecting a Section class.');
 		}
 
-		$this->store[] = $section;
+		$this->store[$section->section_id] = $section;
 	}
 }
