@@ -49,7 +49,7 @@ class Repository
 	public function __get($variable) {
 		// Do we even have this piece of data?
 		if (! isset($this->_store[$variable])) {
-			throw new Exception('Could not locate the ' . $variable . ' in repository.');
+			throw new \Exception('Could not locate the ' . $variable . ' in repository.');
 		}
 
 		return $this->_store[$variable];

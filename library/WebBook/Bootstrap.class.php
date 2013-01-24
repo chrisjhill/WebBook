@@ -25,7 +25,7 @@ class Bootstrap
 		}
 
 		// We do not currently have a login feature, set manually
-		Core\StoreRequest::put('user', new Model\User(1));
+		Core\StoreRequest::put('user', new Model\User\Instance(1));
 
 		// Set the book
 		Core\StoreRequest::put('book', new Model\Book\Instance(Core\Request::get('book-id')));

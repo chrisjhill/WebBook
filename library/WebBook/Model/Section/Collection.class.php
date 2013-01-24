@@ -1,6 +1,5 @@
 <?php
 namespace WebBook\Model\Section;
-use Core;
 
 /**
  * A list of all the sections in a chapter.

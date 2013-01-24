@@ -1,6 +1,5 @@
 <?php
-namespace WebBook\Model;
-use Core;
+namespace WebBook\Utility;
 
 /**
  * Displays outputs from errors, success, or notice messages

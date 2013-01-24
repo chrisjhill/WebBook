@@ -1,6 +1,5 @@
 <?php
 namespace WebBook\Model\Chapter;
-use Core;
 
 /**
  * A list of chapters in a book.

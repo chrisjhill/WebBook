@@ -1,6 +1,5 @@
 <?php
-namespace WebBook\Model;
-use Core;
+namespace WebBook\Utility;
 
 /**
  * Handles all of the time and date functions.

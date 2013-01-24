@@ -14,7 +14,7 @@
     <link rel="stylesheet" type="text/css" href="/assets/css/interface.css" media="screen" />
     <link rel="stylesheet" type="text/css" href="/assets/css/book.css" media="screen" />
     <!--
-    <link rel="stylesheet" type="text/css" href="/assets/css/custom/<?=$book->getInfo('book_id')?>.css?" media="screen" id="custom-styles" />
+    <link rel="stylesheet" type="text/css" href="/assets/css/custom/<?=$book->book_id?>.css?" media="screen" id="custom-styles" />
     //-->
     <!-- Individual pages //-->
     <link rel="stylesheet" type="text/css" href="/assets/css/page/target.css" media="screen" />
@@ -22,7 +22,7 @@
     <!-- Scripts //-->
     <!-- Variables //-->
     <script type="text/javascript">
-    var bookId     = <?=(int)$book->getInfo('book_id')?>;
+    var bookId     = <?=(int)$book->book_id?>;
     var page       = null;
     var readonly   = false;
     var password   = '';

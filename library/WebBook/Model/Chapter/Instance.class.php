@@ -1,6 +1,6 @@
 <?php
 namespace WebBook\Model\Chapter;
-use Core, WebBook\Model\Section;
+use WebBook\Model\Section;
 
 /**
  * Contains information on a chapter.

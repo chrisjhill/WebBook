@@ -1,6 +1,5 @@
 <?php
 namespace WebBook\Model;
-use Core;
 
 /**
  * Database information.
