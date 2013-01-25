@@ -27,7 +27,7 @@ class ViewHelper
 	 * @param  mixed     $cacheName null to not cache, otherwise string.
 	 * @return string               Converted template file into HTML.
 	 */
-	protected function parse($template, $variables, $cacheName = null) {
+	protected function renderPartial($template, $variables, $cacheName = null) {
 		return self::$_view->parse(
 			Config::get('path', 'base') . Config::get('path', 'project')
 				. 'View/Partial/' . $template . '.phtml',
