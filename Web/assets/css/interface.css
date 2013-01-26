@@ -17,20 +17,20 @@
         #navigation a:hover{border-bottom:1px solid #555}
 
     #navigation .icon{padding-left:24px}
-        #navigation .icon-book{background:url(/assets/img/icon-book.png?v=0.4) no-repeat 4px 0}
-        #navigation .icon-character{background:url(/assets/img/icon-character.png?v=0.2) no-repeat 4px 0}
-        #navigation .icon-location{background:url(/assets/img/icon-location.png?v=0.2) no-repeat 4px 0}
-        #navigation .icon-scrapbook{background:url(/assets/img/icon-scrapbook.png?v=0.5) no-repeat 4px 0}
-        #navigation .icon-tag{background:url(/assets/img/icon-tag.png?v=0.2) no-repeat 4px 0}
-        #navigation .icon-todo{background:url(/assets/img/icon-todo.png?v=0.3) no-repeat 4px 0}
-        #navigation .icon-timeline{background:url(/assets/img/icon-timeline.png?v=0.2) no-repeat 4px 0}
-        #navigation .icon-snapshot{background:url(/assets/img/icon-snapshot.png?v=0.2) no-repeat 4px 0}
-        #navigation .icon-chapter{background:url(/assets/img/icon-chapter.png?v=0.2) no-repeat 4px 0}
-        #navigation .icon-comment{background:url(/assets/img/icon-comment.png?v=0.2) no-repeat 4px 0}
-        #navigation .icon-private{background:url(/assets/img/icon-private.png?v=0.4) no-repeat 4px 0}
-        #navigation .icon-target{background:url(/assets/img/icon-target.png?v=0.1) no-repeat 4px 0}
-        #navigation .icon-fullscreen{background:url(/assets/img/icon-fullscreen.png?v=0.3) no-repeat 6px 0}
-        #navigation .icon-settings{background:url(/assets/img/icon-settings.png?v=0.2) no-repeat 4px 0}
+        #navigation .icon-book{background:url(../img/icon-book.png?v=0.4) no-repeat 4px 0}
+        #navigation .icon-character{background:url(../img/icon-character.png?v=0.2) no-repeat 4px 0}
+        #navigation .icon-location{background:url(../img/icon-location.png?v=0.2) no-repeat 4px 0}
+        #navigation .icon-scrapbook{background:url(../img/icon-scrapbook.png?v=0.5) no-repeat 4px 0}
+        #navigation .icon-tag{background:url(../img/icon-tag.png?v=0.2) no-repeat 4px 0}
+        #navigation .icon-todo{background:url(../img/icon-todo.png?v=0.3) no-repeat 4px 0}
+        #navigation .icon-timeline{background:url(../img/icon-timeline.png?v=0.2) no-repeat 4px 0}
+        #navigation .icon-snapshot{background:url(../img/icon-snapshot.png?v=0.2) no-repeat 4px 0}
+        #navigation .icon-chapter{background:url(../img/icon-chapter.png?v=0.2) no-repeat 4px 0}
+        #navigation .icon-comment{background:url(../img/icon-comment.png?v=0.2) no-repeat 4px 0}
+        #navigation .icon-private{background:url(../img/icon-private.png?v=0.4) no-repeat 4px 0}
+        #navigation .icon-target{background:url(../img/icon-target.png?v=0.1) no-repeat 4px 0}
+        #navigation .icon-fullscreen{background:url(../img/icon-fullscreen.png?v=0.3) no-repeat 6px 0}
+        #navigation .icon-settings{background:url(../img/icon-settings.png?v=0.2) no-repeat 4px 0}
 
 /* The outline */
 #outline{position:fixed;top:50px;left:208px;width:800px;background:rgba(255, 255, 255, .95);color:#222;padding:25px;outline:0;border-bottom:2px solid #CCC}

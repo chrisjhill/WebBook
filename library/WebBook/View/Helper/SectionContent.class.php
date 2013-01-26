@@ -25,7 +25,7 @@ class SectionContent extends Core\ViewHelper
 	 * @return string         A rendered View Helper Partial template file.
 	 */
 	public function render($params = array()) {
-		return $this->renderPartial('Section/BookTitle', array(
+		return $this->renderPartial('Section/Content', array(
 			'sectionId'      => $params['section']->section_id,
 			'sectionOrder'   => $params['section']->section_order,
 			'wordCount'      => $params['section']->section_word_count,

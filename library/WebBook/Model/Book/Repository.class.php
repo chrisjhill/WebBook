@@ -42,11 +42,14 @@ class Repository extends Core\Repository
 	 */
 	public function getAllSections() {
 		$query = Model\Database::get()->prepare("
-			SELECT *
-			FROM   `section` s
-			WHERE  s.book_id         = :book_id
-			       AND
-			       s.section_removed = 0
+			SELECT   *
+			FROM     `section` s
+			WHERE    s.book_id         = :book_id
+			         AND
+			         s.section_removed = 0
+			ORDER BY s.chapter_id,
+			         s.section_order,
+			         s.section_id
 		");
 
 		// And execute query
