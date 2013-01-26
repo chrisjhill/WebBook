@@ -1,33 +1,7 @@
 $(document).ready(function() {
-    // Okay, load page we want initialls
-    var pageToLoad = "book";
-    if (window.location.hash) {
-        pageToLoad = window.location.hash.replace("#", "");
-    }
-
-    // If we are loading a snapshot, only show the book
-    if (readonly) {
-        // Load book
-        pageToLoad = "book";
-
-        // Hide the navigation
-        $("#navigation").hide();
-    }
-
-    // And click the link
-    $("#navigation a[rel='"+pageToLoad+"']").click();
-
-    // Which sections to hide?
-    if (pageToLoad == "book") {
-        // We have loaded the book
-        // We want to show all, and then gradually hide all
-        $("#navigation,#outline").delay(2000).animate({opacity: '0'}, 1000);
-    } else {
-        // We are not on the book page
-        // We want to the navigation
-        // We want to hide the outline instantly as it's not relevant
-        $("#outline").css("opacity", "0");
-    }
+    // We have loaded the book
+    // We want to show all, and then gradually hide all
+    $("#navigation,#outline").delay(2000).animate({opacity: '0'}, 1000);
 
     // Hovering over navigation
     $("#navigation").mouseenter(function() {

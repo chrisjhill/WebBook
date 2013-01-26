@@ -14,12 +14,10 @@ $(document).ready(function() {
 
         // Send the Ajax request
         $.ajax({
-            url: '/book/page/book-id/'+bookId,
+            url: '/' + page,
             type: 'post',
             data: {
-                readonly:    readonly,
-                password:    password,
-                snapshot_id: snapshotId
+
             },
             success: function(data) {
                 // Set the page

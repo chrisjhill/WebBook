@@ -16,52 +16,53 @@ class Notice
 	/**
 	 * What type of message we are showing
 	 *
-	 * @var string
+	 * @access private
+	 * @var    string
 	 */
 	private $_outcome;
 
 	/**
 	 * The messages to be shown
 	 *
-	 * @var array
+	 * @access private
+	 * @var    array
 	 */
 	private $_message = array();
 
 	/**
 	 * Any introductory text
 	 *
-	 * @var string
+	 * @access private
+	 * @var    string
 	 */
 	private $_intro;
 
 	/**
 	 * A custom notice/success/error message
 	 *
-	 * @var string
+	 * @access private
+	 * @var    string
 	 */
 	private $_customMessage;
 
 	/**
 	 * Sets the outcome and messages
 	 *
-	 * @param string $outcome
-	 * @param array $message
-	 * @param boolean $output
-	 * @return string
+	 * @access public
+	 * @param  string  $outcome
+	 * @param  array   $message
+	 * @param  boolean $output
 	 */
-	public function __construct($outcome = null, $message = null, $output = false) {
+	public function __construct($outcome = null, $message = null) {
 		$this->setOutcome($outcome);
 		$this->setMessage($message);
-
-		if ($output) {
-			return $this->getMessage();
-		}
 	}
 
 	/**
 	 * Set the outcome of the message
 	 *
-	 * @param string $outcome
+	 * @access public
+	 * @param  string $outcome
 	 */
 	public function setOutcome($outcome) {
 		$this->_outcome = in_array($outcome, array('error', 'success', 'info')) ? $outcome : 'info';
@@ -70,7 +71,8 @@ class Notice
 	/**
 	 * Set the message to output
 	 *
-	 * @param mixed $message
+	 * @access public
+	 * @param  mixed  $message
 	 */
 	public function setMessage($message) {
 		if (is_array($message)) {
@@ -85,7 +87,8 @@ class Notice
 	/**
 	 * Sets the introductory text
 	 *
-	 * @param string $intro
+	 * @access public
+	 * @param  string $intro
 	 */
 	public function setIntro($intro) {
 		$this->_intro = $intro;
@@ -94,7 +97,8 @@ class Notice
 	/**
 	 * Sets a custom message for the notice/success/error
 	 *
-	 * @param string $message
+	 * @access public
+	 * @param  string $message
 	 */
 	public function setCustomMessage($message) {
 		$this->_customMessage = $message;
@@ -103,7 +107,8 @@ class Notice
 	/**
 	 * Is there a message to show?
 	 *
-	 * @return unknown
+	 * @access public
+	 * @return boolean
 	 */
 	public function getIsMessagePending() {
 		return empty($this->_outcome) ? false : true;
@@ -112,6 +117,7 @@ class Notice
 	/**
 	 * Returns what type of message this is
 	 *
+	 * @access public
 	 * @return string
 	 */
 	public function getOutcome() {
@@ -121,10 +127,10 @@ class Notice
 	/**
 	 * Begining of the output
 	 *
-	 * @param boolean $showAsSingle
+	 * @access public
 	 * @return string
 	 */
-	public function getMessage($showAsSingle = false) {
+	public function getMessage() {
 		// Is there anything to output?
 		if (strlen($this->_intro) <= 0 && empty($this->_message[0]) && empty($this->_message[1]) && empty($this->_customMessage)) {
 			return '';
@@ -133,18 +139,16 @@ class Notice
 		$output = null;
 
 		// Get the top of the messsage
-		$minimize = '';// <small><a href="#" class="notice_mimimize"><img src="' . $_SERVER['SITE'] . 'public/images/action_minimize.gif" alt="-" /></a></small>';
-		if (strlen($this->_customMessage) >= 1) {
+		if (isset($this->_customMessage[0])) {
 			$output = '<h3>' . $this->_customMessage . $minimize . '</h3>';
-		}
-		else {
+		} else {
 			switch ($this->_outcome) {
 				case 'error'
-					: $output = '<h3>Oh Dear. An error has occurred!' . $minimize . '</h3>'; break;
+					: $output = '<h3>Oh Dear. An error has occurred!</h3>'; break;
 				case 'success'
-					: $output = '<h3>Your action has been successful' . $minimize . '</h3>'; break;
+					: $output = '<h3>Your action has been successful</h3>'; break;
 				default
-					: $output = '<h3>Some information you might find useful:' . $minimize . '</h3>'; break;
+					: $output = '<h3>Some information you might find useful:</h3>'; break;
 			}
 		}
 
@@ -155,24 +159,17 @@ class Notice
 
 		// Get the actual message
 		if (!empty($this->_message[0]) || !empty($this->_message[1])) {
-			$output .= '<ul>';
-
-			foreach ($this->_message as $key => $value) {
-				if (!empty($value)) {
-					$output .= '<li>' . $value . '</li>';
-				}
-			}
-
-			$output .= '</ul>';
+			$output .= '<ul><li>' . implode('</li></li>', $this->_message) . '</li></ul>';
 		}
 
-		return '<div class="notice ' . ($showAsSingle ? 'notice-single ' : '') . $this->_outcome . '">' . $output . '</div>';
+		return '<div class="notice notice-' . $this->_outcome . '">' . $output . '</div>';
 	}
 
 	/**
 	 * Used when outputting a message as default
 	 *
-	 * @return mixed
+	 * @access public
+	 * @return string
 	 */
 	public function __tostring() {
 		return $this->getMessage();

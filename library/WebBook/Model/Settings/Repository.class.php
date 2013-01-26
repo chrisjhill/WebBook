@@ -24,50 +24,7 @@ class Repository extends Core\Repository
 	 * @return mixed
 	 */
 	public function save() {
-		return ! isset($this->book_id)
-			? $this->insert()
-			: $this->update();
-	}
-
-	/**
-	 * Insert a record into the database.
-	 *
-	 * @access public
-	 * @return mixed  False is failure, integer of new record ID if success.
-	 */
-	public function insert() {
-		$query = Model\Database::get()->prepare("
-			INSERT INTO `section` (
-				`book_id`,
-				`chapter_id`,
-				`section_order`,
-				`section_type`,
-				`section_content`,
-				`section_word_count`,
-				`section_created`
-			) VALUES (
-				:book_id,
-				:chapter_id,
-				:section_order,
-				:section_type,
-				:section_content,
-				:section_word_count,
-				:section_created
-			)
-		");
-
-		// And execute query
-		$query->execute(array(
-			':book_id'            => $this->book_id,
-			':chapter_id'         => $this->chapter_id,
-			':section_order'      => $this->section_order,
-			':section_type'       => $this->section_type,
-			':section_content'    => $this->section_content,
-			':section_word_count' => $this->section_word_count,
-			':section_created'    => $this->section_created
-		));
-
-		return $pdo->lastInsertId();
+		return $this->update();
 	}
 
 	/**
@@ -79,7 +36,7 @@ class Repository extends Core\Repository
 	public function update() {
 		$query = Model\Database::get()->prepare("
 			UPDATE `setting` s
-			SET	s.setting_autosave            = :setting_autosave,
+			SET	   s.setting_autosave         = :setting_autosave,
 				   s.setting_font_family      = :setting_font_family,
 				   s.setting_font_size        = :setting_font_size,
 				   s.setting_font_color       = :setting_font_color,

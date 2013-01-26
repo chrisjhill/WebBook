@@ -21,10 +21,10 @@ class Repository
 	/**
 	 * Import all of the data for a single entity.
 	 *
-	 * @access protected
-	 * @param  array     $data All the data of a single entity.
+	 * @access public
+	 * @param  array  $data All the data of a single entity.
 	 */
-	protected function import($data) {
+	public function import($data) {
 		$this->_store = $data;
 	}
 

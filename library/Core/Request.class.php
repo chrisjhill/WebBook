@@ -20,7 +20,7 @@ class Request
 
 	/**
 	 * A single entry point to the $_GET superglobal
-	 * 
+	 *
 	 * @access private
 	 * @var    array
 	 * @static
@@ -29,7 +29,7 @@ class Request
 
 	/**
 	 * A single entry point to the $_POST superglobal
-	 * 
+	 *
 	 * @access private
 	 * @var    array
 	 * @static
@@ -157,5 +157,16 @@ class Request
 		return isset(self::$_server[$variable])
 			? self::$_server[$variable]
 			: $default;
+	}
+
+	/**
+	 * Check whether the users request was a standard request, or via Ajax.
+	 *
+	 * @access public
+	 * @return boolean
+	 */
+	public static function isAjax() {
+		return isset(self::$_server['HTTP_X_REQUESTED_WITH'])
+			&& strtolower(self::$_server['HTTP_X_REQUESTED_WITH']) == 'xmlhttprequest';
 	}
 }

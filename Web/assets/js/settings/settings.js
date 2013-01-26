@@ -6,7 +6,7 @@ $(document).ready(function() {
 
         // Send the Ajax request
         $.ajax({
-            url:  '/ajax/settings/'+bookId+'/save/',
+            url:  '/settings/update',
             type: 'post',
             data: {
                 setting_autosave:         $("#setting_autosave").val(),
@@ -22,17 +22,17 @@ $(document).ready(function() {
             success: function(data) {
                 // Display success message
                 $("#settings-status-message").slideUp().html(data).slideDown().delay(5000).slideUp();
-                
+
                 // Reload the stylesheet
-                var customStyle = $("#custom-styles").attr("href");
-                customStyle = customStyle.split("?");
-                $("#custom-styles").attr("href", customStyle[0]+"?time="+new Date().getTime());
+                // var customStyle = $("#custom-styles").attr("href");
+                // customStyle = customStyle.split("?");
+                // $("#custom-styles").attr("href", customStyle[0]+"?time="+new Date().getTime());
             }
         });
-        
+
         // @live Set saving indicator
         hideStatusIndicator('');
-        
+
         // Return
         return false;
     });

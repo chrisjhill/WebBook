@@ -15,20 +15,14 @@ class Bootstrap
 	 * </ul>
 	 *
 	 * @access public
-	 * @param  array $params Parameters passed into this state update.
+	 * @param  array  $params Parameters passed into this state update.
 	 * @static
 	 */
 	public static function initRequest($params) {
-		// Is there a book ID?
-		if (! Core\Request::get('book-id')) {
-			header('Location: /book/edit/book-id/1'); exit();
-		}
-
-		// We do not currently have a login feature, set manually
-		Core\StoreRequest::put('user', new Model\User\Instance(1));
-
-		// Set the book
-		Core\StoreRequest::put('book', new Model\Book\Instance(Core\Request::get('book-id')));
+		// Set the user, book, and settings
+		Core\StoreRequest::put('user',     new Model\User\Instance(1));
+		Core\StoreRequest::put('book',     new Model\Book\Instance(1));
+		Core\StoreRequest::put('settings', new Model\Settings\Instance(1));
 	}
 
 	/**
@@ -42,7 +36,7 @@ class Bootstrap
 	 * </ul>
 	 *
 	 * @access public
-	 * @param  array $params Parameters passed into this state update.
+	 * @param  array  $params Parameters passed into this state update.
 	 * @static
 	 */
 	public static function initController($params) {
@@ -61,11 +55,11 @@ class Bootstrap
 	 * </ul>
 	 *
 	 * @access public
-	 * @param  array $params Parameters passed into this state update.
+	 * @param  array  $params Parameters passed into this state update.
 	 * @static
 	 */
 	public static function initAction($params) {
-		/* Do nothing */
+		// Do nothing
 	}
 
 	/**
@@ -77,10 +71,10 @@ class Bootstrap
 	 * </ul>
 	 *
 	 * @access public
-	 * @param  array $params Parameters passed into this state update.
+	 * @param  array  $params Parameters passed into this state update.
 	 * @static
 	 */
 	public static function initShutdown($params) {
-		/* Do nothing */
+		// Do nothing
 	}
 }
