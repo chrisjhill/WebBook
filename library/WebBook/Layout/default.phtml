@@ -24,41 +24,12 @@
 	</style>
 
 	<!-- Scripts //-->
+	<script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.0/jquery.min.js"></script>
 	<!-- Variables //-->
 	<script type="text/javascript">
-	var bookId     = <?=$book->book_id?>;
-	var page       = null;
-	var readonly   = false;
-	var password   = '';
-	var snapshotId = 0;
+	var WEBBOOK = WEBBOOK || {};
+	var bookId = <?=$book->book_id?>;
 	</script>
-	<!-- jQuery //-->
-	<!--<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.7/jquery.min.js"></script>//-->
-	<script type="text/javascript" src="/assets/js/jquery.js"></script>
-	<!-- Common //-->
-	<script type="text/javascript" src="/assets/js/common.js"></script>
-	<script type="text/javascript" src="/assets/js/init.js"></script>
-	<!-- Book //-->
-	<script type="text/javascript" src="/assets/js/book/section.js"></script>
-	<script type="text/javascript" src="/assets/js/book/chapter.js"></script>
-	<script type="text/javascript" src="/assets/js/book/title.js"></script>
-	<script type="text/javascript" src="/assets/js/book/wysiwyg.js"></script>
-	<script type="text/javascript" src="/assets/js/book/outline.js"></script>
-	<!-- Settings //-->
-	<script type="text/javascript" src="/assets/js/settings/settings.js"></script>
-	<!-- Snapshot //-->
-	<script type="text/javascript" src="/assets/js/snapshot/snapshot.js"></script>
-	<!-- Target //-->
-	<script type="text/javascript" src="/assets/js/target/target.js"></script>
-	<!-- Distribution //-->
-	<script type="text/javascript" src="/assets/js/distribution/distribution.js"></script>
-	<!-- Plugins //-->
-	<script type="text/javascript" src="/assets/js/plugin/php.js"></script>
-	<script type="text/javascript" src="/assets/js/plugin/fullscreen.js"></script>
-	<script type="text/javascript" src="/assets/js/plugin/color.js"></script>
-	<!-- Google things //-->
-	<script type="text/javascript" src="https://www.google.com/jsapi"></script>
-	<script type="text/javascript">google.load('visualization', '1', {'packages':['annotatedtimeline']});</script>
 </head>
 <body>
 	<div id="navigation">
@@ -89,13 +60,19 @@
 
 	<!-- Dynamic elements //-->
 	<div id="wysiwyg" class="none">
-		<button id="wysiwyg-bold">Bold</button>
-		<button id="wysiwyg-italic">Italic</button>
-		<button id="wysiwyg-underline">Underline</button>
-		<button id="wysiwyg-highlight">Highlight</button>
-		<button id="wysiwyg-unformat">Unformat</button>
+		<button class="wysiwyg-item" data-cmd="bold">Bold</button>
+		<button class="wysiwyg-item" data-cmd="italic">Italic</button>
+		<button class="wysiwyg-item" data-cmd="underline">Underline</button>
+		<button class="wysiwyg-item" data-cmd="backColor">Highlight</button>
+		<button class="wysiwyg-item" data-cmd="removeFormat">Unformat</button>
 	</div>
 
 	<div id="status-indicator"></div>
+
+	<!-- Scripts //-->
+	<script src="/assets/js/plugin/smooth-scroll.js"></script>
+	<script src="/assets/js/nav.js"></script>
+	<script src="/assets/js/wysiwyg.js"></script>
+	<script src="/assets/js/loader.js"></script>
 </body>
 </html>
