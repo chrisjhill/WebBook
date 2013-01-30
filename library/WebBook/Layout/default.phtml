@@ -17,9 +17,11 @@
 	<link rel="stylesheet" type="text/css" href="/assets/css/page/target.css" media="screen" />
 	<!-- Custom styles //-->
 	<style type="text/css">
-	body,.fullscreen{background:#EEE url(/assets/img/body-bg-wood.jpg) fixed top left;font:color:#000;font:16px/1.6em "Palatino Linotype","Book Antiqua",Palatino,FreeSerif,serif}
+	body{background:#EEE url(/assets/img/body-bg-wood.jpg) fixed top left;font:color:#000;font:15px/1.6em "Palatino Linotype","Book Antiqua",Palatino,FreeSerif,serif}
+	#fullscreen-bg{display:none}
+	:-webkit-full-screen #fullscreen-bg{display:block;width:100%;background:url(/assets/img/body-bg-wood.jpg) fixed top left}
 	.container-inner,.chapter,#navigation{box-shadow:0px 0px 5px 2px #c49a6a;background:#FFF}
-	.container-inner,.chapter{width:750px;padding:50px}
+	.container-inner,.chapter{width:700px;padding:50px}
 	.chapter{text-align:justify}
 	</style>
 
@@ -28,7 +30,7 @@
 	<!-- Variables //-->
 	<script type="text/javascript">
 	var WEBBOOK = WEBBOOK || {};
-	var bookId = <?=$book->book_id?>;
+	var bookId  = <?=$book->book_id?>;
 	</script>
 </head>
 <body>
@@ -36,20 +38,20 @@
 		<p id="webBook"><span>web</span>Book</p>
 
 		<ul>
-			<li><a href="#book" rel="book" class="icon icon-book">My Book</a></li>
-			<li><a href="#character" rel="character" class="icon icon-character">Characters</a></li>
-			<li><a href="#location" rel="location" class="icon icon-location">Locations</a></li>
-			<li><a href="#scrapbook" rel="scrapbook" class="icon icon-scrapbook">Scrapbook</a></li>
-			<li><a href="#tag" rel="tag" class="icon icon-tag">Tags</a></li>
-			<li><a href="#todo" rel="todo" class="icon icon-todo">Todo</a></li>
-			<li><a href="#timeline" rel="timeline" class="icon icon-timeline">Timeline</a></li>
-			<li><a href="#snapshot" rel="snapshot" class="icon icon-snapshot">Snapshots</a></li>
-			<li><a href="#chapter" rel="chapter" class="icon icon-chapter">Chapters</a></li>
-			<li><a href="#comment" rel="comment" class="icon icon-comment">Comments</a></li>
-			<li><a href="#distribution" rel="distribution" class="icon icon-private">Distribution</a></li>
-			<li><a href="#target" rel="target" class="icon icon-target">Targets</a></li>
-			<li><a href="#book" rel="fullscreen" class="icon icon-fullscreen">Fullscreen</a></li>
-			<li><a href="#settings" rel="settings" class="icon icon-settings">Page setup</a></li>
+			<li><a href="#book"         class="icon icon-book">My Book</a></li>
+			<li><a href="#character"    class="icon icon-character">Characters</a></li>
+			<li><a href="#location"     class="icon icon-location">Locations</a></li>
+			<li><a href="#scrapbook"    class="icon icon-scrapbook">Scrapbook</a></li>
+			<li><a href="#tag"          class="icon icon-tag">Tags</a></li>
+			<li><a href="#todo"         class="icon icon-todo">Todo</a></li>
+			<li><a href="#timeline"     class="icon icon-timeline">Timeline</a></li>
+			<li><a href="#snapshot"     class="icon icon-snapshot">Snapshots</a></li>
+			<li><a href="#chapter"      class="icon icon-chapter">Chapters</a></li>
+			<li><a href="#comment"      class="icon icon-comment">Comments</a></li>
+			<li><a href="#distribution" class="icon icon-private">Distribution</a></li>
+			<li><a href="#target"       class="icon icon-target">Targets</a></li>
+			<li><a href="#fullscreen"   class="icon icon-fullscreen">Fullscreen</a></li>
+			<li><a href="#settings"     class="icon icon-settings">Page setup</a></li>
 		</ul>
 	</div>
 
@@ -68,11 +70,13 @@
 	</div>
 
 	<div id="status-indicator"></div>
+	<div id="fullscreen-bg"></div>
 
 	<!-- Scripts //-->
 	<script src="/assets/js/plugin/smooth-scroll.js"></script>
 	<script src="/assets/js/nav.js"></script>
 	<script src="/assets/js/wysiwyg.js"></script>
+	<script src="/assets/js/fullscreen.js"></script>
 	<script src="/assets/js/loader.js"></script>
 </body>
 </html>
