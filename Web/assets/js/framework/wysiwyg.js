@@ -4,6 +4,9 @@
  * We do not want the user to spend too long worrying about formatting. Instead
  * we want them to write! Due to this we do not give them that many options.
  *
+ * @copyright   2012 Christopher Hill <cjhill@gmail.com>
+ * @author      Christopher Hill <cjhill@gmail.com>
+ * @since       28/01/2013
  */
 WEBBOOK.Wysiwyg = {
 	// Vars
@@ -45,6 +48,7 @@ WEBBOOK.Wysiwyg = {
 	 * </ul>
 	 *
 	 * @param Event event
+	 * @todo  There is a bug with WebKit where removeFormat does not remove backColor.
 	 */
 	hideShowWysiwyg: function(event) {
 		// Get the range
@@ -83,7 +87,7 @@ WEBBOOK.Wysiwyg = {
 	 */
 	getRange: function() {
 		if (window.getSelection) {
-			// Non IE
+			// Non-IE
 			var savedRange = window.getSelection().getRangeAt(0);
 		} else if (document.selection) {
 			// IE

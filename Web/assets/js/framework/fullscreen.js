@@ -1,6 +1,13 @@
 /**
  * Handles interaction with the navigation element.
  *
+ * At the moment we only support WebKit since they are the only browser which
+ * supports fullscreen scrolling. Gecko is making this possible but is, at the
+ * moment of writing, not available. As soon as it does then it will be added.
+ *
+ * @copyright   2012 Christopher Hill <cjhill@gmail.com>
+ * @author      Christopher Hill <cjhill@gmail.com>
+ * @since       30/01/2013
  */
 WEBBOOK.Fullscreen = {
 	// Vars

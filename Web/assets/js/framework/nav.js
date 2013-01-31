@@ -1,20 +1,30 @@
 /**
  * Handles interaction with the navigation element.
  *
+ * Note: The Fullscreen link exists by default, but is hidden if the user does
+ * not have WebKit.
+ *
+ * @copyright   2012 Christopher Hill <cjhill@gmail.com>
+ * @author      Christopher Hill <cjhill@gmail.com>
+ * @since       28/01/2013
  */
 WEBBOOK.Nav = {
 	// Vars
 	navSelector:          "#navigation",
 	navLinkSelector:      "a",
 	fullscreenBgSelector: "#fullscreen-bg",
+	contentSelector:      "#content",
 
 	navHideAfterTime:     2000, // How long the navigation is visible before it starts to fade out.
 	navFadeInTime:        200,  // How long it shoud take for the navigation to become visible.
 	navFadeOutTime:       1000, // How long it should take for the navigation to completely fade.
 
+	pageStore:            {},
+
 	// DOM references
 	$nav:     undefined,
 	$navLink: undefined,
+	$content: undefined,
 
 	/**
 	 * Sets up the navigation.
@@ -27,6 +37,7 @@ WEBBOOK.Nav = {
 		// Set DOM references
 		this.$nav     = $(this.navSelector);
 		this.$navLink = this.$nav.find(this.navLinkSelector);
+		this.$content = $(this.contentSelector);
 
 		// Listeners
 		this.$nav.delay(this.navHideAfterTime).animate({opacity: 0}, this.navFadeOutTime)
@@ -49,7 +60,7 @@ WEBBOOK.Nav = {
 	 */
 	navigationEnter: function(event) {
 		this.$nav.stop(true)
-			.animate({opacity: '1'}, this.navFadeInTime);
+			.animate({opacity: "1"}, this.navFadeInTime);
 	},
 
 	/**
@@ -59,7 +70,7 @@ WEBBOOK.Nav = {
 	 */
 	navigationLeave: function(event) {
 		this.$nav.delay(this.navHideAfterTime)
-			.animate({opacity: '0'}, this.navFadeOutTime);
+			.animate({opacity: "0"}, this.navFadeOutTime);
 	},
 
 	/**
@@ -73,18 +84,39 @@ WEBBOOK.Nav = {
 	 *
 	 * @param  Event   event
 	 * @return boolean
+	 * @todo   Move the pageStore into a content object.
+	 * @todo   Use local storage instead of local variables.
 	 */
 	navLinkClick: function(event) {
 		// Set the action that we need to perform
 		var action = event.currentTarget.hash.slice(1);
 
 		// Fullscreen
-		if (action == 'fullscreen') {
+		if (action == "fullscreen") {
 			this.fullscreenToggle();
 			return false;
 		}
 
-		// @todo Functionality for loading new pages asynchronously.
+		// We need to load a new page
+		// First, do we already have it in the page store?
+		if (typeof this.pageStore.action != "undefined") {
+			this.$content.html(this.pageStore.action.content);
+			return false;
+		}
+
+		// We need to get the page content and then save it
+		$.ajax({
+			url: "/" + action,
+			success: function(data) {
+				// Set the page
+				WEBBOOK.Nav.pageStore.action = {};
+				WEBBOOK.Nav.pageStore.action.content = data;
+				WEBBOOK.Nav.$content.html(data);
+			},
+			error: function() {
+				alert("Oh dear");
+			}
+		});
 
 		return false;
 	},
@@ -92,6 +124,8 @@ WEBBOOK.Nav = {
 	/**
 	 * Toggles fullscreen on and off.
 	 *
+	 * @triggers Fullscreen_Request
+	 * @triggers Fullscreen_Cancel
 	 */
 	fullscreenToggle: function() {
 		// We are not yet fullscreen
