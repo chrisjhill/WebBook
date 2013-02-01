@@ -6,6 +6,12 @@
  * @since       01/02/2013
  */
 WEBBOOK.Content = {
+	// Vars
+	contentSelector: "#content",
+
+	// DOM references
+	$content: undefined,
+
 	/**
 	 * Listens for content updates.
 	 *
@@ -13,12 +19,16 @@ WEBBOOK.Content = {
 	 * @listens Document On Content_Update
 	 */
 	init: function() {
+		// Set DOM references
+		this.$content = $(this.contentSelector);
+
+		// Listeners
 		$(document)
 			.on("Content_Retrieved", function(event, page, content) {
-				WEBBOOK.Content.save(event, page, content);
+				WEBBOOK.Content.save(page, content);
 			})
-			.on("Content_Update", function(event, page, content) {
-				WEBBOOK.Content.save(event, page, content);
+			.on("Content_Update", function(event, page) {
+				WEBBOOK.Content.update(page);
 			});
 	},
 
@@ -37,8 +47,20 @@ WEBBOOK.Content = {
 	 * @param string page    The page name that we want to save.
 	 * @param string content The page's HTML.
 	 */
-	save: function(event, page, content) {
+	save: function(page, content) {
 		WEBBOOK.Store.put("content." + page, content);
+	},
+
+	/**
+	 * This function places the content retrieval in one place.
+	 *
+	 * @param Event  event
+	 * @param string page  The page name that we want to save.
+	 *
+	 * @todo I don't think html() will work here, might need some other skullduggery.
+	 */
+	update: function(event, page) {
+		WEBBOOK.Content.save(page, this.$content.html());
 	},
 
 	/**

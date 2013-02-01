@@ -19,6 +19,8 @@ WEBBOOK.Nav = {
 	navFadeInTime:        200,  // How long it shoud take for the navigation to become visible.
 	navFadeOutTime:       1000, // How long it should take for the navigation to completely fade.
 
+	pagesLoaded:          {},   // Keeps track of which pages have been loaded in this session.
+
 	// DOM references
 	$nav:     undefined,
 	$navLink: undefined,
@@ -84,33 +86,39 @@ WEBBOOK.Nav = {
 	 * @return boolean
 	 * @todo   Move the pageStore into a content object.
 	 * @todo   Use local storage instead of local variables, LS = persistence!
+	 *
+	 * @triggers Content_Retrieved If our Ajax function succeeded.
 	 */
 	navLinkClick: function(event) {
-		// Set the action that we need to perform
-		var action = event.currentTarget.hash.slice(1);
+		// Set the page that we need to load
+		var page = event.currentTarget.hash.slice(1);
 
 		// Fullscreen
-		if (action == "fullscreen") {
+		if (page == "fullscreen") {
 			this.fullscreenToggle();
 			return false;
 		}
 
 		// We need to load a new page
 		// First, do we already have it in the page store?
-		if (WEBBOOK.Content.has(action, false)) {
-			this.$content.html(WEBBOOK.Content.get(action));
+		if (WEBBOOK.Content.has(page, false)) {
+			this.$content.html(WEBBOOK.Content.get(page));
+			this.loadJavascript(page);
 			return false;
 		}
 
 		// We need to get the page content and then save it
 		$.ajax({
-			url: "/" + action,
+			url: "/" + page,
 			success: function(data) {
 				// Set the content
 				WEBBOOK.Nav.$content.html(data);
+				this.loadJavascript(page);
 
 				// And save the content
-				$(document).trigger({ type: "Content_Retrieved" }, [action, data]);
+				$(document).trigger({ type: "Content_Retrieved" }, [page, data]);
+
+				// Include the JavaScript
 			},
 			error: function() {
 				alert("Oh dear");
@@ -121,10 +129,23 @@ WEBBOOK.Nav = {
 	},
 
 	/**
+	 * Loads a page's Javascript as and when required.
+	 *
+	 * @param string action The page we wish to load
+	 */
+	loadJavascript: function(page) {
+		if (typeof this.pagesLoaded[page] === "undefined") {
+			$.getScript("/assets/js/framework/page/" + page + ".js");
+
+			this.pagesLoaded[page] = true;
+		}
+	},
+
+	/**
 	 * Toggles fullscreen on and off.
 	 *
-	 * @triggers Fullscreen_Request
-	 * @triggers Fullscreen_Cancel
+	 * @triggers Fullscreen_Request If we need to go fullscreen.
+	 * @triggers Fullscreen_Cancel  If we need to cancel fullscreen.
 	 */
 	fullscreenToggle: function() {
 		// We are not yet fullscreen
