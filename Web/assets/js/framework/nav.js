@@ -19,8 +19,6 @@ WEBBOOK.Nav = {
 	navFadeInTime:        200,  // How long it shoud take for the navigation to become visible.
 	navFadeOutTime:       1000, // How long it should take for the navigation to completely fade.
 
-	pageStore:            {},
-
 	// DOM references
 	$nav:     undefined,
 	$navLink: undefined,
@@ -85,7 +83,7 @@ WEBBOOK.Nav = {
 	 * @param  Event   event
 	 * @return boolean
 	 * @todo   Move the pageStore into a content object.
-	 * @todo   Use local storage instead of local variables.
+	 * @todo   Use local storage instead of local variables, LS = persistence!
 	 */
 	navLinkClick: function(event) {
 		// Set the action that we need to perform
@@ -99,8 +97,8 @@ WEBBOOK.Nav = {
 
 		// We need to load a new page
 		// First, do we already have it in the page store?
-		if (typeof this.pageStore.action != "undefined") {
-			this.$content.html(this.pageStore.action.content);
+		if (WEBBOOK.Content.has(action, false)) {
+			this.$content.html(WEBBOOK.Content.get(action));
 			return false;
 		}
 
@@ -108,10 +106,11 @@ WEBBOOK.Nav = {
 		$.ajax({
 			url: "/" + action,
 			success: function(data) {
-				// Set the page
-				WEBBOOK.Nav.pageStore.action = {};
-				WEBBOOK.Nav.pageStore.action.content = data;
+				// Set the content
 				WEBBOOK.Nav.$content.html(data);
+
+				// And save the content
+				$(document).trigger({ type: "Content_Retrieved" }, [action, data]);
 			},
 			error: function() {
 				alert("Oh dear");
