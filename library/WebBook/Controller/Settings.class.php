@@ -1,6 +1,6 @@
 <?php
 namespace WebBook\Controller;
-use Core, WebBook\Utility;
+use Core, WebBook\View\Helper;
 
 /**
  * This controller handles all of the settings actions.
@@ -65,7 +65,7 @@ class Settings extends Core\Controller
 		$settings->save();
 
 		// Display notice
-		echo new Utility\Notice('success', 'Settings have been successfully updated.');
+		echo new Helper\Notice('success', 'Settings have been successfully updated.');
 		die();
 	}
 }

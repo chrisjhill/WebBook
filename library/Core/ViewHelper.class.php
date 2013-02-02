@@ -42,8 +42,20 @@ class ViewHelper
 	 * @access public
 	 * @param  string $variableName The name of the variable to return.
 	 * @return View
+	 * @magic
 	 */
 	public function __get($variableName) {
 		return self::$_view;
+	}
+
+	/**
+	 * If the View Helper is echo'd then we need to render it.
+	 *
+	 * @access public
+	 * @return string
+	 * @magic
+	 */
+	public function __toString() {
+		return $this->render();
 	}
 }

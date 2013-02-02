@@ -7,7 +7,7 @@
  */
 WEBBOOK.Notice = {
 	// Vars
-	contentSelector: "#content",
+	contentSelector: "#notice-container",
 
 	// DOM references
 	$content: undefined,
@@ -34,10 +34,12 @@ WEBBOOK.Notice = {
 	 * @param string status  Whether it successed, error'd, or a info.
 	 */
 	display: function(message, status) {
+		console.log(message);
 		// If the status is missing, then it is from an Ajax request
 		// We will already have all we need
 		if (typeof status === "undefined") {
-			this.$content.prepend(message);
+			console.log(this.$content);
+			this.$content.html(message).slideDown().delay(3000).slideUp();
 
 			// @todo Needs finishing.
 		}

@@ -45,10 +45,6 @@
     #outline a.outline-expand{border-bottom:0;font-weight:bold;font-size:12px}
         #outline a.outline-expand:hover{color:#F00}
 
-/* Status indicator */
-#status-indicator{display:none;position:fixed;top:0;right:0;background:#FFF}
-    #status-indicator p{margin:0;padding:5px}
-
 /* Insert section */
 #section-insert{display:none;position:absolute;z-index:9;background:#FFF;border-radius:4px}
     #section-insert p{margin:0;padding:0 5px;line-height:15px;text-align:right}

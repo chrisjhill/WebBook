@@ -20,12 +20,12 @@ hr{background:transparent;color:transparent;border:none;margin:20px 0;padding:0;
 /* Custom styles */
 .url{background:#F5F5F5;font-family:Monaco,Courier;border:1px solid #DDD;padding:4px 8px;font-size:12px;width:auto;min-width:400px}
 
-.notice,.error,.success{padding:10px}
-    .notice{background:#FEEFB3;border:2px solid #EEE0A7}
-    .error{background:#F4E6E6;border:2px solid #F4D0D0}
-    .success{background:#E7F9BE;border:2px solid #C9F36C}
-        .notice h3,.error h3,.success h3{margin:0;padding:0}
-        .notice p,.error p,.success p{margin:0;padding:10px 0 0}
+/* Notice */
+#notice-container{display:none;position:fixed;top:0;left:0;right:0;z-index:999}
+    .notice{margin:0;padding:10px 0 5px;text-align:center;font-size:16px}
+        .notice-info{background:#FEEFB3;border-bottom:2px solid #EEE0A7}
+        .notice-error{background:#F4E6E6;border-bottom:2px solid #F4D0D0}
+        .notice-success{background:#E7F9BE;border-bottom:2px solid #C9F36C}
 
 /* Thanks to: http://vesess.com/sandbox/form_template.html */
 label,.textbox,textarea{float:left}
