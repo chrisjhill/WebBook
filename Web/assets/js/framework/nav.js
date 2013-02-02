@@ -117,11 +117,9 @@ WEBBOOK.Nav = {
 
 				// And save the content
 				$(document).trigger({ type: "Content_Retrieved" }, [page, data]);
-
-				// Include the JavaScript
 			},
 			error: function() {
-				alert("Oh dear");
+				alert("Sorry, we were unable to load the page :(");
 			}
 		});
 
@@ -131,7 +129,11 @@ WEBBOOK.Nav = {
 	/**
 	 * Loads a page's Javascript as and when required.
 	 *
-	 * @param string action The page we wish to load
+	 * We do not want to load every single JavaScript snippet when a user first
+	 * lands on the page. Instead we will gradually load it as they navigate,
+	 * saving both time for the user and bandwidth.
+	 *
+	 * @param string page The page we wish to load
 	 */
 	loadJavascript: function(page) {
 		if (typeof this.pagesLoaded[page] === "undefined") {

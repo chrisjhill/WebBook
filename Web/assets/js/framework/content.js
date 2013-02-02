@@ -1,5 +1,9 @@
 /**
- * Handles page content.
+ * Handles the saving of page content.
+ *
+ * This is basically an interface for the Store. It listens for requests to
+ * save or update page content and then handles it accordingle. It also takes
+ * complexity away from other objects by handling the update() functionality.
  *
  * @copyright   2012 Christopher Hill <cjhill@gmail.com>
  * @author      Christopher Hill <cjhill@gmail.com>
@@ -30,6 +34,9 @@ WEBBOOK.Content = {
 			.on("Content_Update", function(event, page) {
 				WEBBOOK.Content.update(page);
 			});
+
+		// Save the book right away
+		this.update(null, "book");
 	},
 
 	/**

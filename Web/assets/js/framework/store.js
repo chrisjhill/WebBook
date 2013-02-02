@@ -8,6 +8,9 @@
  * retained. In general, objects should namespace each of the variables.
  * So, WEBBOOK.Content will set variables as content.xyz
  *
+ * Note: We only have ~5MB to play with. For bigger books we might need to do
+ * something more clever.
+ *
  * @copyright   2012 Christopher Hill <cjhill@gmail.com>
  * @author      Christopher Hill <cjhill@gmail.com>
  * @since       01/02/2013
@@ -64,14 +67,12 @@ WEBBOOK.Store = {
 	 * @return mixed
 	 */
 	get: function(variable, defaultValue) {
-		if (this.localStorageAvailable) {
-			return this.has(variable)
-				? localStorage[variable]
-				: defaultValue;
-		} else {
-			return this.has(variable)
-				? this.store[variable]
-				: defaultValue;
+		if (this.localStorageAvailable && this.has(variable)) {
+			return localStorage[variable];
+		} else if (this.has(variable)) {
+			return this.store[variable];
 		}
+
+		return defaultValue;
 	}
 }
