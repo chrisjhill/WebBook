@@ -29,6 +29,17 @@ class Repository
 	}
 
 	/**
+	 * If the entity has a variable.
+	 *
+	 * @access public
+	 * @param  string  $variable The variable to try and locate.
+	 * @return boolean
+	 */
+	public function has($variable) {
+		return isset($this->_store[$variable]);
+	}
+
+	/**
 	 * Set a variable for this entity.
 	 *
 	 * @access public

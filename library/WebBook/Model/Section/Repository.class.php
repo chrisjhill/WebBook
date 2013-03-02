@@ -24,7 +24,7 @@ class Repository extends Core\Repository
 	 * @return mixed
 	 */
 	public function save() {
-		return ! isset($this->section_id)
+		return ! $this->has('section_id')
 			? $this->insert()
 			: $this->update();
 	}
@@ -67,7 +67,7 @@ class Repository extends Core\Repository
 			':section_created'    => $this->section_created
 		));
 
-		return $pdo->lastInsertId();
+		return $query->lastInsertId();
 	}
 
 	/**

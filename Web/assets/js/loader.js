@@ -5,3 +5,4 @@ WEBBOOK.Content.init();
 WEBBOOK.Wysiwyg.init();
 WEBBOOK.Fullscreen.init();
 WEBBOOK.Nav.init();
+WEBBOOK.Edit.init();

@@ -43,8 +43,9 @@ class Database
 	 * Try and establish a connection to the database.
 	 *
 	 * @access public
+	 * @static
 	 */
-	public function establishConnection() {
+	public static function establishConnection() {
 		// Try and connect to the database
 		try {
 			// Connection
