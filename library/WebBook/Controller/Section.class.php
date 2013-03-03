@@ -29,10 +29,11 @@ class Section extends Core\Controller
 	 * @ajax
 	 */
 	public function updateAction() {
-		// Get the book this section is assigned
-		$section = new Model\Section\Instance();
-		$section->section_id = Core\Request::post('section_id');
-		$section = new Model\Section\Instance($section->get());
+		// Get the information for this section
+		$section = new Model\Section\Instance(array(
+			'section_id' => Core\Request::post('section_id')
+		));
+		$section->import($section->get());
 
 		// Update
 		// @todo str_word_count() might not be the most appropriate function.
@@ -54,5 +55,22 @@ class Section extends Core\Controller
 	 */
 	public function reorderAction() {
 		$this->setLayout(false);
+	}
+
+	/**
+	 * Delete a section from the chapter.
+	 *
+	 * @access public
+	 * @ajax
+	 */
+	public function deleteAction() {
+		// Get the information for this section
+		$section = new Model\Section\Instance(array(
+			'section_id' => Core\Request::post('section_id')
+		));
+		$section->delete();
+
+		// Do not output anything
+		die();
 	}
 }

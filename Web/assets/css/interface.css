@@ -46,8 +46,8 @@
         #outline a.outline-expand:hover{color:#F00}
 
 /* Insert section */
-#section-insert{display:none;position:absolute;z-index:9;background:#FFF;border-radius:4px}
-    #section-insert p{margin:0;padding:0 5px;line-height:15px;text-align:right}
-    #section-insert a{color:#888;text-decoration:none;font-size:12px}
-        #section-insert a:hover{text-decoration:underline;color:#080}
-        #section-insert a#section-insert-delete:hover{color:#9B0026}
+#section-handler{display:none;position:absolute;z-index:9;background:#FFF;border-radius:4px}
+    #section-handler p{margin:0;padding:0 5px;line-height:15px;text-align:right}
+    #section-handler a{color:#888;text-decoration:none;font-size:12px}
+        #section-handler a:hover{text-decoration:underline;color:#080}
+        #section-handler a#section-insert-delete:hover{color:#9B0026}

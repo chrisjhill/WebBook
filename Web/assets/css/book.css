@@ -5,21 +5,21 @@
 
     .section{margin-bottom:4px}
     .chapter{position:relative;margin-bottom:50px}
-        .title{padding-top:20px}
-            h2.title{margin:0 0 4px;padding:0}
-            h3.title{margin:40px 0 0px;padding:0;display:block;border-bottom:1px solid #CCC}
+        .chapter-title,.subtitle{padding-top:20px}
+            h2.chapter-title{margin:0 0 4px}
+            h3.subtitle{margin:40px 0 0px;padding:0;display:block;border-bottom:1px solid #CCC}
 
-        .chapter p{margin:0;padding:4px 0}
+        .chapter p{margin:4px 0;padding:0}
         .chapter p + p:not(:empty){text-indent:40px}
         .chapter p:empty{padding-bottom:20px}
-        
-        .chapter-insert{opacity:0;position:absolute;bottom:0;left:0;width:100%;text-align:center;background:#F5F5F5;border-top:1px solid #F0F0F0;margin:0;padding:0}
-            .chapter-insert:hover{opacity:1}
-            .chapter-insert a{display:block;color:#999;text-decoration:none;font-size:12px;padding:10px 0}
-                .chapter-insert a:hover{color:#080;text-decoration:underline}
-        
+
+        .chapter-handler{opacity:0;position:absolute;bottom:0;left:0;width:100%;text-align:center;background:#F5F5F5;border-top:1px solid #F0F0F0;margin:0;padding:0}
+            .chapter-handler:hover{opacity:1}
+            .chapter-handler a{display:block;color:#999;text-decoration:none;font-size:12px;padding:10px 0}
+                .chapter-handler a:hover{color:#080;text-decoration:underline}
+
         .chapter-delete{opacity:0;position:absolute;top:-12px;right:-12px;width:32px;height:32px;cursor:pointer}
             .chapter-delete:hover{opacity:1}
-    
+
     #wysiwyg{position:fixed;top:0;left:0;background:rgba(255, 255, 255, .8);border:2px solid rgba(150, 150, 150, .8);-webkit-border-radius:8px;-moz-border-radius:8px;border-radius:8px;padding:5px}
         #wysiwyg button{}
