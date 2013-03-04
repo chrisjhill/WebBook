@@ -67,7 +67,7 @@ class Repository extends Core\Repository
 			':section_created'    => $this->section_created
 		));
 
-		return $query->lastInsertId();
+		return Model\Database::get()->lastInsertId();
 	}
 
 	/**

@@ -43,7 +43,7 @@ WEBBOOK.Edit = {
 		// Listeners
 		this.$section.on("keyup paste", $.proxy(this.updated, this));
 		this.$sectionHandlerSections.on("mouseenter", $.proxy(this.handlerOpen,   this));
-		this.$sectionHandlerAddTitle.on("click",      $.proxy(this.insertTitle,   this))
+		this.$sectionHandlerAddTitle.on("click",      $.proxy(this.insertSubtitle,   this))
 		this.$sectionHandlerAddContent.on("click",    $.proxy(this.insertContent, this));
 		this.$sectionHandlerDelete.on("click",        $.proxy(this.delete,        this));
 
@@ -128,10 +128,11 @@ WEBBOOK.Edit = {
 		}
 
 		// And show the handler
-		this.$sectionHandler.hide().css({
-			top:  offsetTop  + "px",
-			left: offsetLeft + "px",
-		}).fadeIn(750);
+		this.$sectionHandler
+			.hide()
+			.data("sectionid", $el.data("sectionid"))
+			.css({ top: offsetTop + "px", left: offsetLeft + "px" })
+			.fadeIn(750);
 	},
 
 	/**
@@ -139,8 +140,8 @@ WEBBOOK.Edit = {
 	 *
 	 * @param Event e
 	 */
-	insertTitle: function(e) {
-		alert("Coming soon");
+	insertSubtitle: function(e) {
+		this.insert("subtitle");
 		return false;
 	},
 
@@ -150,8 +151,49 @@ WEBBOOK.Edit = {
 	 * @param Event e
 	 */
 	insertContent: function(e) {
-		alert("Coming soon");
+		this.insert("content");
 		return false;
+	},
+
+	/**
+	 * Insert a new section.
+	 *
+	 */
+	insert: function(sectionType) {
+		// The section we need to insert this section after
+		var sectionId = this.$sectionHandler.data("sectionid");
+
+		// Get the section DOM element
+		var $el = this.$section.filter("#section-" + sectionId);
+
+		// The order of the new section
+		var order = parseInt($el.data("order")) + 1;
+
+		// Increment the sections *after* this new section will be added
+		this.$section.filter(function() {
+			return $(this).data("order") >= order;
+		}).data().order++;
+
+		// Insert the section via Ajax
+		$.ajax({
+			url:    "/section/insert",
+			method: "post",
+			data:   {
+				chapter_id:   $el.data("chapterid"),
+				section_type: sectionType,
+				order:        order
+			},
+			success: function(data) {
+				// Set the content
+				WEBBOOK.Edit.$section.filter("#section-" + sectionId).after(data);
+
+				// And save the content
+				$(document).trigger({ type: "Edit_Inserted" });
+			},
+			error: function() {
+				alert("Sorry, we were unable to load the page :(");
+			}
+		});
 	},
 
 	/**

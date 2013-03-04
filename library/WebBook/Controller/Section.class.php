@@ -17,9 +17,28 @@ class Section extends Core\Controller
 	 *
 	 * @access public
 	 * @ajax
+	 * @todo   Update the order of sections.
 	 */
 	public function insertAction() {
-		$this->setLayout(false);
+		// Get the book ID this is for
+		$book = Core\StoreRequest::get('book');
+
+		// Create a new dummy section
+		$section = new Model\Section\Instance(array(
+			'book_id'            => $book->book_id,
+			'chapter_id'         => Core\Request::post('chapter_id'),
+			'section_order'      => Core\Request::post('order'),
+			'section_type'       => Core\Request::post('section_type'),
+			'section_content'    => '<p>Start typing&hellip;</p>',
+			'section_word_count' => 2,
+			'section_created'    => Core\Request::server('REQUEST_TIME')
+		));
+
+		// And insert it
+		$section->section_id = $section->insert();
+
+		// And echo the new section
+		die($section->output());
 	}
 
 	/**
@@ -54,7 +73,7 @@ class Section extends Core\Controller
 	 * @ajax
 	 */
 	public function reorderAction() {
-		$this->setLayout(false);
+		// Not yet implemented
 	}
 
 	/**
