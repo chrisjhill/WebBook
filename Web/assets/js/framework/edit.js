@@ -7,6 +7,7 @@
  */
 WEBBOOK.Edit = {
 	// Vars
+	chapterSelector:        ".chapter",
 	sectionsSelector:       ".section",
 	// Updating content
 	sectionsUpdateInterval: 1000,
@@ -19,12 +20,9 @@ WEBBOOK.Edit = {
 	sectionHandlerDeleteSelector:     "#section-handler-delete",
 
 	// DOM references
-	$section:                  undefined,
-	$sectionHandler:           undefined,
-	$sectionHandlerSections:   undefined,
-	$sectionHandlerAddTitle:   undefined,
-	$sectionHandlerAddContent: undefined,
-	$sectionHandlerDelete:     undefined,
+	$chapter:        undefined,
+	$section:        undefined,
+	$sectionHandler: undefined,
 
 	/**
 	 * Listen for updates to the text, and adding of new chapters and sections.
@@ -33,19 +31,16 @@ WEBBOOK.Edit = {
 	 */
 	init: function() {
 		// Set DOM references
+		this.$chapter                  = $(this.chapterSelector);
 		this.$section                  = $(this.sectionsSelector);
 		this.$sectionHandler           = $(this.sectionHandlerSelector);
-		this.$sectionHandlerSections   = $(this.sectionHandlerSectionsSelector);
-		this.$sectionHandlerAddTitle   = $(this.sectionHandlerAddTitleSelector);
-		this.$sectionHandlerAddContent = $(this.sectionHandlerAddContentSelector);
-		this.$sectionHandlerDelete     = $(this.sectionHandlerDeleteSelector);
 
 		// Listeners
-		this.$section.on("keyup paste", $.proxy(this.updated, this));
-		this.$sectionHandlerSections.on("mouseenter", $.proxy(this.handlerOpen,   this));
-		this.$sectionHandlerAddTitle.on("click",      $.proxy(this.insertSubtitle,   this))
-		this.$sectionHandlerAddContent.on("click",    $.proxy(this.insertContent, this));
-		this.$sectionHandlerDelete.on("click",        $.proxy(this.delete,        this));
+		this.$chapter.on("keyup paste", this.sectionsSelector,                 $.proxy(this.updated,        this));
+		this.$chapter.on("mouseenter",  this.sectionHandlerSectionsSelector,   $.proxy(this.handlerOpen,    this));
+		this.$chapter.on("click",       this.sectionHandlerAddTitleSelector,   $.proxy(this.insertSubtitle, this));
+		this.$chapter.on("click",       this.sectionHandlerAddContentSelector, $.proxy(this.insertContent,  this));
+		this.$chapter.on("click",       this.sectionHandlerDeleteSelector,     $.proxy(this.delete,         this));
 
 		// Save the content every x seconds
 		setInterval(function() {
@@ -185,10 +180,12 @@ WEBBOOK.Edit = {
 			},
 			success: function(data) {
 				// Set the content
-				WEBBOOK.Edit.$section.filter("#section-" + sectionId).after(data);
+				$el.after(data).next(this.sectionsSelector)
+					.animate({ backgroundColor: "#FFFFAA" }, 750)
+					.animate({ backgroundColor: "#FFFFFF" }, 2000);
 
-				// And save the content
-				$(document).trigger({ type: "Edit_Inserted" });
+				// Let others know what just happened
+				$(document).trigger({ type: "Edit_Inserted" }, [sectionId]);
 			},
 			error: function() {
 				alert("Sorry, we were unable to load the page :(");
@@ -202,7 +199,40 @@ WEBBOOK.Edit = {
 	 * @param Event e
 	 */
 	delete: function(e) {
-		alert("Coming soon");
+		// The section we need to insert this section after
+		var sectionId = this.$sectionHandler.data("sectionid");
+
+		// Get the section DOM element
+		var $el = this.$section.filter("#section-" + sectionId);
+
+		// The order of the new section
+		var order = parseInt($el.data("order"));
+
+		// Decrement the sections *after* this section
+		this.$section.filter(function() {
+			return $(this).data("order") <= order;
+		}).data().order--;
+
+		// Insert the section via Ajax
+		$.ajax({
+			url:    "/section/delete",
+			method: "post",
+			data:   {
+				section_id: sectionId,
+				order:      order
+			},
+			success: function(data) {
+				// Remove the section from the DOM
+				$el.animate({ height: 0, opacity: 0 }, 250);
+
+				// Let others know what just happened
+				$(document).trigger({ type: "Edit_Deleted" }, [sectionId]);
+			},
+			error: function() {
+				alert("Sorry, we were unable to load the page :(");
+			}
+		});
+
 		return false;
 	}
 }

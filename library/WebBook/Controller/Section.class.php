@@ -83,9 +83,14 @@ class Section extends Core\Controller
 	 * @ajax
 	 */
 	public function deleteAction() {
+		// Get the book ID this is for
+		$book = Core\StoreRequest::get('book');
+
 		// Get the information for this section
 		$section = new Model\Section\Instance(array(
-			'section_id' => Core\Request::post('section_id')
+			'book_id'         => $book->book_id,
+			'section_id'      => Core\Request::post('section_id'),
+			'section_removed' => Core\Request::server('REQUEST_TIME')
 		));
 		$section->delete();
 
