@@ -31,16 +31,20 @@ WEBBOOK.Edit = {
 	 */
 	init: function() {
 		// Set DOM references
-		this.$chapter                  = $(this.chapterSelector);
-		this.$section                  = $(this.sectionsSelector);
-		this.$sectionHandler           = $(this.sectionHandlerSelector);
+		this.$chapter        = $(this.chapterSelector);
+		this.$section        = $(this.sectionsSelector);
+		this.$sectionHandler = $(this.sectionHandlerSelector);
 
 		// Listeners
-		this.$chapter.on("keyup paste", this.sectionsSelector,                 $.proxy(this.updated,        this));
-		this.$chapter.on("mouseenter",  this.sectionHandlerSectionsSelector,   $.proxy(this.handlerOpen,    this));
-		this.$chapter.on("click",       this.sectionHandlerAddTitleSelector,   $.proxy(this.insertSubtitle, this));
-		this.$chapter.on("click",       this.sectionHandlerAddContentSelector, $.proxy(this.insertContent,  this));
-		this.$chapter.on("click",       this.sectionHandlerDeleteSelector,     $.proxy(this.delete,         this));
+		this.$chapter.on("keyup paste",  this.sectionsSelector,                 $.proxy(this.updated,        this));
+		this.$chapter.on("mouseenter",   this.sectionHandlerSectionsSelector,   $.proxy(this.handlerOpen,    this));
+		this.$sectionHandler.on("click", this.sectionHandlerAddTitleSelector,   $.proxy(this.insertSubtitle, this));
+		this.$sectionHandler.on("click", this.sectionHandlerAddContentSelector, $.proxy(this.insertContent,  this));
+		this.$sectionHandler.on("click", this.sectionHandlerDeleteSelector,     $.proxy(this.delete,         this));
+
+		// Listeners (via triggers)
+		$(document).on("Edit_Inserted Edit_Deleted", $.proxy(this.handlerClose,   this));
+		$(document).on("Edit_Inserted Edit_Deleted", $.proxy(this.sectionReindex, this));
 
 		// Save the content every x seconds
 		setInterval(function() {
@@ -131,6 +135,14 @@ WEBBOOK.Edit = {
 	},
 
 	/**
+	 * Close the section handler.
+	 *
+	 */
+	handlerClose: function() {
+		this.$sectionHandler.fadeOut(250);
+	},
+
+	/**
 	 * Insert a title into this chapter.
 	 *
 	 * @param Event e
@@ -180,9 +192,13 @@ WEBBOOK.Edit = {
 			},
 			success: function(data) {
 				// Set the content
-				$el.after(data).next(this.sectionsSelector)
+				$el.after(data).next(WEBBOOK.Edit.sectionsSelector)
+					.focus()
 					.animate({ backgroundColor: "#FFFFAA" }, 750)
 					.animate({ backgroundColor: "#FFFFFF" }, 2000);
+
+				// Select the content to save the user a couple keystrokes
+				 document.execCommand("selectAll", false, null);
 
 				// Let others know what just happened
 				$(document).trigger({ type: "Edit_Inserted" }, [sectionId]);
@@ -191,6 +207,15 @@ WEBBOOK.Edit = {
 				alert("Sorry, we were unable to load the page :(");
 			}
 		});
+	},
+
+	/**
+	 * Reindexes the sections.
+	 *
+	 * @param Event e
+	 */
+	sectionReindex: function(e) {
+		this.$section = $(this.sectionsSelector);
 	},
 
 	/**
@@ -223,7 +248,9 @@ WEBBOOK.Edit = {
 			},
 			success: function(data) {
 				// Remove the section from the DOM
-				$el.animate({ height: 0, opacity: 0 }, 250);
+				$el.animate({ height: 0, opacity: 0 }, 250, function() {
+					$(this).remove();
+				});
 
 				// Let others know what just happened
 				$(document).trigger({ type: "Edit_Deleted" }, [sectionId]);
