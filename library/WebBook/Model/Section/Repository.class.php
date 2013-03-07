@@ -36,6 +36,7 @@ class Repository extends Core\Repository
 	 * @return mixed  False is failure, integer of new record ID if success.
 	 */
 	public function insert() {
+		// Insert the new section
 		$query = Model\Database::get()->prepare("
 			INSERT INTO `section` (
 				`book_id`,
@@ -67,7 +68,11 @@ class Repository extends Core\Repository
 			':section_created'    => $this->section_created
 		));
 
-		return Model\Database::get()->lastInsertId();
+		// Assign the section ID to this section
+		$this->section_id = Model\Database::get()->lastInsertId();
+
+		// Update the section ordering
+		$this->incrementOrder();
 	}
 
 	/**
@@ -107,6 +112,10 @@ class Repository extends Core\Repository
 	 * @return boolean
 	 */
 	public function delete() {
+		// Update the section ordering
+		$this->decrementOrder();
+
+		// Set the section as deleted
 		$query = Model\Database::get()->prepare("
 			UPDATE `section` s
 			SET    s.section_removed = :section_removed
@@ -164,5 +173,59 @@ class Repository extends Core\Repository
 		$query->execute(array(':book_id' => $this->book_id));
 
 		return $query;
+	}
+
+	/**
+	 * Update the order of sections after inserting a section.
+	 *
+	 * @access private
+	 */
+	private function incrementOrder() {
+		$query = Model\Database::get()->prepare("
+			UPDATE `section` s
+			SET    s.section_order  = s.section_order + 1
+			WHERE  s.book_id        = :book_id
+			       AND
+			       s.chapter_id     = :chapter_id
+			       AND
+			       s.section_id    != :section_id
+			       AND
+			       s.section_order >= :section_order
+		");
+
+		// And execute query
+		$query->execute(array(
+			':book_id'       => $this->book_id,
+			':chapter_id'    => $this->chapter_id,
+			':section_id'    => $this->section_id,
+			':section_order' => $this->section_order
+		));
+	}
+
+	/**
+	 * Update the order of sections after deleting a section.
+	 *
+	 * @access private
+	 */
+	private function decrementOrder() {
+		$query = Model\Database::get()->prepare("
+			UPDATE `section` s
+			SET    s.section_order  = s.section_order - 1
+			WHERE  s.book_id        = :book_id
+			       AND
+			       s.chapter_id     = :chapter_id
+			       AND
+			       s.section_id    != :section_id
+			       AND
+			       s.section_order >= :section_order
+		");
+
+		// And execute query
+		$query->execute(array(
+			':book_id'       => $this->book_id,
+			':chapter_id'    => $this->chapter_id,
+			':section_id'    => $this->section_id,
+			':section_order' => $this->section_order
+		));
 	}
 }

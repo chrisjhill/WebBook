@@ -231,11 +231,11 @@ WEBBOOK.Edit = {
 		var $el = this.$section.filter("#section-" + sectionId);
 
 		// The order of the new section
-		var order = parseInt($el.data("order"));
+		var sectionOrder = parseInt($el.data("order"));
 
 		// Decrement the sections *after* this section
 		this.$section.filter(function() {
-			return $(this).data("order") <= order;
+			return $(this).data("order") <= sectionOrder;
 		}).data().order--;
 
 		// Insert the section via Ajax
@@ -243,8 +243,9 @@ WEBBOOK.Edit = {
 			url:    "/section/delete",
 			method: "post",
 			data:   {
-				section_id: sectionId,
-				order:      order
+				chapter_id:    $el.data("chapterid"),
+				section_id:    sectionId,
+				section_order: sectionOrder
 			},
 			success: function(data) {
 				// Remove the section from the DOM

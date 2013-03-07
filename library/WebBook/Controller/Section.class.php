@@ -35,7 +35,7 @@ class Section extends Core\Controller
 		));
 
 		// And insert it
-		$section->section_id = $section->insert();
+		$section->insert();
 
 		// And echo the new section
 		die($section->output());
@@ -89,7 +89,9 @@ class Section extends Core\Controller
 		// Get the information for this section
 		$section = new Model\Section\Instance(array(
 			'book_id'         => $book->book_id,
+			'chapter_id'      => Core\Request::post('chapter_id'),
 			'section_id'      => Core\Request::post('section_id'),
+			'section_order'   => Core\Request::post('section_order'),
 			'section_removed' => Core\Request::server('REQUEST_TIME')
 		));
 		$section->delete();
