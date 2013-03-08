@@ -33,6 +33,7 @@ class Collection implements \IteratorAggregate
 
 		// Does the chapter already exist?
 		if (! isset($this->store[$section->chapter_id])) {
+			// Create chapter instance
 			$this->store[$section->chapter_id] = new Instance();
 		}
 
@@ -47,6 +48,6 @@ class Collection implements \IteratorAggregate
 	 * @return Chapter\Instance
 	 */
 	public function getIterator() {
-		return new ArrayIterator($this->store);
+		return new \ArrayIterator($this->store);
 	}
 }

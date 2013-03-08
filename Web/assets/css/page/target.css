@@ -1,4 +1,4 @@
 .target-pill-parent{width:99%;border:1px solid #CCC;border-radius:8px;padding:2px;box-shadow:2px 2px 2px #EEE}
-     .target-pill-background{background:#F5F5F5;border-radius:6px}
-         .target-pill-percent{height:26px;width:0px;padding-top:2px;background:#f47c20;border-radius:6px;text-align:right;color:#FFF}
-         .target-pill-percent span{display:none;padding-right:4px;font-size:12px;text-shadow:1px 1px 1px #f47c20}
+	 .target-pill-background{background:#F5F5F5;border-radius:6px}
+		 .target-pill-percent{height:26px;width:0px;padding-top:2px;background:#f47c20;border-radius:6px;text-align:right;color:#FFF}
+		 .target-pill-percent span{display:none;padding-right:4px;font-size:12px;text-shadow:1px 1px 1px #f47c20}

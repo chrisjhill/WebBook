@@ -22,16 +22,16 @@ hr{background:transparent;color:transparent;border:none;margin:20px 0;padding:0;
 
 /* Notice */
 #notice-container{display:none;position:fixed;top:0;left:0;right:0;z-index:999}
-    .notice{margin:0;padding:10px 0 5px;text-align:center;font-size:16px}
-        .notice-info{background:#FEEFB3;border-bottom:2px solid #EEE0A7}
-        .notice-error{background:#F4E6E6;border-bottom:2px solid #F4D0D0}
-        .notice-success{background:#E7F9BE;border-bottom:2px solid #C9F36C}
+	.notice{margin:0;padding:10px 0 5px;text-align:center;font-size:16px}
+		.notice-info{background:#FEEFB3;border-bottom:2px solid #EEE0A7}
+		.notice-error{background:#F4E6E6;border-bottom:2px solid #F4D0D0}
+		.notice-success{background:#E7F9BE;border-bottom:2px solid #C9F36C}
 
 /* Thanks to: http://vesess.com/sandbox/form_template.html */
 label,.textbox,textarea{float:left}
 label{width:165px;margin-top:4px}
 .textbox,textarea,select{margin-bottom:.75em;padding:3px 5px;width:300px;font:14px/1.5em Helvetica,Arial;color:#111}
-    select,select option{font-size:16px !important}
+	select,select option{font-size:16px !important}
 .textbox,textarea{border:1px solid #CCC}
 textarea{overflow:auto}
 .focus{border:1px solid #AAA}
@@ -41,12 +41,12 @@ form br{clear:both}
 
 /* Tables */
 table{width:100%;border-collapse:collapse}
-    tr{}
-        th,td{text-align:left;padding:6px}
-        th{border-bottom:3px solid #CCC;background:#F5F5F5}
-        td{border-bottom:1px solid #CCC}
+	tr{}
+		th,td{text-align:left;padding:6px}
+		th{border-bottom:3px solid #CCC;background:#F5F5F5}
+		td{border-bottom:1px solid #CCC}
 .barebones{width:auto}
-    .barebones td{border-bottom:0}
+	.barebones td{border-bottom:0}
 
 /* Thanks to: http://www.webdesignerwall.com/demo/css-buttons.html */
 .button{display:inline-block;zoom:1;*display:inline;vertical-align:baseline;margin:0 2px;outline:none;cursor:pointer;text-align:center;text-decoration:none;font:14px/100% Arial,Helvetica,sans-serif;padding:.5em 2em .55em;text-shadow:0 1px 1px rgba(0,0,0,.3);-webkit-border-radius:.5em;-moz-border-radius:.5em;border-radius:.5em;-webkit-box-shadow:0 1px 2px rgba(0,0,0,.2);-moz-box-shadow:0 1px 2px rgba(0,0,0,.2);box-shadow:0 1px 2px rgba(0,0,0,.2)}

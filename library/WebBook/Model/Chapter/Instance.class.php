@@ -24,9 +24,11 @@ class Instance extends Repository implements \IteratorAggregate
 	 * Sets up the chapter, allowing it to contain one or many Section\Instance's.
 	 *
 	 * @access public
+	 * @param  array  $data All of the information on this section.
 	 */
-	public function __construct() {
+	public function __construct($data = array()) {
 		$this->_sectionCollection = new Section\Collection();
+		$this->import($data);
 	}
 
 	/**

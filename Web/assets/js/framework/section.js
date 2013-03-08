@@ -5,7 +5,7 @@
  * @author      Christopher Hill <cjhill@gmail.com>
  * @since       01/02/2013
  */
-WEBBOOK.Edit = {
+WEBBOOK.Section = {
 	// Vars
 	chapterSelector:        ".chapter",
 	sectionsSelector:       ".section",
@@ -43,12 +43,12 @@ WEBBOOK.Edit = {
 		this.$sectionHandler.on("click", this.sectionHandlerDeleteSelector,     $.proxy(this.delete,         this));
 
 		// Listeners (via triggers)
-		$(document).on("Edit_Inserted Edit_Deleted", $.proxy(this.handlerClose,   this));
-		$(document).on("Edit_Inserted Edit_Deleted", $.proxy(this.sectionReindex, this));
+		$(document).on("Section_Inserted Section_Deleted", $.proxy(this.handlerClose,   this));
+		$(document).on("Section_Inserted Section_Deleted", $.proxy(this.sectionReindex, this));
 
 		// Save the content every x seconds
 		setInterval(function() {
-			WEBBOOK.Edit.update();
+			WEBBOOK.Section.update();
 		}, this.sectionsUpdateInterval);
 	},
 
@@ -192,7 +192,7 @@ WEBBOOK.Edit = {
 			},
 			success: function(data) {
 				// Set the content
-				$el.after(data).next(WEBBOOK.Edit.sectionsSelector)
+				$el.after(data).next(WEBBOOK.Section.sectionsSelector)
 					.focus()
 					.animate({ backgroundColor: "#FFFFAA" }, 750)
 					.animate({ backgroundColor: "#FFFFFF" }, 2000);
@@ -201,7 +201,7 @@ WEBBOOK.Edit = {
 				 document.execCommand("selectAll", false, null);
 
 				// Let others know what just happened
-				$(document).trigger({ type: "Edit_Inserted" }, [sectionId]);
+				$(document).trigger({ type: "Section_Inserted" }, [sectionId]);
 			},
 			error: function() {
 				alert("Sorry, we were unable to load the page :(");
@@ -254,7 +254,7 @@ WEBBOOK.Edit = {
 				});
 
 				// Let others know what just happened
-				$(document).trigger({ type: "Edit_Deleted" }, [sectionId]);
+				$(document).trigger({ type: "Section_Deleted" }, [sectionId]);
 			},
 			error: function() {
 				alert("Sorry, we were unable to load the page :(");
