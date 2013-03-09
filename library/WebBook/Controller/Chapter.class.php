@@ -65,6 +65,7 @@ class Chapter extends Core\Controller
 			'chapterId' => Core\Request::post('chapter_id')
 		));
 
+		// Do not output anything
 		die();
 	}
 
@@ -75,6 +76,19 @@ class Chapter extends Core\Controller
 	 * @ajax
 	 */
 	public function deleteAction() {
+		// Get the book ID this is for
+		$book = Core\StoreRequest::get('book');
+
+		// Create instance from the post information
+		$section = new Model\Chapter\Instance(array(
+			'book_id'         => $book->book_id,
+			'chapter_id'      => Core\Request::post('chapter_id'),
+			'section_removed' => Core\Request::server('REQUEST_TIME')
+		));
+
+		// Delete the chapter
+		$section->delete();
+
 		// Do not output anything
 		die();
 	}

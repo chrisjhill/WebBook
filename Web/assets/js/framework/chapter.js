@@ -28,7 +28,7 @@ WEBBOOK.Chapter = {
 
 		// Listeners
 		WEBBOOK.Book.$book.on("click", this.chapterInsertSelector, $.proxy(this.insert, this));
-		// WEBBOOK.Book.$book.on("click", this.chapterDeleteSelector, $.proxy(this.delete, this));
+		WEBBOOK.Book.$book.on("click", this.chapterDeleteSelector, $.proxy(this.delete, this));
 
 		// Listeners (via triggers)
 		$(document).on("Chapter_Inserted", $.proxy(this.chapterReindex, this));
@@ -97,7 +97,41 @@ WEBBOOK.Chapter = {
 	 *
 	 * @triggers Chapter_Deleted If we managed to delete the chapter.
 	 */
-	remove: function() {
+	delete: function(e) {
+		// Get the chapter DOM element
+		var $el = $(e.currentTarget).parents(this.chapterSelector);
+
+		// Insert the section via Ajax
+		$.ajax({
+			url:    "/chapter/delete",
+			method: "post",
+			data:   {
+				chapter_id: $el.data("chapterid")
+			},
+			success: function() {
+				// Hide the chapter
+				// Note: To create a smooth animation, the margin and padding
+				// .. (only top and bottom) need to be removed, otherwise you
+				// .. will get a "jump" once it is removed.
+				$el.animate({
+					opacity:       0,
+					height:        0,
+					margin:        0,
+					paddingTop:    0,
+					paddingBottom: 0
+				}, 1000, function() {
+					$(this).remove();
+				});
+
+				// Let others know what just happened
+				$(document).trigger({ type: "Chapter_Removed" });
+				$(document).trigger({ type: "Section_Deleted" });
+			},
+			error: function() {
+				alert("Sorry, we were unable to load the page :(");
+			}
+		});
+
 		return false;
 	}
 }
