@@ -74,8 +74,6 @@ class Repository extends Core\Repository
 			SET    s.chapter_id  = s.chapter_id + 1
 			WHERE  s.book_id     = :book_id
 			       AND
-			       s.chapter_id != :chapter_id
-			       AND
 			       s.chapter_id >= :chapter_id
 		");
 

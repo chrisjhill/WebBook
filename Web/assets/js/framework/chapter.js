@@ -83,6 +83,7 @@ WEBBOOK.Chapter = {
 
 				// Let others know what just happened
 				$(document).trigger({ type: "Chapter_Inserted" });
+				$(document).trigger({ type: "Section_Inserted" });
 			},
 			error: function() {
 				alert("Sorry, we were unable to load the page :(");

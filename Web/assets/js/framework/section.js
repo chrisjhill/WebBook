@@ -7,7 +7,6 @@
  */
 WEBBOOK.Section = {
 	// Vars
-	chapterSelector:        ".chapter",
 	sectionsSelector:       ".section",
 	// Updating content
 	sectionsUpdateInterval: 1000,
@@ -20,45 +19,38 @@ WEBBOOK.Section = {
 	sectionHandlerDeleteSelector:     "#section-handler-delete",
 
 	// DOM references
-	$chapter:        undefined,
 	$section:        undefined,
 	$sectionHandler: undefined,
 
 	/**
 	 * Listen for updates to the text, and adding of new chapters and sections.
 	 *
-	 * @listens Chapter_Section           On Keyup, Paste Updates section content.
-	 * @listens SectionHandler            On MouseEnter   Shows the section handler.
 	 * @listens SectionHandler_AddTitle   On Click        Adds a title to chapter.
 	 * @listens SectionHandler_AddContent On Click        Adds a content to chapter.
 	 * @listens SectionHandler_Delete     On Click        Deletes the section.
 	 *
-	 * @listens Section_Inserted
-	 *          Section_Deleted
-	 *          Chapter_Inserted
-	 *          Chapter_Deleted   Close the section handler after an action.
+	 * @listens Chapter_Section           On Keyup, Paste Updates section content.
+	 * @listens SectionHandler            On MouseEnter   Shows the section handler.
 	 *
-	 * @listens Section_Inserted
-	 *          Section_Deleted
-	 *          Chapter_Inserted
-	 *          Chapter_Deleted   Sections have been inserted or deleted, reindex.
+	 * @listens Section_Inserted, Section_Deleted         Close the section handler.
+	 * @listens Section_Inserted, Section_Deleted         Reindex the sections.
 	 */
 	init: function() {
 		// Set DOM references
-		this.$chapter        = $(this.chapterSelector);
-		this.$section        = $(this.sectionsSelector);
 		this.$sectionHandler = $(this.sectionHandlerSelector);
 
 		// Listeners
-		this.$chapter.on("keyup paste",  this.sectionsSelector,                 $.proxy(this.updated,        this));
-		this.$chapter.on("mouseenter",   this.sectionHandlerSectionsSelector,   $.proxy(this.handlerOpen,    this));
 		this.$sectionHandler.on("click", this.sectionHandlerAddTitleSelector,   $.proxy(this.insertSubtitle, this));
 		this.$sectionHandler.on("click", this.sectionHandlerAddContentSelector, $.proxy(this.insertContent,  this));
 		this.$sectionHandler.on("click", this.sectionHandlerDeleteSelector,     $.proxy(this.delete,         this));
 
+		// Listeners (External)
+		WEBBOOK.Chapter.$chapter.on("keyup paste", this.sectionsSelector,               $.proxy(this.updated,     this));
+		WEBBOOK.Chapter.$chapter.on("mouseenter",  this.sectionHandlerSectionsSelector, $.proxy(this.handlerOpen, this));
+
 		// Listeners (via triggers)
-		$(document).on("Section_Inserted Section_Deleted Chapter_Inserted", $.proxy(this.handlerClose,   this));
-		$(document).on("Section_Inserted Section_Deleted Chapter_Inserted", $.proxy(this.sectionReindex, this));
+		$(document).on("Section_Inserted Section_Deleted", $.proxy(this.handlerClose,   this));
+		$(document).on("Section_Inserted Section_Deleted", $.proxy(this.sectionReindex, this));
 
 		// Save the content every x seconds
 		setInterval(function() {
@@ -81,6 +73,7 @@ WEBBOOK.Section = {
 	 * @param Event e
 	 */
 	updated: function(e) {
+		console.log("Updated");
 		this.sectionsUpdated[$(e.currentTarget).data("sectionid")] = $(e.currentTarget);
 	},
 
