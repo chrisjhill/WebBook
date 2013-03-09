@@ -41,16 +41,15 @@ WEBBOOK.Chapter = {
 		// Get the chapter DOM element
 		var $el = $(e.currentTarget).parents(this.chapterSelector);
 
-		// Get the chapter ID
-		var chapterId = $el.data("chapterid");
-
 		// The order of the new section
-		var order = chapterId++;
+		var order = parseInt($el.data("chapterid")) + 1;
 
 		// Increment the sections *after* this new section will be added
 		this.$chapter.filter(function() {
-			return $(this).data("chapterid") >= order;
-		}).data().order++;
+			if (parseInt($(this).data("chapterid")) >= order) {
+				$(this).data().chapterid++;
+			}
+		});
 
 		// Insert the section via Ajax
 		$.ajax({

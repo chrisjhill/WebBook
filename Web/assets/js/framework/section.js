@@ -43,8 +43,8 @@ WEBBOOK.Section = {
 		this.$sectionHandler.on("click", this.sectionHandlerDeleteSelector,     $.proxy(this.delete,         this));
 
 		// Listeners (via triggers)
-		$(document).on("Section_Inserted Section_Deleted", $.proxy(this.handlerClose,   this));
-		$(document).on("Section_Inserted Section_Deleted", $.proxy(this.sectionReindex, this));
+		$(document).on("Section_Inserted Section_Deleted Chapter_Inserted", $.proxy(this.handlerClose,   this));
+		$(document).on("Section_Inserted Section_Deleted Chapter_Inserted", $.proxy(this.sectionReindex, this));
 
 		// Save the content every x seconds
 		setInterval(function() {
@@ -174,12 +174,14 @@ WEBBOOK.Section = {
 		var $el = this.$section.filter("#section-" + sectionId);
 
 		// The order of the new section
-		var order = parseInt($el.data("order")) + 1;
+		var sectionOrder = parseInt($el.data("order")) + 1;
 
 		// Increment the sections *after* this new section will be added
 		this.$section.filter(function() {
-			return $(this).data("order") >= order;
-		}).data().order++;
+			if (parseInt($(this).data("order")) >= sectionOrder) {
+				$(this).data().order++;
+			};
+		});
 
 		// Insert the section via Ajax
 		$.ajax({
@@ -188,7 +190,7 @@ WEBBOOK.Section = {
 			data:   {
 				chapter_id:   $el.data("chapterid"),
 				section_type: sectionType,
-				order:        order
+				order:        sectionOrder
 			},
 			success: function(data) {
 				// Set the content
@@ -235,8 +237,10 @@ WEBBOOK.Section = {
 
 		// Decrement the sections *after* this section
 		this.$section.filter(function() {
-			return $(this).data("order") <= sectionOrder;
-		}).data().order--;
+			if (parseInt($(this).data("order")) <= sectionOrder) {
+				$(this).data().order--;
+			};
+		});
 
 		// Insert the section via Ajax
 		$.ajax({
