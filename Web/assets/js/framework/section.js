@@ -27,7 +27,21 @@ WEBBOOK.Section = {
 	/**
 	 * Listen for updates to the text, and adding of new chapters and sections.
 	 *
-	 * @listens Section On Focus, Blur, Keyup, Paste
+	 * @listens Chapter_Section           On Keyup, Paste Updates section content.
+	 * @listens SectionHandler            On MouseEnter   Shows the section handler.
+	 * @listens SectionHandler_AddTitle   On Click        Adds a title to chapter.
+	 * @listens SectionHandler_AddContent On Click        Adds a content to chapter.
+	 * @listens SectionHandler_Delete     On Click        Deletes the section.
+	 *
+	 * @listens Section_Inserted
+	 *          Section_Deleted
+	 *          Chapter_Inserted
+	 *          Chapter_Deleted   Close the section handler after an action.
+	 *
+	 * @listens Section_Inserted
+	 *          Section_Deleted
+	 *          Chapter_Inserted
+	 *          Chapter_Deleted   Sections have been inserted or deleted, reindex.
 	 */
 	init: function() {
 		// Set DOM references
@@ -50,6 +64,15 @@ WEBBOOK.Section = {
 		setInterval(function() {
 			WEBBOOK.Section.update();
 		}, this.sectionsUpdateInterval);
+	},
+
+	/**
+	 * A section has been inserted or deleted, reindex the sections.
+	 *
+	 * @param Event e
+	 */
+	sectionReindex: function(e) {
+		this.$section = $(this.sectionsSelector);
 	},
 
 	/**
@@ -165,6 +188,9 @@ WEBBOOK.Section = {
 	/**
 	 * Insert a new section.
 	 *
+	 * @param string sectionType The type of section we want to insert.
+	 *
+	 * @triggers Section_Inserted If we managed to insert the section.
 	 */
 	insert: function(sectionType) {
 		// The section we need to insert this section after
@@ -212,18 +238,11 @@ WEBBOOK.Section = {
 	},
 
 	/**
-	 * Reindexes the sections.
-	 *
-	 * @param Event e
-	 */
-	sectionReindex: function(e) {
-		this.$section = $(this.sectionsSelector);
-	},
-
-	/**
 	 * Delete a section from this book.
 	 *
 	 * @param Event e
+	 *
+	 * @triggers Section_Deleted If we managed to deleted the section.
 	 */
 	delete: function(e) {
 		// The section we need to insert this section after

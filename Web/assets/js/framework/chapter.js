@@ -19,8 +19,10 @@ WEBBOOK.Chapter = {
 	/**
 	 * Sets up the chapter handling.
 	 *
-	 * @listens ChapterInsert On Click
-	 * @listens ChapterDelete On Click
+	 * @listens Chapter_Insert On Click Insert a new chapter.
+	 * @listens Chapter_Delete On Click Delete the chapter.
+	 *
+	 * @listens Chapter_Inserted A new chapter has been inserted, reindex the chapters.
 	 */
 	init: function() {
 		// Set DOM references
@@ -30,12 +32,26 @@ WEBBOOK.Chapter = {
 		// Listeners
 		this.$book.on("click", this.chapterInsertSelector, $.proxy(this.insert, this));
 		// this.$book.on("click", this.chapterDeleteSelector, $.proxy(this.delete, this));
+
+		// Listeners (via triggers)
+		$(document).on("Chapter_Inserted", $.proxy(this.chapterReindex, this));
+	},
+
+	/**
+	 * A chapter has been inserted or deleted, reindex the chapters.
+	 *
+	 * @param Event e
+	 */
+	chapterReindex: function(e) {
+		this.$chapter = $(this.chapterSelector);
 	},
 
 	/**
 	 * Inserts a new chapter into the book.
 	 *
 	 * @param Event e
+	 *
+	 * @triggers Chapter_Inserted If we managed to insert the chapter.
 	 */
 	insert: function(e) {
 		// Get the chapter DOM element
@@ -80,6 +96,8 @@ WEBBOOK.Chapter = {
 	 * Deletes a chapter from the book.
 	 *
 	 * @param Event e
+	 *
+	 * @triggers Chapter_Deleted If we managed to delete the chapter.
 	 */
 	remove: function() {
 		return false;
