@@ -45,8 +45,9 @@ WEBBOOK.Section = {
 		this.$sectionHandler.on("click", this.sectionHandlerDeleteSelector,     $.proxy(this.delete,         this));
 
 		// Listeners (External)
-		WEBBOOK.Chapter.$chapter.on("keyup paste", this.sectionsSelector,               $.proxy(this.updated,     this));
-		WEBBOOK.Chapter.$chapter.on("mouseenter",  this.sectionHandlerSectionsSelector, $.proxy(this.handlerOpen, this));
+		// console.log(WEBBOOK.Book);
+		WEBBOOK.Book.$book.on("keyup paste", this.sectionsSelector,               $.proxy(this.updated,     this));
+		WEBBOOK.Book.$book.on("mouseenter",  this.sectionHandlerSectionsSelector, $.proxy(this.handlerOpen, this));
 
 		// Listeners (via triggers)
 		$(document).on("Section_Inserted Section_Deleted", $.proxy(this.handlerClose,   this));

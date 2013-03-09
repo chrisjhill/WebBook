@@ -7,13 +7,11 @@
  */
 WEBBOOK.Chapter = {
 	// Vars
-	bookSelector:          "#book",
 	chapterSelector:       ".chapter",
 	chapterInsertSelector: ".chapter-insert",
 	chapterDeleteSelector: ".chapter-delete",
 
 	// DOM references
-	$book:    undefined,
 	$chapter: undefined,
 
 	/**
@@ -26,12 +24,11 @@ WEBBOOK.Chapter = {
 	 */
 	init: function() {
 		// Set DOM references
-		this.$book    = $(this.bookSelector);
 		this.$chapter = $(this.chapterSelector);
 
 		// Listeners
-		this.$book.on("click", this.chapterInsertSelector, $.proxy(this.insert, this));
-		// this.$book.on("click", this.chapterDeleteSelector, $.proxy(this.delete, this));
+		WEBBOOK.Book.$book.on("click", this.chapterInsertSelector, $.proxy(this.insert, this));
+		// WEBBOOK.Book.$book.on("click", this.chapterDeleteSelector, $.proxy(this.delete, this));
 
 		// Listeners (via triggers)
 		$(document).on("Chapter_Inserted", $.proxy(this.chapterReindex, this));
