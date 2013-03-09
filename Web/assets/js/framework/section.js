@@ -37,6 +37,7 @@ WEBBOOK.Section = {
 	 */
 	init: function() {
 		// Set DOM references
+		this.$section        = $(this.sectionsSelector);
 		this.$sectionHandler = $(this.sectionHandlerSelector);
 
 		// Listeners
