@@ -8,6 +8,7 @@
 WEBBOOK.Book = {
 	// Vars
 	bookSelector: "#book",
+	bookId:       undefined,
 
 	// DOM references
 	$book: undefined,

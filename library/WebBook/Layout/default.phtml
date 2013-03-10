@@ -1,22 +1,18 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
-"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
-
-<html xmlns="http://www.w3.org/1999/xhtml" lang="en">
+<!DOCTYPE html>
+<html lang="en-gb">
 <head>
-	<meta http-equiv="Content-Language" content="en-gb" />
-	<title>WebBook</title>
-	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-	<meta name="keywords" content="" />
-	<meta name="description" content="" />
+	<meta charset="utf-8" />
+	<meta name="author" content="http://github.com/chrisjhill" />
+	<title>WebBook | The Book Writing App for Writers, by a Writer</title>
 
 	<!-- Styles //-->
-	<link rel="stylesheet" type="text/css" href="/assets/css/bones.css" media="screen" />
-	<link rel="stylesheet" type="text/css" href="/assets/css/interface.css" media="screen" />
-	<link rel="stylesheet" type="text/css" href="/assets/css/book.css" media="screen" />
+	<link rel="stylesheet" href="/assets/css/bones.css">
+	<link rel="stylesheet" href="/assets/css/interface.css">
+	<link rel="stylesheet" href="/assets/css/book.css">
 	<!-- Individual pages //-->
 	<link rel="stylesheet" type="text/css" href="/assets/css/page/target.css" media="screen" />
-	<!-- Custom styles //-->
-	<style type="text/css">
+	<!-- Custom book styles //-->
+	<style>
 	body{background:#EEE url(/assets/img/body-bg-wood.jpg) fixed top left;font:color:#000;font:15px/1.6em "Palatino Linotype","Book Antiqua",Palatino,FreeSerif,serif}
 	#fullscreen-bg{display:none}
 	:-webkit-full-screen #fullscreen-bg{display:block;width:100%;background:url(/assets/img/body-bg-wood.jpg) fixed top left}
@@ -25,13 +21,8 @@
 	.chapter{text-align:justify}
 	</style>
 
-	<!-- Scripts //-->
-	<script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
-	<!-- Variables //-->
-	<script type="text/javascript">
-	var WEBBOOK = {};
-	var bookId  = <?=$book->book_id?>;
-	</script>
+	<!-- Create WebBook object //-->
+	<script>var WEBBOOK = {};</script>
 </head>
 <body>
 	<div id="navigation">
@@ -73,17 +64,28 @@
 	<div id="fullscreen-bg"></div>
 
 	<!-- Scripts //-->
+	<!-- External //-->
+	<script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+	<!-- Internal //-->
+	<!-- Plugins //-->
 	<script src="/assets/js/plugin/color.js"></script>
 	<script src="/assets/js/plugin/smooth-scroll.js"></script>
+	<!-- Core //-->
+	<script src="/assets/js/loader.js"></script>
 	<script src="/assets/js/framework/store.js"></script>
-	<script src="/assets/js/framework/notice.js"></script>
 	<script src="/assets/js/framework/content.js"></script>
-	<script src="/assets/js/framework/wysiwyg.js"></script>
-	<script src="/assets/js/framework/fullscreen.js"></script>
+	<script src="/assets/js/framework/notice.js"></script>
 	<script src="/assets/js/framework/nav.js"></script>
+	<!-- Book editing //-->
 	<script src="/assets/js/framework/book.js"></script>
 	<script src="/assets/js/framework/chapter.js"></script>
 	<script src="/assets/js/framework/section.js"></script>
-	<script src="/assets/js/loader.js"></script>
+	<script src="/assets/js/framework/wysiwyg.js"></script>
+	<script src="/assets/js/framework/fullscreen.js"></script>
+	<!-- Initialisation //-->
+	<script type="text/javascript">
+	WEBBOOK.Book.bookId = <?=$book->book_id?>;
+	WEBBOOK.Loader.init();
+	</script>
 </body>
 </html>

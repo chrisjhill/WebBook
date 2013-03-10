@@ -113,7 +113,7 @@ WEBBOOK.Nav = {
 			success: function(data) {
 				// Set the content
 				WEBBOOK.Nav.$content.html(data);
-				this.loadJavascript(page);
+				WEBBOOK.Nav.loadJavascript(page);
 
 				// And save the content
 				$(document).trigger({ type: "Content_Retrieved" }, [page, data]);
