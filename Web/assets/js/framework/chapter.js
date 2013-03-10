@@ -17,8 +17,9 @@ WEBBOOK.Chapter = {
 	/**
 	 * Sets up the chapter handling.
 	 *
-	 * @listens Chapter_Insert On Click Insert a new chapter.
-	 * @listens Chapter_Delete On Click Delete the chapter.
+	 * @listens Chapter_Insert On Click      Insert a new chapter.
+	 * @listens Chapter_Delete On Click      Delete the chapter.
+	 * @listens Book           On MouseLeave Hide the section handler.
 	 *
 	 * @listens Chapter_Inserted A new chapter has been inserted, reindex the chapters.
 	 */
@@ -27,8 +28,9 @@ WEBBOOK.Chapter = {
 		this.$chapter = $(this.chapterSelector);
 
 		// Listeners
-		WEBBOOK.Book.$book.on("click", this.chapterInsertSelector, $.proxy(this.insert, this));
-		WEBBOOK.Book.$book.on("click", this.chapterDeleteSelector, $.proxy(this.delete, this));
+		WEBBOOK.Book.$book.on("click",      this.chapterInsertSelector, $.proxy(this.insert, this));
+		WEBBOOK.Book.$book.on("click",      this.chapterDeleteSelector, $.proxy(this.delete, this));
+		WEBBOOK.Book.$book.on("mouseleave", function() { WEBBOOK.Section.handlerClose(); });
 
 		// Listeners (via triggers)
 		$(document).on("Chapter_Inserted", $.proxy(this.chapterReindex, this));

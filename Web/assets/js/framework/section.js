@@ -13,7 +13,7 @@ WEBBOOK.Section = {
 	sectionsUpdated:        [],
 	// Inserting new subtitles, content, and removing section
 	sectionHandlerSelector:           "#section-handler",
-	sectionHandlerSectionsSelector:   ".content,.subtitle",
+	sectionHandlerSectionsSelector:   ".chapter-title,.content,.subtitle",
 	sectionHandlerAddTitleSelector:   "#section-handler-title",
 	sectionHandlerAddContentSelector: "#section-handler-content",
 	sectionHandlerDeleteSelector:     "#section-handler-delete",
@@ -46,7 +46,6 @@ WEBBOOK.Section = {
 		this.$sectionHandler.on("click", this.sectionHandlerDeleteSelector,     $.proxy(this.delete,         this));
 
 		// Listeners (External)
-		// console.log(WEBBOOK.Book);
 		WEBBOOK.Book.$book.on("keyup paste", this.sectionsSelector,               $.proxy(this.updated,     this));
 		WEBBOOK.Book.$book.on("mouseenter",  this.sectionHandlerSectionsSelector, $.proxy(this.handlerOpen, this));
 
@@ -123,6 +122,13 @@ WEBBOOK.Section = {
 		// Place the section into a variable for speed
 		var $el = $(e.currentTarget);
 
+		// If it is a chapter title then do not allow them to delete the section
+		if ($el.hasClass("chapter-title")) {
+			$(this.sectionHandlerDeleteSelector).hide();
+		} else {
+			$(this.sectionHandlerDeleteSelector).show();
+		}
+
 		// We want to display the handler in different positions depending if the
 		// .. section is a subtitle or a cpontent block. This is because a
 		// .. content block can stretch for quite a long way, so makes more sense
@@ -157,7 +163,7 @@ WEBBOOK.Section = {
 	 *
 	 */
 	handlerClose: function() {
-		this.$sectionHandler.fadeOut(250);
+		this.$sectionHandler.stop(true, true).fadeOut(250);
 	},
 
 	/**
@@ -238,6 +244,7 @@ WEBBOOK.Section = {
 	 * @param Event e
 	 *
 	 * @triggers Section_Deleted If we managed to deleted the section.
+	 * @triggers Notice          If we try and remove a chapter title.
 	 */
 	delete: function(e) {
 		// The section we need to insert this section after
@@ -245,6 +252,16 @@ WEBBOOK.Section = {
 
 		// Get the section DOM element
 		var $el = this.$section.filter("#section-" + sectionId);
+
+		// Do not allow deletion of chapter titles
+		// @todo This needs to be made into a proper Notice trigger
+		if ($el.hasClass("chapter-title")) {
+			$(document).trigger({ type: "Notice" },
+				'<p class="notice notice-error">'
+					+ '<strong>Sorry, you cannot remove chapter titles</strong>'
+					+ '</p>');
+			return false;
+		}
 
 		// The order of the new section
 		var sectionOrder = parseInt($el.data("order"));
