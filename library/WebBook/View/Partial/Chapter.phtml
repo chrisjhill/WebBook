@@ -2,6 +2,9 @@
 	data-chapterid="<?=$chapterId?>">
 	<?=$sectionHtml?>
 
-	<span class="chapter-delete">x</span>
+	<?php if ($chapterCanRemove): ?>
+		<span class="chapter-delete">x</span>
+	<?php endif; ?>
+
 	<div class="chapter-insert"><a href="#">new chapter +</a></div>
 </div>

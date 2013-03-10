@@ -23,14 +23,15 @@ class Book extends Core\ViewHelper
 		$book = Core\StoreRequest::get('book');
 
 		// Placeholder for each chapter's HTML
-		$chapterHtml  = '';
+		$chapterHtml = '';
 
 		// Loop through the chapters
 		foreach ($book as $chapterId => $chapter) {
 			// Place the chapter's sections into a chapter
 			$chapterHtml .= $this->view->chapter(array(
-				'chapter'   => $chapter,
-				'chapterId' => $chapterId
+				'chapter'          => $chapter,
+				'chapterId'        => $chapterId,
+				'chapterCanRemove' => ! empty($chapterHtml)
 			));
 		}
 

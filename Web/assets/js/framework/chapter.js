@@ -112,6 +112,9 @@ WEBBOOK.Chapter = {
 	 * @triggers Chapter_Deleted If we managed to delete the chapter.
 	 */
 	delete: function(e) {
+		// Hide the delete icon
+		$(e.currentTarget).fadeOut(75);
+
 		// Get the chapter DOM element
 		var $el = $(e.currentTarget).parents(this.chapterSelector);
 

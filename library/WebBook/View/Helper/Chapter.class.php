@@ -16,8 +16,9 @@ class Chapter extends Core\ViewHelper
 	 *
 	 * <code>
 	 * array(
-	 *     'chapter'   => Model\Chapter\Collection,
-	 *     'chapterId' => 123
+	 *     'chapter'          => Model\Chapter\Collection,
+	 *     'chapterId'        => 123,
+	 *     'chapterCanRemove' => true
 	 * )
 	 * </code>
 	 *
@@ -36,8 +37,9 @@ class Chapter extends Core\ViewHelper
 
 		// Place the chapter's sections into a chapter
 		return $this->renderPartial('Chapter', array(
-			'chapterId'    => $params['chapterId'],
-			'sectionHtml'  => $sectionHtml
+			'chapterId'        => $params['chapterId'],
+			'sectionHtml'      => $sectionHtml,
+			'chapterCanRemove' => $params['chapterCanRemove']
 		));
 	}
 }
