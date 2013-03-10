@@ -35,7 +35,7 @@ class Chapter extends Core\Controller
 			'chapter_id'         => Core\Request::post('chapter_id'),
 			'section_order'      => 0,
 			'section_type'       => 'chaptertitle',
-			'section_content'    => '<p>Your chapter title</p>',
+			'section_content'    => 'Your chapter title',
 			'section_word_count' => 3,
 			'section_created'    => Core\Request::server('REQUEST_TIME')
 		));

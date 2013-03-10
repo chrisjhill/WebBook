@@ -1,0 +1,167 @@
+/**
+ * The file contains all of the generic styles used across all pages.
+ *
+ * Any style which is part of a specific page is placed in the page directory
+ * and will automatically be included by the nav framework object.
+ *
+ * Note: This file is supposed to lack some of the more custom styles (such as
+ * fonts, background, colours, etc.) as this is editable on a per-book basis.
+ *
+ * @copyright   2012 Christopher Hill <cjhill@gmail.com>
+ * @author      Christopher Hill <cjhill@gmail.com>
+ * @since       10/03/2013
+ */
+body{position:relative;margin:0;padding:0;background:#EEE}
+
+/* Basic formatting */
+.none{display:none}
+.hide{visibility:hidden}
+.left{float:left}
+.right{float:right}
+.text-left{text-align:left}
+.text-center{text-align:center}
+.text-right{text-align:right}
+
+/* Basic typography */
+h1,h2,h3{font-weight:normal}
+h1{font-size:45px}
+h2{font-size:24px}
+h3{font-size:19px}
+em{color:#888}
+hr{background:transparent;color:transparent;border:none;margin:20px 0;padding:0;border-bottom:1px dotted #CCC}
+:focus{outline:0}
+
+
+/* The navigation */
+nav{position:fixed;top:50px;left:20px;width:115px;background:#FFF;color:#222;padding:25px;outline:0;border-radius:4px}
+	/* The logo */
+	#webBook{font-size:30px;color:#333;font-weight:bold;letter-spacing:-2px;margin:0;padding:0 0 15px;text-shadow:1px 1px 1px #FFF}
+		#webBook span{font-weight:normal}
+
+	/* The navigational link styling */
+	nav ul{margin:0;padding:0;list-style:none}
+		nav li{padding:4px 0 4px}
+			nav a{color:#666;text-decoration:none;border-bottom:1px solid #CCC;padding-bottom:2px;padding-right:4px}
+			nav a:hover{border-bottom:1px solid #555}
+
+	/* Navigational link icons */
+	/* @todo Turn into sprites */
+	nav .icon{padding-left:24px}
+		nav .icon-book      {background:url(../img/icon-book.png)       no-repeat 4px 0}
+		nav .icon-character {background:url(../img/icon-character.png)  no-repeat 4px 0}
+		nav .icon-location  {background:url(../img/icon-location.png)   no-repeat 4px 0}
+		nav .icon-scrapbook {background:url(../img/icon-scrapbook.png)  no-repeat 4px 0}
+		nav .icon-tag       {background:url(../img/icon-tag.png)        no-repeat 4px 0}
+		nav .icon-todo      {background:url(../img/icon-todo.png)       no-repeat 4px 0}
+		nav .icon-timeline  {background:url(../img/icon-timeline.png)   no-repeat 4px 0}
+		nav .icon-snapshot  {background:url(../img/icon-snapshot.png)   no-repeat 4px 0}
+		nav .icon-chapter   {background:url(../img/icon-chapter.png)    no-repeat 4px 0}
+		nav .icon-comment   {background:url(../img/icon-comment.png)    no-repeat 4px 0}
+		nav .icon-private   {background:url(../img/icon-private.png)    no-repeat 4px 0}
+		nav .icon-target    {background:url(../img/icon-target.png)     no-repeat 4px 0}
+		nav .icon-fullscreen{background:url(../img/icon-fullscreen.png) no-repeat 6px 0}
+		nav .icon-settings  {background:url(../img/icon-settings.png)   no-repeat 4px 0}
+
+
+/* The container */
+.container{margin:50px 0 50px 208px;outline:0;float:left}
+	/* Secondary pages */
+	.secondary{position:relative;z-index:3}
+		.secondary h2,.secondary h3{border-bottom:1px solid #CCC;padding-top:20px}
+
+
+/* The book */
+#book{}
+	/* Chapters */
+	.chapter{position:relative;margin-bottom:50px;border-radius:4px}
+		/* Sections */
+		.section{margin-bottom:4px}
+			/* Book title */
+			.book-title{color:#111;font-weight:normal;text-align:center;font-size:45px;margin-bottom:40px;line-height:50px;padding-top:50px !important}
+
+			/* Book author */
+			.book-author{color:#888;text-align:center;font-size:20px;padding:30px 0 120px !important;text-indent:0 !important;line-height:40px}
+				.book-author span{border-bottom:1px solid #CCC;padding-bottom:5px}
+
+			/* Chapter title */
+			.chapter-title{padding-top:20px}
+				.chapter-title{margin:0 0 4px}
+
+			/* Subtitle */
+			.subtitle{margin:40px 0 0px;padding:20px 0 0;display:block;border-bottom:1px solid #CCC}
+
+			/* Content */
+			.content p{margin:4px 0;padding:0}
+			.content p + p:not(:empty){text-indent:40px}
+			.content p:empty{padding-bottom:20px}
+
+		/* Insert section */
+		#section-handler{display:none;position:absolute;z-index:9;background:#FFF;border-radius:4px}
+			#section-handler p{margin:0;padding:0 5px;line-height:15px;text-align:right}
+			#section-handler a{color:#888;text-decoration:none;font-size:12px}
+				#section-handler a:hover{text-decoration:underline;color:#080}
+				#section-handler a#section-insert-delete:hover{color:#9B0026}
+
+		/* Insert a new chapter */
+		.chapter-insert{opacity:0;position:absolute;bottom:0;left:0;width:100%;text-align:center;background:#F5F5F5;border-top:1px solid #F0F0F0;margin:0;padding:0}
+			.chapter-insert:hover{opacity:1}
+			.chapter-insert a{display:block;color:#999;text-decoration:none;font-size:12px;padding:10px 0}
+				.chapter-insert a:hover{color:#080;text-decoration:underline}
+
+		/* Delete a chapter */
+		.chapter-delete{opacity:0;position:absolute;top:-12px;right:-12px;width:24px;height:24px;cursor:pointer;background:#555;color:#EEE;border:3px solid #FFF;text-align:center;-webkit-border-radius:24px;-moz-border-radius:24px;border-radius:24px}
+			.chapter-delete:hover{opacity:1}
+
+		/* The WYSIWYG controls */
+		#wysiwyg{position:fixed;top:0;left:0;background:rgba(255, 255, 255, .8);border:2px solid rgba(150, 150, 150, .8);-webkit-border-radius:8px;-moz-border-radius:8px;border-radius:8px;padding:5px}
+			#wysiwyg button{}
+
+
+/* Componants */
+/* Notice */
+#notice-container{display:none;position:fixed;top:0;left:0;right:0;z-index:999}
+	.notice{margin:0;padding:10px 0 5px;text-align:center;font-size:16px}
+		.notice-info{background:#FEEFB3;border-bottom:2px solid #EEE0A7}
+		.notice-error{background:#F4E6E6;border-bottom:2px solid #F4D0D0}
+		.notice-success{background:#E7F9BE;border-bottom:2px solid #C9F36C}
+
+/* Tables */
+table{width:100%;border-collapse:collapse}
+	tr{}
+		th,td{text-align:left;padding:6px}
+		th{border-bottom:3px solid #CCC;background:#F5F5F5}
+		td{border-bottom:1px solid #CCC}
+
+
+/* Third part styling */
+/* Forms: Thanks to: http://vesess.com/sandbox/form_template.html */
+label,.textbox,textarea{float:left}
+label{width:165px;margin-top:4px}
+.textbox,textarea,select{margin-bottom:.75em;padding:3px 5px;width:300px;font:14px/1.5em Helvetica,Arial;color:#111}
+	select,select option{font-size:16px !important}
+.textbox,textarea{border:1px solid #CCC}
+textarea{overflow:auto}
+.focus{border:1px solid #AAA}
+textarea{font:16px/1.5em Arial,Helvetica,"Liberation sans","Bitstream Vera Sans",sans-serif;height:175px}
+.nofloat{float:none}
+form br{clear:both}
+
+/* Buttons: Thanks to: http://www.webdesignerwall.com/demo/css-buttons.html */
+.button{display:inline-block;zoom:1;*display:inline;vertical-align:baseline;margin:0 2px;outline:none;cursor:pointer;text-align:center;text-decoration:none;font:14px/100% Arial,Helvetica,sans-serif;padding:.5em 2em .55em;text-shadow:0 1px 1px rgba(0,0,0,.3);-webkit-border-radius:.5em;-moz-border-radius:.5em;border-radius:.5em;-webkit-box-shadow:0 1px 2px rgba(0,0,0,.2);-moz-box-shadow:0 1px 2px rgba(0,0,0,.2);box-shadow:0 1px 2px rgba(0,0,0,.2)}
+.button:hover{text-decoration:none}
+.button:active{position:relative;top:1px}
+.bigrounded{font-size:13px;-webkit-border-radius:1em;-moz-border-radius:1em;border-radius:1em}
+.medium{font-size:12px;padding:.4em 1.5em .42em}
+.small{font-size:11px;padding:.2em 1em .275em}
+/* Orange */
+.orange{color:#fef4e9;border:solid 1px #da7c0c;background:#f78d1d;background:-webkit-gradient(linear, left top, left bottom, from(#faa51a), to(#f47a20));background:-moz-linear-gradient(top,  #faa51a,  #f47a20);filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#faa51a', endColorstr='#f47a20')}
+.orange:hover{background:#f47c20;background:-webkit-gradient(linear, left top, left bottom, from(#f88e11), to(#f06015));background:-moz-linear-gradient(top,  #f88e11,  #f06015);filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#f88e11', endColorstr='#f06015')}
+.orange:active{color:#fcd3a5;background:-webkit-gradient(linear, left top, left bottom, from(#f47a20), to(#faa51a));background:-moz-linear-gradient(top,  #f47a20,  #faa51a);filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#f47a20', endColorstr='#faa51a')}
+/* Red */
+.red{color:#faddde;border:solid 1px #980c10;background:#d81b21;background:-webkit-gradient(linear, left top, left bottom, from(#ed1c24), to(#aa1317));background:-moz-linear-gradient(top,  #ed1c24,  #aa1317);filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#ed1c24', endColorstr='#aa1317')}
+.red:hover{background:#b61318;background:-webkit-gradient(linear, left top, left bottom, from(#c9151b), to(#a11115));background:-moz-linear-gradient(top,  #c9151b,  #a11115);filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#c9151b', endColorstr='#a11115')}
+.red:active{color:#de898c;background:-webkit-gradient(linear, left top, left bottom, from(#aa1317), to(#ed1c24));background:-moz-linear-gradient(top,  #aa1317,  #ed1c24);filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#aa1317', endColorstr='#ed1c24')}
+/* White */
+.white{color:#606060;border:solid 1px #b7b7b7;background:#fff;background:-webkit-gradient(linear, left top, left bottom, from(#fff), to(#ededed));background:-moz-linear-gradient(top,  #fff,  #ededed);filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#ffffff', endColorstr='#ededed');text-shadow:none}
+.white:hover{background:#ededed;background:-webkit-gradient(linear, left top, left bottom, from(#fff), to(#dcdcdc));background:-moz-linear-gradient(top,  #fff,  #dcdcdc);filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#ffffff', endColorstr='#dcdcdc')}
+.white:active{color:#999;background:-webkit-gradient(linear, left top, left bottom, from(#ededed), to(#fff));background: -moz-linear-gradient(top,  #ededed,  #fff);filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#ededed', endColorstr='#ffffff')}

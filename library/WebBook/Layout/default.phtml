@@ -6,17 +6,16 @@
 	<title>WebBook | The Book Writing App for Writers, by a Writer</title>
 
 	<!-- Styles //-->
-	<link rel="stylesheet" href="/assets/css/bones.css">
-	<link rel="stylesheet" href="/assets/css/interface.css">
-	<link rel="stylesheet" href="/assets/css/book.css">
+	<link rel="stylesheet" href="/assets/css/webbook.css">
 	<!-- Individual pages //-->
-	<link rel="stylesheet" type="text/css" href="/assets/css/page/target.css" media="screen" />
+	<link rel="stylesheet" href="/assets/css/page/snapshot.css">
+	<link rel="stylesheet" href="/assets/css/page/target.css">
 	<!-- Custom book styles //-->
 	<style>
 	body{background:#EEE url(/assets/img/body-bg-wood.jpg) fixed top left;font:color:#000;font:15px/1.6em "Palatino Linotype","Book Antiqua",Palatino,FreeSerif,serif}
 	#fullscreen-bg{display:none}
 	:-webkit-full-screen #fullscreen-bg{display:block;width:100%;background:url(/assets/img/body-bg-wood.jpg) fixed top left}
-	.container-inner,.chapter,#navigation{box-shadow:0px 0px 5px 2px #c49a6a;background:#FFF}
+	.container-inner,.chapter,nav{box-shadow:0px 0px 5px 2px #c49a6a;background:#FFF}
 	.container-inner,.chapter{width:700px;padding:50px}
 	.chapter{text-align:justify}
 	</style>
@@ -25,7 +24,7 @@
 	<script>var WEBBOOK = {};</script>
 </head>
 <body>
-	<div id="navigation">
+	<nav>
 		<p id="webBook"><span>web</span>Book</p>
 
 		<ul>
@@ -44,7 +43,7 @@
 			<li><a href="#target"       class="icon icon-target">Targets</a></li>
 			<li><a href="#fullscreen"   class="icon icon-fullscreen">Fullscreen</a></li>
 		</ul>
-	</div>
+	</nav>
 
 	<!-- The page content //-->
 	<div id="content">
@@ -60,13 +59,15 @@
 		<button class="wysiwyg-item" data-cmd="removeFormat">Unformat</button>
 	</div>
 
+	<!-- Contains the notice at the top of the page //-->
 	<div id="notice-container"></div>
+
+	<!-- Allows the fullscreen mode to have a background //-->
 	<div id="fullscreen-bg"></div>
 
 	<!-- Scripts //-->
 	<!-- External //-->
 	<script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
-	<!-- Internal //-->
 	<!-- Plugins //-->
 	<script src="/assets/js/plugin/color.js"></script>
 	<script src="/assets/js/plugin/smooth-scroll.js"></script>

@@ -10,7 +10,7 @@
  */
 WEBBOOK.Nav = {
 	// Vars
-	navSelector:          "#navigation",
+	navSelector:          "nav",
 	navLinkSelector:      "a",
 	fullscreenBgSelector: "#fullscreen-bg",
 	contentSelector:      "#content",

@@ -29,7 +29,9 @@ class Section extends Core\Controller
 			'chapter_id'         => Core\Request::post('chapter_id'),
 			'section_order'      => Core\Request::post('order'),
 			'section_type'       => Core\Request::post('section_type'),
-			'section_content'    => '<p>Start typing&hellip;</p>',
+			'section_content'    => Core\Request::post('section_type') == 'content'
+				? '<p>Start typing&hellip;</p>'
+				: 'Subtitle heading',
 			'section_word_count' => 2,
 			'section_created'    => Core\Request::server('REQUEST_TIME')
 		));
