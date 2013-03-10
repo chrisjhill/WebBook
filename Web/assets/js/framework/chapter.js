@@ -72,11 +72,23 @@ WEBBOOK.Chapter = {
 				chapter_id: order
 			},
 			success: function(data) {
-				// Set the content
-				$el.after(data).next(WEBBOOK.Chapter.chapterSelector)
-					.focus()
+				// Grab the new chapter
+				var $chapter  = $el.after(data).next(WEBBOOK.Chapter.chapterSelector);
+
+				// Scroll to the new chapter
+				$("html,body").animate({ scrollTop: $chapter.offset().top - 50 });
+
+				// Let the user know which chapter has been added by flashing
+				$chapter
 					.animate({ backgroundColor: "#FFFFAA" }, 750)
 					.animate({ backgroundColor: "#FFFFFF" }, 2000);
+
+				// Select the content to save the user a couple keystrokes
+				$chapter
+					.find(WEBBOOK.Section.sectionsSelector)
+					.first()
+					.focus();
+				document.execCommand("selectAll", false, null);
 
 				// Let others know what just happened
 				$(document).trigger({ type: "Chapter_Inserted" });
