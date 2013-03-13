@@ -15,6 +15,45 @@ use Core, WebBook\Model;
 class Repository extends Core\Repository
 {
 	/**
+	 * Saves a record to the database.
+	 *
+	 * This function handles both uppdate and save for an easier Model. If
+	 * there is an ID in the store then we update, otherwise we insert.
+	 *
+	 * @access public
+	 * @return mixed
+	 */
+	public function save() {
+		return ! $this->has('section_id')
+			? $this->insert()
+			: $this->update();
+	}
+
+	/**
+	 * Updates the book.
+	 *
+	 * @access public
+	 */
+	public function update() {
+		$query = Model\Database::get()->prepare("
+			UPDATE `book` b
+			SET     b.book_title        = :book_title,
+			        b.book_distribution = :book_distribution
+			        b.book_updated      = :book_updated
+			WHERE  s.book_id            = :book_id
+			LIMIT  1
+		");
+
+		// And execute query
+		return $query->execute(array(
+			':book_title'        => $this->book_title,
+			':book_distribution' => $this->section_content,
+			':book_updated'      => $this->book_updated,
+			':book_id'           => $this->book_id
+		));
+	}
+
+	/**
 	 * Delete a chapter from a book.
 	 *
 	 * @access public
