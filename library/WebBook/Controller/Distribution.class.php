@@ -11,8 +11,23 @@ use Core, WebBook\Model;
  * @version   0.1
  * @since     13/03/2013
  */
-class Distribuction extends Core\Controller
+class Distribution extends Core\Controller
 {
+	/**
+	 * Sets up the view for distributing the book.
+	 *
+	 * @access public
+	 * @ajax
+	 */
+	public function indexAction() {
+		// Get the information on the book distribution
+		$book = Core\StoreRequest::get('book');
+		$this->view->addVariable('bookPassword',     substr(md5($book->book_id
+			. $book->book_created),
+			0, 8));
+		$this->view->addVariable('bookDistribution', $book->book_distribution);
+	}
+
 	/**
 	 * Updates the book privacy settings.
 	 *

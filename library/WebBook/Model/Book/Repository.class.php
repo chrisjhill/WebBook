@@ -74,6 +74,27 @@ class Repository extends Core\Repository
 	}
 
 	/**
+	 * Get the book information.
+	 *
+	 * @access public
+	 * @access public
+	 * @return mixed  Array on success, false on failure.
+	 */
+	public function get() {
+		$query = Model\Database::get()->prepare("
+			SELECT *
+			FROM   `book` b
+			WHERE  b.book_id = :book_id
+			LIMIT  1
+		");
+
+		// And execute query
+		$query->execute(array(':book_id' => $this->book_id));
+
+		return $query->fetch();
+	}
+
+	/**
 	 * Get all the records in a chapter.
 	 *
 	 * @access public

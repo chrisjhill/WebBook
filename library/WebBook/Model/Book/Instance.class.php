@@ -35,6 +35,7 @@ class Instance extends Repository implements \IteratorAggregate
 
 		// Get the sections in this chapter
 		$this->book_id = $bookId;
+		$this->import($this->get());
 		$sections      = $this->getAllSections();
 
 		// Loop over each section and add the instance
