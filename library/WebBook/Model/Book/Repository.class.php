@@ -24,7 +24,7 @@ class Repository extends Core\Repository
 	 * @return mixed
 	 */
 	public function save() {
-		return ! $this->has('section_id')
+		return ! $this->has('book_id')
 			? $this->insert()
 			: $this->update();
 	}
@@ -38,16 +38,16 @@ class Repository extends Core\Repository
 		$query = Model\Database::get()->prepare("
 			UPDATE `book` b
 			SET     b.book_title        = :book_title,
-			        b.book_distribution = :book_distribution
+			        b.book_distribution = :book_distribution,
 			        b.book_updated      = :book_updated
-			WHERE  s.book_id            = :book_id
-			LIMIT  1
+			WHERE   b.book_id            = :book_id
+			LIMIT   1
 		");
 
 		// And execute query
 		return $query->execute(array(
 			':book_title'        => $this->book_title,
-			':book_distribution' => $this->section_content,
+			':book_distribution' => $this->book_distribution,
 			':book_updated'      => $this->book_updated,
 			':book_id'           => $this->book_id
 		));

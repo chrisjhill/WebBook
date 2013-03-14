@@ -138,7 +138,6 @@ WEBBOOK.Nav = {
 	loadJavascript: function(page) {
 		if (typeof this.pagesLoaded[page] === "undefined") {
 			$.getScript("/assets/js/framework/page/" + page + ".js");
-
 			this.pagesLoaded[page] = true;
 		}
 	},

@@ -1,6 +1,6 @@
 <?php
 namespace WebBook\Controller;
-use Core, WebBook\Model;
+use Core, WebBook\View\Helper;
 
 /**
  * This controller handles the updating of the book privacy setting and
@@ -14,6 +14,15 @@ use Core, WebBook\Model;
 class Distribution extends Core\Controller
 {
 	/**
+	 * Run common functionality over the actions.
+	 *
+	 * @access public
+	 */
+	public function init() {
+		$this->setLayout(false);
+	}
+
+	/**
 	 * Sets up the view for distributing the book.
 	 *
 	 * @access public
@@ -22,10 +31,12 @@ class Distribution extends Core\Controller
 	public function indexAction() {
 		// Get the information on the book distribution
 		$book = Core\StoreRequest::get('book');
-		$this->view->addVariable('bookPassword',     substr(md5($book->book_id
-			. $book->book_created),
-			0, 8));
+
 		$this->view->addVariable('bookDistribution', $book->book_distribution);
+		$this->view->addVariable('bookPassword', substr(
+			md5($book->book_id . $book->book_created),
+			0, 8
+		));
 	}
 
 	/**
@@ -37,9 +48,10 @@ class Distribution extends Core\Controller
 	public function updateAction() {
 		// Get the book ID this is for
 		$book = Core\StoreRequest::get('book');
-		$book->book_distribution = Core\Request::post('book_id');
+		$book->book_distribution = Core\Request::post('book_distribution');
 		$book->save();
 
+		echo new Helper\Notice('success', 'Distribution settings have been successfully updated.');
 		die();
 	}
 }
