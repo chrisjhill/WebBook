@@ -61,8 +61,9 @@ class Chapter extends Core\Controller
 
 		// And output
 		echo $this->view->chapter(array(
-			'chapter'   => $chapter,
-			'chapterId' => Core\Request::post('chapter_id')
+			'chapter'          => $chapter,
+			'chapterId'        => Core\Request::post('chapter_id'),
+			'chapterCanRemove' => true
 		));
 
 		// Do not output anything
