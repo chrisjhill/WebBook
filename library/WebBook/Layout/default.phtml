@@ -7,9 +7,7 @@
 
 	<!-- Styles //-->
 	<link rel="stylesheet" href="/assets/css/webbook.css">
-	<!-- Individual pages //-->
-	<link rel="stylesheet" href="/assets/css/page/snapshot.css">
-	<link rel="stylesheet" href="/assets/css/page/target.css">
+	<link rel="stylesheet" href="/assets/css/page/page.css">
 	<!-- Custom book styles //-->
 	<style>
 	body{background:#EEE url(/assets/img/body-bg-wood.jpg) fixed top left;font:color:#000;font:15px/1.6em "Palatino Linotype","Book Antiqua",Palatino,FreeSerif,serif}
@@ -21,7 +19,9 @@
 	</style>
 
 	<!-- Create WebBook object //-->
-	<script>var WEBBOOK = {};</script>
+	<script>
+	var WEBBOOK = {};
+	</script>
 </head>
 <body>
 	<nav>
@@ -73,6 +73,7 @@
 	<script src="/assets/js/plugin/smooth-scroll.js"></script>
 	<!-- Core //-->
 	<script src="/assets/js/loader.js"></script>
+	<script src="/assets/js/framework/app.js"></script>
 	<script src="/assets/js/framework/store.js"></script>
 	<script src="/assets/js/framework/content.js"></script>
 	<script src="/assets/js/framework/notice.js"></script>
@@ -85,6 +86,7 @@
 	<script src="/assets/js/framework/fullscreen.js"></script>
 	<!-- Initialisation //-->
 	<script type="text/javascript">
+	WEBBOOK.App.status  = "<?=$appStatus?>";
 	WEBBOOK.Book.bookId = <?=$book->book_id?>;
 	WEBBOOK.Loader.init();
 	</script>

@@ -99,12 +99,15 @@ WEBBOOK.Nav = {
 			return false;
 		}
 
-		// We need to load a new page
-		// First, do we already have it in the page store?
-		if (WEBBOOK.Content.has(page, false)) {
-			this.$content.html(WEBBOOK.Content.get(page));
-			this.loadJavascript(page);
-			return false;
+		// We only wan to enable local storage in production
+		if (WEBBOOK.App.status != "development") {
+			// We need to load a new page
+			// First, do we already have it in the page store?
+			if (WEBBOOK.Content.has(page, false)) {
+				this.$content.html(WEBBOOK.Content.get(page));
+				this.loadJavascript(page);
+				return false;
+			}
 		}
 
 		// We need to get the page content and then save it

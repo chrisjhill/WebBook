@@ -8,7 +8,6 @@
 WEBBOOK.Distribution = {
 	// Vars
 	updateSelector:        "#distribution-update",
-
 	distributionRadioName: "book-distribution",
 
 	// DOM references
@@ -36,11 +35,16 @@ WEBBOOK.Distribution = {
 	 * @triggers Notice         If success or failure.
 	 */
 	update: function(event) {
+		// What distribution does the user want?
+		// 0 = Private
+		// 1 = Anyone
+		var bookDistribution = $("input[name="+this.distributionRadioName+"]:checked").val();
+
 		$.ajax({
 			url:  "/distribution/update",
 			type: "post",
 			data: {
-				book_distribution: $("input:radio[name="+this.distributionRadioName+"]:checked").val()
+				book_distribution: bookDistribution
 			},
 			success: function(data) {
 				// Save the content

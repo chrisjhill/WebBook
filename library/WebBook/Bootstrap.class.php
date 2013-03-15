@@ -41,7 +41,8 @@ class Bootstrap
 	 */
 	public static function initController($params) {
 		// Add variables to the view
-		$params['controller']->view->addVariable('urlRoot', Core\Config::get('path', 'root'));
+		$params['controller']->view->addVariable('urlRoot',   Core\Config::get('path',     'root'));
+		$params['controller']->view->addVariable('appStatus', Core\Config::get('settings', 'status'));
 	}
 
 	/**

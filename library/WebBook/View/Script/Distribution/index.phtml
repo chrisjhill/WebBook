@@ -1,18 +1,9 @@
-<div class="container secondary">
+<div class="container secondary page-distribution">
 	<div class="container-inner">
 		<form>
 			<h1>Distribution on the Webernet</h1>
 
 			<p><em>There are several ways for you to distribute your book. You can either "shut it down" so only you can view it, or only let people view it whom you deem worthy.</em></p>
-
-			<?php if ($bookDistribution >= 1) { ?>
-				<h2>Spread the word!</h2>
-
-				<p>
-					Available at:
-					<input type="text" class="url" value="/read/1/<?=$bookPassword?>/its-a-kind-of-magic" readonly />
-				</p>
-			<?php } ?>
 
 			<form>
 				<h2>Who can view your book?</h2>
@@ -20,11 +11,12 @@
 				<table class="barebones">
 					<tr>
 						<td><input type="radio" name="book-distribution" value="0" <?=($bookDistribution == '0' ? 'checked="checked"' : '')?> /></td>
-						<td>Only me</td>
+						<td colspan="2">Only me</td>
 					</tr>
 					<tr>
 						<td><input type="radio" name="book-distribution" value="1" <?=($bookDistribution == '1' ? 'checked="checked"' : '')?> /></td>
-						<td>The whole world</td>
+						<td>The whole world via the address:</td>
+						<td><input type="text" class="textbox" value="/read/1/<?=$bookPassword?>/its-a-kind-of-magic" readonly /></td>
 					</tr>
 				</table>
 
