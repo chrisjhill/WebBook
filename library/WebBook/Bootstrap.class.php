@@ -19,10 +19,14 @@ class Bootstrap
 	 * @static
 	 */
 	public static function initRequest($params) {
+		// Get the ID's
+		$userId = 1;
+		$bookId = Core\Request::post('book_id', 1);
+
 		// Set the user, book, and settings
-		Core\StoreRequest::put('user',     new Model\User\Instance(1));
-		Core\StoreRequest::put('book',     new Model\Book\Instance(1));
-		Core\StoreRequest::put('settings', new Model\Settings\Instance(1));
+		Core\StoreRequest::put('user',     new Model\User\Instance($userId));
+		Core\StoreRequest::put('book',     new Model\Book\Instance($bookId));
+		Core\StoreRequest::put('settings', new Model\Settings\Instance($bookId));
 	}
 
 	/**

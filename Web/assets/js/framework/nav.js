@@ -121,7 +121,11 @@ WEBBOOK.Nav = {
 
 		// We need to get the page content and then save it
 		$.ajax({
-			url: "/" + page,
+			url:  "/" + page,
+			type: "post",
+			data: {
+				book_id: WEBBOOK.Book.bookId
+			},
 			success: function(data) {
 				// Set the content
 				WEBBOOK.Content.$secondary.html(data);

@@ -44,6 +44,7 @@ WEBBOOK.Distribution = {
 			url:  "/distribution/update",
 			type: "post",
 			data: {
+				book_id:           WEBBOOK.Book.bookId,
 				book_distribution: bookDistribution
 			},
 			success: function(data) {

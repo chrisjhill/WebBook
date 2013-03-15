@@ -48,6 +48,7 @@ WEBBOOK.Settings = {
 			url:  "/settings/update",
 			type: "post",
 			data: {
+				book_id:                  WEBBOOK.Book.bookId,
 				setting_autosave:         $(this.settingAutosave).val(),
 				setting_font_family:      $(this.settingFontFamily).val(),
 				setting_font_size:        $(this.settingFontSize).val(),

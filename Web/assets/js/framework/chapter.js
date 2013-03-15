@@ -68,9 +68,10 @@ WEBBOOK.Chapter = {
 
 		// Insert the section via Ajax
 		$.ajax({
-			url:    "/chapter/insert",
-			method: "post",
-			data:   {
+			url:  "/chapter/insert",
+			type: "post",
+			data: {
+				book_id:    WEBBOOK.Book.bookId,
 				chapter_id: order
 			},
 			success: function(data) {
@@ -120,9 +121,10 @@ WEBBOOK.Chapter = {
 
 		// Insert the section via Ajax
 		$.ajax({
-			url:    "/chapter/delete",
-			method: "post",
-			data:   {
+			url:  "/chapter/delete",
+			type: "post",
+			data: {
+				book_id:    WEBBOOK.Book.bookId,
 				chapter_id: $el.data("chapterid")
 			},
 			success: function() {

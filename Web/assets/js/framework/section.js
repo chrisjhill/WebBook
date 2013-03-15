@@ -96,6 +96,7 @@ WEBBOOK.Section = {
 				url:  "/section/update",
 				type: "post",
 				data: {
+					book_id:         WEBBOOK.Book.bookId,
 					section_id:      this.sectionsUpdated[sectionId].data("sectionid"),
 					section_order:   this.sectionsUpdated[sectionId].data("order"),
 					section_content: this.sectionsUpdated[sectionId].html(),
@@ -212,9 +213,10 @@ WEBBOOK.Section = {
 
 		// Insert the section via Ajax
 		$.ajax({
-			url:    "/section/insert",
-			method: "post",
-			data:   {
+			url:  "/section/insert",
+			type: "post",
+			data: {
+				book_id:      WEBBOOK.Book.bookId,
 				chapter_id:   $el.data("chapterid"),
 				section_type: sectionType,
 				order:        sectionOrder
@@ -275,9 +277,10 @@ WEBBOOK.Section = {
 
 		// Insert the section via Ajax
 		$.ajax({
-			url:    "/section/delete",
-			method: "post",
-			data:   {
+			url:  "/section/delete",
+			type: "post",
+			data: {
+				book_id:       WEBBOOK.Book.bookId,
 				chapter_id:    $el.data("chapterid"),
 				section_id:    sectionId,
 				section_order: sectionOrder
