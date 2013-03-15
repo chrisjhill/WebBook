@@ -13,7 +13,6 @@ WEBBOOK.Nav = {
 	navSelector:          "nav",
 	navLinkSelector:      "a",
 	fullscreenBgSelector: "#fullscreen-bg",
-	contentSelector:      "#content",
 
 	navHideAfterTime:     2000, // How long the navigation is visible before it starts to fade out.
 	navFadeInTime:        200,  // How long it shoud take for the navigation to become visible.
@@ -22,9 +21,8 @@ WEBBOOK.Nav = {
 	pagesLoaded:          {},   // Keeps track of which pages have been loaded in this session.
 
 	// DOM references
-	$nav:     undefined,
-	$navLink: undefined,
-	$content: undefined,
+	$nav:       undefined,
+	$navLink:   undefined,
 
 	/**
 	 * Sets up the navigation.
@@ -37,7 +35,6 @@ WEBBOOK.Nav = {
 		// Set DOM references
 		this.$nav     = $(this.navSelector);
 		this.$navLink = this.$nav.find(this.navLinkSelector);
-		this.$content = $(this.contentSelector);
 
 		// Listeners
 		this.$nav.delay(this.navHideAfterTime).animate({opacity: 0}, this.navFadeOutTime)
@@ -99,12 +96,24 @@ WEBBOOK.Nav = {
 			return false;
 		}
 
+		// Book
+		else if (page == "book") {
+			// We want to hide the secondary content and show the book
+			WEBBOOK.Book.$book.show();
+			WEBBOOK.Content.$secondary.hide();
+			return false;
+		}
+
+		// We have not clicked on the book, hide it and show the secondary
+		WEBBOOK.Book.$book.hide();
+		WEBBOOK.Content.$secondary.show();
+
 		// We only wan to enable local storage in production
 		if (WEBBOOK.App.status != "development") {
 			// We need to load a new page
 			// First, do we already have it in the page store?
 			if (WEBBOOK.Content.has(page, false)) {
-				this.$content.html(WEBBOOK.Content.get(page));
+				WEBBOOK.Content.$secondary.html(WEBBOOK.Content.get(page));
 				this.loadJavascript(page);
 				return false;
 			}
@@ -115,7 +124,7 @@ WEBBOOK.Nav = {
 			url: "/" + page,
 			success: function(data) {
 				// Set the content
-				WEBBOOK.Nav.$content.html(data);
+				WEBBOOK.Content.$secondary.html(data);
 				WEBBOOK.Nav.loadJavascript(page);
 
 				// And save the content

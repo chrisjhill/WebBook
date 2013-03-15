@@ -37,7 +37,6 @@ WEBBOOK.Notice = {
 		// If the status is missing, then it is from an Ajax request
 		// We will already have all we need
 		if (typeof status === "undefined") {
-			console.log(this.$content);
 			this.$content.html(message).slideDown().delay(3000).slideUp();
 
 			// @todo Needs finishing.

@@ -64,10 +64,10 @@ nav{position:fixed;top:50px;left:20px;width:115px;background:#FFF;color:#222;pad
 
 
 /* The container */
-.container{margin:50px 0 50px 208px;outline:0;float:left}
+#content{margin:50px 0 50px 208px;outline:0;float:left}
 	/* Secondary pages */
-	.secondary{position:relative;z-index:3}
-		.secondary h2,.secondary h3{border-bottom:1px solid #CCC;padding-top:20px}
+	#secondary{display:none;position:relative;z-index:3;background}
+		#secondary h2,.secondary h3{border-bottom:1px solid #CCC;padding-top:20px}
 
 
 /* The book */

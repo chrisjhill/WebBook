@@ -11,10 +11,10 @@
  */
 WEBBOOK.Content = {
 	// Vars
-	contentSelector: "#content",
+	secondarySelector:    "#secondary",
 
 	// DOM references
-	$content: undefined,
+	$secondary: undefined,
 
 	/**
 	 * Listens for content updates.
@@ -24,7 +24,7 @@ WEBBOOK.Content = {
 	 */
 	init: function() {
 		// Set DOM references
-		this.$content = $(this.contentSelector);
+		this.$secondary = $(this.secondarySelector);
 
 		// Listeners
 		$(document)
@@ -67,7 +67,7 @@ WEBBOOK.Content = {
 	 * @todo I don't think html() will work here, might need some other skullduggery.
 	 */
 	update: function(event, page) {
-		WEBBOOK.Content.save(page, this.$content.html());
+		WEBBOOK.Content.save(page, this.$secondary.html());
 	},
 
 	/**
