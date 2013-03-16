@@ -17,13 +17,35 @@
 
 	<p>
 		I hope to reach
-		<input type="text" id="target-word-count" value="<?=$bookTargetWordCount?>" class="textbox nofloat" style="width:60px" />
+		<input type="text" id="target-word-count" value="<?=$bookTargetWordCount?>" class="textbox nofloat" />
 		words by
-		<input type="text" id="target-date" value="<?=$bookTargetDate?>" class="textbox nofloat" style="width:125px" />
+		<input type="text" id="target-date" value="<?=$bookTargetDate?>" class="textbox nofloat" />
 		<a href="#" id="target-update" class="button orange medium">Update Target</a>
 	</p>
 
 	<h2>My progression</h2>
 
-	<div id="target-graph" style="width: 640px; height: 250px; margin-bottom:40px"></div>
+	<div id="target-graph"><!-- Container for the graph //--></div>
+
+	<script>
+	var data = new google.visualization.DataTable();
+	data.addColumn('date',   'Date');
+	data.addColumn('number', 'Word Count');
+	data.addRows([
+		<?php foreach ($bookProgressMarkers as $bookProgress): ?>
+			[
+				new Date(<?=date('Y, n, j', $bookProgress['progress_date'])?>),
+				<?=(int)$bookProgress['progress_word_count']?>
+			],
+		<?php endforeach; ?>
+	]);
+
+	var chart = new google.visualization.AnnotatedTimeLine(document.getElementById('target-graph'));
+	chart.draw(data, {
+		displayExactValues:   true,
+		displayRangeSelector: false,
+		displayZoomButtons:   false,
+		fill:                 8
+	});
+	</script>
 </form>

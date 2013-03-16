@@ -11,3 +11,7 @@
 	 .target-pill-background{background:#F5F5F5;border-radius:6px}
 		 .target-pill-percent{height:26px;width:0px;padding-top:2px;background:#f47c20;border-radius:6px;text-align:right;color:#FFF}
 		 .target-pill-percent span{display:none;padding-right:4px;font-size:12px;text-shadow:1px 1px 1px #f47c20}
+#target-word-count{width:60px}
+#target-date{width:125px}
+#target-graph{width:690px;height:250px;margin-bottom:40px}
+	#target-graph td{border-bottom:0}

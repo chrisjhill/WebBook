@@ -3,7 +3,7 @@ namespace WebBook\Controller;
 use Core, WebBook\Model, WebBook\View\Helper;
 
 /**
- *
+ * Handles the interaction with the target page.
  *
  * @copyright 2013 Christopher Hill <cjhill@gmail.com>
  * @author    Christopher Hill <cjhill@gmail.com>
@@ -12,7 +12,7 @@ use Core, WebBook\Model, WebBook\View\Helper;
 class Target extends Core\Controller
 {
 	/**
-	 *
+	 * Generates the target and progress information.
 	 *
 	 * @access public
 	 * @ajax
@@ -21,8 +21,14 @@ class Target extends Core\Controller
 		// The book information
 		$book = Core\StoreRequest::get('book');
 
-		// Get the target the user has set
+		// Get the target the user has made
 		$target = new Model\Target\Instance($book->book_id);
+
+		// Get the books progressions
+		$progress = new Model\Progress\Instance(array(
+			'book_id' => $book->book_id
+		));
+		$progress->setData();
 
 		// Work out the percentage complete
 		// User hasn't event started yet
@@ -47,6 +53,7 @@ class Target extends Core\Controller
 		$this->view->addVariable('bookTargetWordCount', number_format($target->target_word_count), 2);
 		$this->view->addVariable('bookTargetDate',      date('jS F, Y', $target->target_date));
 		$this->view->addVariable('bookPercentComplete', $bookPercentComplete);
+		$this->view->addVariable('bookProgressMarkers', $progress);
 	}
 
 	/**
