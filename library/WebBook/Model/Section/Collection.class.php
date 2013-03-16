@@ -6,7 +6,6 @@ namespace WebBook\Model\Section;
  *
  * @copyright   2012 Christopher Hill <cjhill@gmail.com>
  * @author      Christopher Hill <cjhill@gmail.com>
- * @since       20/01/2013
  */
 class Collection
 {

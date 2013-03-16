@@ -7,10 +7,8 @@ use Core, WebBook\Model;
  *
  * The repository is essentially an ORM, but simplified.
  *
- * @copyright 2012 Christopher Hill <cjhill@gmail.com>
+ * @copyright 2013 Christopher Hill <cjhill@gmail.com>
  * @author    Christopher Hill <cjhill@gmail.com>
- * @version   0.1
- * @since     23/01/2013
  */
 class Repository extends Core\Repository
 {

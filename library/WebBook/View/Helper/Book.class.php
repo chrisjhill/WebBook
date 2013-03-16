@@ -7,7 +7,6 @@ use Core;
  *
  * @copyright   2012 Christopher Hill <cjhill@gmail.com>
  * @author      Christopher Hill <cjhill@gmail.com>
- * @since       26/01/2013
  */
 class Book extends Core\ViewHelper
 {

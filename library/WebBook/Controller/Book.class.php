@@ -7,8 +7,6 @@ use Core;
  *
  * @copyright 2012 Christopher Hill <cjhill@gmail.com>
  * @author    Christopher Hill <cjhill@gmail.com>
- * @version   0.4
- * @since     22/10/2012
  */
 class Book extends Core\Controller
 {

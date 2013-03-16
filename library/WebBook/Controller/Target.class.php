@@ -7,7 +7,6 @@ use Core, WebBook\Model, WebBook\View\Helper;
  *
  * @copyright 2013 Christopher Hill <cjhill@gmail.com>
  * @author    Christopher Hill <cjhill@gmail.com>
- * @since     15/03/2013
  */
 class Target extends Core\Controller
 {

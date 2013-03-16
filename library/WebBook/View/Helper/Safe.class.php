@@ -7,7 +7,6 @@ use Core;
  *
  * @copyright   2012 Christopher Hill <cjhill@gmail.com>
  * @author      Christopher Hill <cjhill@gmail.com>
- * @since       18/01/2012
  */
 class Safe
 {

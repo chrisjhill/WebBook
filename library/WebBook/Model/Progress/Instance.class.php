@@ -7,7 +7,6 @@ use WebBook\View\Helper;
  *
  * @copyright 2013 Christopher Hill <cjhill@gmail.com>
  * @author    Christopher Hill <cjhill@gmail.com>
- * @since     16/03/2013
  */
 class Instance extends Repository implements \IteratorAggregate
 {

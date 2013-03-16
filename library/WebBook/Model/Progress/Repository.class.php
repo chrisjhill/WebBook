@@ -9,7 +9,6 @@ use Core, WebBook\Model;
  *
  * @copyright 2013 Christopher Hill <cjhill@gmail.com>
  * @author    Christopher Hill <cjhill@gmail.com>
- * @since     16/03/2013
  */
 class Repository extends Core\Repository
 {

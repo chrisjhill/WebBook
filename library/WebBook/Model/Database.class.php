@@ -6,8 +6,6 @@ namespace WebBook\Model;
  *
  * @copyright 2012 Christopher Hill <cjhill@gmail.com>
  * @author    Christopher Hill <cjhill@gmail.com>
- * @version   0.2
- * @since     22/10/2012
  */
 class Database
 {

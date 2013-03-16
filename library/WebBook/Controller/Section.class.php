@@ -7,8 +7,6 @@ use Core, WebBook\Model;
  *
  * @copyright 2013 Christopher Hill <cjhill@gmail.com>
  * @author    Christopher Hill <cjhill@gmail.com>
- * @version   0.1
- * @since     02/03/2013
  */
 class Section extends Core\Controller
 {

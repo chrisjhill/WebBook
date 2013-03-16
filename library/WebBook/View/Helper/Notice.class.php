@@ -7,10 +7,6 @@ use Core;
  *
  * @copyright 2012 Christopher Hill <cjhill@gmail.com>
  * @author    Christopher Hill <cjhill@gmail.com>
- * @version   0.2
- * @since     22/10/2012
- *
- * @update    02/02/2013 Greatly simplified this class and moved into View Helper.
  */
 class Notice extends Core\ViewHelper
 {

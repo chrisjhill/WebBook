@@ -10,8 +10,6 @@ use Core, WebBook\Model\Chapter, WebBook\Model\Section;
  *
  * @copyright 2012 Christopher Hill <cjhill@gmail.com>
  * @author    Christopher Hill <cjhill@gmail.com>
- * @version   0.3
- * @since     23/10/2012
  */
 class Instance extends Repository implements \IteratorAggregate
 {

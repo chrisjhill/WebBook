@@ -4,10 +4,8 @@ namespace WebBook\Model\Chapter;
 /**
  * A list of chapters in a book.
  *
- * @copyright   2012 Christopher Hill <cjhill@gmail.com>
+ * @copyright   2013 Christopher Hill <cjhill@gmail.com>
  * @author      Christopher Hill <cjhill@gmail.com>
- * @version     0.2
- * @since       20/01/2013
  */
 class Collection implements \IteratorAggregate
 {
