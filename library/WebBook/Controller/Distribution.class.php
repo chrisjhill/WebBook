@@ -14,15 +14,6 @@ use Core, WebBook\View\Helper;
 class Distribution extends Core\Controller
 {
 	/**
-	 * Run common functionality over the actions.
-	 *
-	 * @access public
-	 */
-	public function init() {
-		$this->setLayout(false);
-	}
-
-	/**
 	 * Sets up the view for distributing the book.
 	 *
 	 * @access public

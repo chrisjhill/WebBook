@@ -17,9 +17,6 @@ class Repository extends Core\Repository
 	/**
 	 * Saves a record to the database.
 	 *
-	 * This function handles both uppdate and save for an easier Model. If
-	 * there is an ID in the store then we update, otherwise we insert.
-	 *
 	 * @access public
 	 * @return mixed
 	 */

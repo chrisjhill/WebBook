@@ -39,10 +39,12 @@ class Instance extends Repository implements \IteratorAggregate
 
 		// Import the book information
 		$this->import($this->get());
+		$this->book_word_count = 0;
 
 		// Loop over each section and add the instance
 		while ($section = $sections->fetch()) {
 			$this->_chapterCollection->add(new Section\Instance($section));
+			$this->book_word_count += $section['section_word_count'];
 		}
 	}
 

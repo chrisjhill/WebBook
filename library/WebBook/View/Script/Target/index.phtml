@@ -1,0 +1,29 @@
+<form>
+	<h1>Targets &amp; Progression</h1>
+
+	<h2>Have I reached my target?</h2>
+
+	<div class="target-pill-parent">
+		<div class="target-pill-background">
+			<div class="target-pill-percent" data-percent="<?=$bookPercentComplete?>%">
+				<?php if ($bookPercentComplete >= 8): ?>
+					<span><?=$bookPercentComplete?>%</span>
+				<?php endif; ?>
+			</div>
+		</div>
+	</div>
+
+	<h2>Update my target</h2>
+
+	<p>
+		I hope to reach
+		<input type="text" id="target-word-count" value="<?=$bookTargetWordCount?>" class="textbox nofloat" style="width:60px" />
+		words by
+		<input type="text" id="target-date" value="<?=$bookTargetDate?>" class="textbox nofloat" style="width:125px" />
+		<a href="#" id="target-update" class="button orange medium">Update Target</a>
+	</p>
+
+	<h2>My progression</h2>
+
+	<div id="target-graph" style="width: 640px; height: 250px; margin-bottom:40px"></div>
+</form>

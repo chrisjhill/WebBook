@@ -47,6 +47,12 @@ class Bootstrap
 		// Add variables to the view
 		$params['controller']->view->addVariable('urlRoot',   Core\Config::get('path',     'root'));
 		$params['controller']->view->addVariable('appStatus', Core\Config::get('settings', 'status'));
+
+		// If it is an ajax request then we just want a snippet of information,
+		// .. we do not want the entire layout.
+		if (Core\Request::isAjax()) {
+			$params['controller']->setLayout(false);
+		}
 	}
 
 	/**

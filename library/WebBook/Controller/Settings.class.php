@@ -13,27 +13,15 @@ use Core, WebBook\View\Helper;
 class Settings extends Core\Controller
 {
 	/**
-	 * This function is called on each load on this controller.
-	 *
-	 * It's job is to provide a consistent environment for the rest of the actions.
-	 *
-	 * @access public
-	 */
-	public function init() {
-		$this->setLayout(false);
-		$this->view->addVariable('book',     Core\StoreRequest::get('book'));
-		$this->view->addVariable('user',     Core\StoreRequest::get('user'));
-		$this->view->addVariable('settings', Core\StoreRequest::get('settings'));
-	}
-
-	/**
 	 * Displays the settings page ready for the user to update.
 	 *
 	 * @access public
 	 * @ajax
 	 */
 	public function indexAction() {
-		// Do nothing
+		$this->view->addVariable('book',     Core\StoreRequest::get('book'));
+		$this->view->addVariable('user',     Core\StoreRequest::get('user'));
+		$this->view->addVariable('settings', Core\StoreRequest::get('settings'));
 	}
 
 	/**
@@ -46,8 +34,8 @@ class Settings extends Core\Controller
 		// @todo Check that the fields are valid
 
 		// Update settings instance
-		$settings = $this->view->getVariable('settings');
-		$book     = $this->view->getVariable('book');
+		$settings = Core\StoreRequest::get('settings');
+		$book     = Core\StoreRequest::get('book');
 
 		$settings->import(array(
 			'book_id'                  => $book->book_id,

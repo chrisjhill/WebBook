@@ -58,18 +58,10 @@ class Book extends Core\Controller
 	/**
 	 * Output the complete book.
 	 *
-	 * This action can be called via ajax or it can be forwarded to, it is
-	 * generally never called directly.
-	 *
-	 * If it is called via Ajax then we do not want to use a layout.
-	 *
 	 * @access public
-	 * @ajax
 	 */
 	public function bookAction() {
-		if (Core\Request::isAjax()) {
-			$this->setLayout(false);
-		}
+		// Do nothing
 	}
 
 	/**
