@@ -1,0 +1,30 @@
+<form>
+	<h1>Snapshots</h1>
+
+	<p><em>You can store up to 10 book snapshots at any one time. A snapshot is a complete copy of your book at a particular moment in time, so is a good way for you to locate that all-important text you misplaced.</em></p>
+
+	<h2>Take a snapshot</h2>
+
+	<p>
+		<a href="#" id="snapshot-save" class="button orange bigrounded">Create a snapshot of my book, please</a><br />
+	</p>
+
+	<h2>Your snapshots</h2>
+
+	<table>
+		<tr>
+			<th>Snapshot generated</th>
+			<th>Age</th>
+			<th>View</th>
+			<th>Remove</th>
+		</tr>
+		<?php foreach ($bookSnapshots as $snapshot) { ?>
+			<tr id="snapshot-<?=(int)$snapshot['snapshot_created']?>">
+				<td><?=WebBook\Utility\Date::getDate($snapshot['snapshot_created'])?></td>
+				<td><?=WebBook\Utility\Date::getDifference($snapshot['snapshot_created'], Core\Request::server('REQUEST_TIME'))?></td>
+				<td><a href="/book/snapshot/<?=$bookId?>/<?=$snapshot['snapshot_created']?>" target="_blank" class="snapshot-view button white medium">View</a></td>
+				<td><a href="#" class="snapshot-remove button white medium" data-snapshotid="<?=$snapshot['snapshot_created']?>">Remove</a></td>
+			</tr>
+		<?php } ?>
+	</table>
+</form>
