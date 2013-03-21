@@ -1,6 +1,6 @@
 <?php
 namespace WebBook\Controller;
-use Core, WebBook\Model;
+use Core, WebBook\Model, WebBook\View\Helper;
 
 /**
  * Handles the interaction with the snapshot page.
@@ -33,25 +33,21 @@ class Snapshot extends Core\Controller
 	}
 
 	/**
-	 * Update the users target.
+	 * Remove a snapshot.
 	 *
 	 * @access public
 	 * @ajax
 	 */
-	public function updateAction() {
-		// @todo Check that the fields are valid
-
-		// Update settings instance
-		$book = Core\StoreRequest::get('book');
-
-		// Set the new target information and save
-		$target = new Model\Target\Instance($book->book_id);
-		$target->target_word_count = Core\Request::post('target_word_count');
-		$target->target_date       = strtotime(Core\Request::post('target_date'));
-		$target->save();
+	public function removeAction() {
+		// Set the new snapshot information and remove
+		$target = new Model\Snapshot\Instance(array(
+			'book_id'          => Core\Request::post('book_id'),
+			'snapshot_created' => Core\Request::post('snapshot_id')
+		));
+		$target->delete();
 
 		// Display notice
-		echo new Helper\Notice('success', 'Target has been successfully updated.');
+		echo new Helper\Notice('success', 'Snapshot has been successfully removed.');
 		die();
 	}
 }

@@ -79,9 +79,9 @@ class Repository extends Core\Repository
 	public function delete() {
 		$query = Model\Database::get()->prepare("
 			DELETE FROM `snapshot`
-			WHERE  s.book_id          = :book_id
+			WHERE  `book_id`          = :book_id
 			       AND
-			       s.snapshot_created = :snapshot_created
+			       `snapshot_created` = :snapshot_created
 		");
 
 		// And execute query
