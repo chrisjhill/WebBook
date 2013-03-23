@@ -18,13 +18,19 @@
 			<th>View</th>
 			<th>Remove</th>
 		</tr>
-		<?php foreach ($bookSnapshots as $snapshot) { ?>
-			<tr id="snapshot-<?=(int)$snapshot['snapshot_created']?>">
-				<td><?=WebBook\Utility\Date::getDate($snapshot['snapshot_created'])?></td>
-				<td><?=WebBook\Utility\Date::getDifference($snapshot['snapshot_created'], Core\Request::server('REQUEST_TIME'))?></td>
-				<td><a href="/book/snapshot/<?=$bookId?>/<?=$snapshot['snapshot_created']?>" target="_blank" class="snapshot-view button white medium">View</a></td>
-				<td><a href="#" class="snapshot-remove button white medium" data-snapshotid="<?=$snapshot['snapshot_created']?>">Remove</a></td>
+		<?php if (count($bookSnapshots) <= 0): ?>
+			<tr>
+				<td colspan="4">You currently have no snapshots!</td>
 			</tr>
-		<?php } ?>
+		<?php else: ?>
+			<?php foreach ($bookSnapshots as $snapshot): ?>
+				<tr id="snapshot-<?=(int)$snapshot['snapshot_created']?>">
+					<td><?=WebBook\Utility\Date::getDate($snapshot['snapshot_created'])?></td>
+					<td><?=WebBook\Utility\Date::getDifference($snapshot['snapshot_created'], Core\Request::server('REQUEST_TIME'))?></td>
+					<td><a href="/book/snapshot/<?=$bookId?>/<?=$snapshot['snapshot_created']?>" target="_blank" class="snapshot-view button white medium">View</a></td>
+					<td><a href="#" class="snapshot-remove button white medium" data-snapshotid="<?=$snapshot['snapshot_created']?>">Remove</a></td>
+				</tr>
+			<?php endforeach; ?>
+		<?php endif; ?>
 	</table>
 </form>

@@ -31,43 +31,37 @@ class Repository extends Core\Repository
 	public function insert() {
 		// Insert the new section
 		$query = Model\Database::get()->prepare("
-			INSERT INTO `section` (
+			INSERT INTO `snapshot` (
 				`book_id`,
 				`chapter_id`,
 				`section_order`,
 				`section_type`,
 				`section_content`,
-				`section_word_count`,
-				`section_created`
+				`snapshot_created`
 			) VALUES (
 				:book_id,
 				:chapter_id,
 				:section_order,
 				:section_type,
 				:section_content,
-				:section_word_count,
-				:section_created
+				:snapshot_created
 			)
 		");
 
 		// Loop over the sections and insert
-		foreach ($book as $chapterId => $chapter) {
+		foreach ($this->book as $chapterId => $chapter) {
 			foreach ($chapter as $section) {
 				// And execute query
 				$query->execute(array(
-					':book_id'            => $this->book_id,
-					':chapter_id'         => $this->chapter_id,
-					':section_order'      => $this->section_order,
-					':section_type'       => $this->section_type,
-					':section_content'    => $this->section_content,
-					':section_word_count' => $this->section_word_count,
-					':section_created'    => $this->section_created
+					':book_id'          => $section->book_id,
+					':chapter_id'       => $section->chapter_id,
+					':section_order'    => $section->section_order,
+					':section_type'     => $section->section_type,
+					':section_content'  => $section->section_content,
+					':snapshot_created' => $this->snapshot_created
 				));
 			}
 		}
-
-		// Assign the section ID to this section
-		$this->section_id = Model\Database::get()->lastInsertId();
 	}
 
 	/**

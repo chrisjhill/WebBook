@@ -7,9 +7,11 @@
  */
 WEBBOOK.Snapshot = {
 	// Vars
+	saveSelector:   "#snapshot-save",
 	removeSelector: ".snapshot-remove",
 
 	// DOM references
+	$save:   undefined,
 	$remove: undefined,
 
 	/**
@@ -20,9 +22,32 @@ WEBBOOK.Snapshot = {
 	init: function() {
 		// Set DOM references
 		this.$remove = $(this.removeSelector);
+		this.$save   = $(this.saveSelector);
 
 		// Listeners
+		this.$save.on("click",   $.proxy(this.save, this));
 		this.$remove.on("click", $.proxy(this.remove, this));
+	},
+
+	/**
+	 * Save a snapshot.
+	 *
+	 * @param Event event
+	 */
+	save: function(event) {
+		$.ajax({
+			url:  "/snapshot/save",
+			type: "post",
+			data: {
+				book_id: WEBBOOK.Book.bookId
+			},
+			success: function(data) {
+				// Display the notice
+				$(document).trigger({ type: "Notice" }, data);
+			}
+		});
+
+		return false;
 	},
 
 	/**

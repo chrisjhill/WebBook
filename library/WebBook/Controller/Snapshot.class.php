@@ -33,6 +33,25 @@ class Snapshot extends Core\Controller
 	}
 
 	/**
+	 * Save a snapshot.
+	 *
+	 * @access public
+	 * @ajax
+	 */
+	public function saveAction() {
+		// Set the new snapshot information and remove
+		$snapshot = new Model\Snapshot\Instance(array(
+			'book'             => Core\StoreRequest::get('book'),
+			'snapshot_created' => Core\Request::server('REQUEST_TIME')
+		));
+		$snapshot->save();
+
+		// Display notice
+		echo new Helper\Notice('success', 'Snapshot has been successfully saved.');
+		die();
+	}
+
+	/**
 	 * Remove a snapshot.
 	 *
 	 * @access public
@@ -40,11 +59,11 @@ class Snapshot extends Core\Controller
 	 */
 	public function removeAction() {
 		// Set the new snapshot information and remove
-		$target = new Model\Snapshot\Instance(array(
+		$snapshot = new Model\Snapshot\Instance(array(
 			'book_id'          => Core\Request::post('book_id'),
 			'snapshot_created' => Core\Request::post('snapshot_id')
 		));
-		$target->delete();
+		$snapshot->delete();
 
 		// Display notice
 		echo new Helper\Notice('success', 'Snapshot has been successfully removed.');

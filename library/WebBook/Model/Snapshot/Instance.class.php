@@ -14,9 +14,9 @@ class Instance extends Repository implements \IteratorAggregate
 	 * A collection of snapshot arrays.
 	 *
 	 * @access private
-	 * @var    Section\Collection
+	 * @var    array
 	 */
-	private $_store;
+	private $_store = array();
 
 	/**
 	 * Create a new Snapshot\Instance.
