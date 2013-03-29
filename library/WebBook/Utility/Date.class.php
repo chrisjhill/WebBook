@@ -96,7 +96,7 @@ class Date
 
 			// How many days?
 			$period = floor($difference / $week);
-			return date('l, g:ia', $earlyDate);
+			return date('l, g:ia', $period);
 		}
 
 		// We are dealing with something within the past 24 hours
