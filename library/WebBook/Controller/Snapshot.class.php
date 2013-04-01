@@ -46,8 +46,8 @@ class Snapshot extends Core\Controller
 		));
 		$snapshot->save();
 
-		// Display notice
-		echo new Helper\Notice('success', 'Snapshot has been successfully saved.');
+		// Output when the snapshot was created
+		echo Core\Request::server('REQUEST_TIME');
 		die();
 	}
 

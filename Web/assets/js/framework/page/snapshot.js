@@ -43,7 +43,12 @@ WEBBOOK.Snapshot = {
 			},
 			success: function(data) {
 				// Display the notice
-				$(document).trigger({ type: "Notice" }, data);
+				$(document).trigger({ type: "Notice" }, {
+					status:  "success",
+					message: "Snapshot has successfully been saved."
+				});
+
+				// And create the row
 			}
 		});
 
