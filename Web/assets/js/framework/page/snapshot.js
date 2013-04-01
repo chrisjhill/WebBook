@@ -7,12 +7,13 @@
  */
 WEBBOOK.Snapshot = {
 	// Vars
+	tableSelector:  "#snapshots",
 	saveSelector:   "#snapshot-save",
 	removeSelector: ".snapshot-remove",
 
 	// DOM references
-	$save:   undefined,
-	$remove: undefined,
+	$table: undefined,
+	$save:  undefined,
 
 	/**
 	 * Sets up the event listeners.
@@ -21,12 +22,12 @@ WEBBOOK.Snapshot = {
 	 */
 	init: function() {
 		// Set DOM references
-		this.$remove = $(this.removeSelector);
-		this.$save   = $(this.saveSelector);
+		this.$table = $(this.tableSelector);
+		this.$save  = $(this.saveSelector);
 
 		// Listeners
-		this.$save.on("click",   $.proxy(this.save, this));
-		this.$remove.on("click", $.proxy(this.remove, this));
+		this.$save.on("click",                       $.proxy(this.save,   this));
+		this.$table.on("click", this.removeSelector, $.proxy(this.remove, this));
 	},
 
 	/**
@@ -49,6 +50,19 @@ WEBBOOK.Snapshot = {
 				});
 
 				// And create the row
+				$("#secondary table").append('<tr>'
+					+ '<td>Today</td>'
+					+ '<td>Just now</td>'
+					+ '<td>'
+					+ '    <a href="/book/snapshot/' + WEBBOOK.Book.bookId + '/' + data + '" target="_blank" class="snapshot-view button white medium">'
+					+ '        View'
+					+ '    </a>'
+					+ '</td>'
+					+ '<td>'
+					+ '    <a href="#" class="snapshot-remove button white medium" data-snapshotid="' + data + '">'
+					+ '        Remove'
+					+ '    </a>'
+					+ '</td>');
 			}
 		});
 
