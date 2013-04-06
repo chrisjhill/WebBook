@@ -29,7 +29,7 @@ class SectionBookTitle extends Core\ViewHelper
 			'sectionOrder'   => $params['section']->section_order,
 			'wordCount'      => $params['section']->section_word_count,
 			'sectionContent' => $params['section']->section_content,
-			'sectionCanEdit' => true,
+			'sectionCanEdit' => $this->view->getVariable('readonly'),
 			'chapterId'      => $params['section']->chapter_id
 		));
 	}

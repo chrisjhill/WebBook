@@ -32,6 +32,10 @@ hr{background:transparent;color:transparent;border:none;margin:20px 0;padding:0;
 :focus{outline:0}
 
 
+/* Readonly mode */
+#readonly #content{float:none;margin:50px auto}
+
+
 /* The navigation */
 nav{position:fixed;top:50px;left:20px;width:115px;background:#FFF;color:#222;padding:25px;outline:0;border-radius:4px}
 	/* The logo */

@@ -31,9 +31,9 @@ class Book extends Core\Controller
 	 * @access public
 	 */
 	public function viewAction() {
-		// Set to readonly
+		// Set to readonly and forward onto the book
 		$this->view->addVariable['readonly'] = true;
-
+		$this->setLayout('readonly');
 		$this->forward('book');
 	}
 
