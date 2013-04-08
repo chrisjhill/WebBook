@@ -38,7 +38,7 @@ class Repository extends Core\Repository
 			SET     b.book_title        = :book_title,
 			        b.book_distribution = :book_distribution,
 			        b.book_updated      = :book_updated
-			WHERE   b.book_id            = :book_id
+			WHERE   b.book_id           = :book_id
 			LIMIT   1
 		");
 

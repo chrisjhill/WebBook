@@ -34,16 +34,20 @@ class Repository extends Core\Repository
 			INSERT INTO `snapshot` (
 				`book_id`,
 				`chapter_id`,
+				`section_id`,
 				`section_order`,
 				`section_type`,
 				`section_content`,
+				`section_word_count`,
 				`snapshot_created`
 			) VALUES (
 				:book_id,
 				:chapter_id,
+				:section_id,
 				:section_order,
 				:section_type,
 				:section_content,
+				:section_word_count,
 				:snapshot_created
 			)
 		");
@@ -53,12 +57,14 @@ class Repository extends Core\Repository
 			foreach ($chapter as $section) {
 				// And execute query
 				$query->execute(array(
-					':book_id'          => $section->book_id,
-					':chapter_id'       => $section->chapter_id,
-					':section_order'    => $section->section_order,
-					':section_type'     => $section->section_type,
-					':section_content'  => $section->section_content,
-					':snapshot_created' => $this->snapshot_created
+					':book_id'            => $section->book_id,
+					':chapter_id'         => $section->chapter_id,
+					':section_id'         => $section->section_id,
+					':section_order'      => $section->section_order,
+					':section_type'       => $section->section_type,
+					':section_content'    => $section->section_content,
+					':section_word_count' => $section->section_word_count,
+					':snapshot_created'   => $this->snapshot_created
 				));
 			}
 		}
