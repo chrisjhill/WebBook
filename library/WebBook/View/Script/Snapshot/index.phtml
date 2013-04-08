@@ -27,7 +27,7 @@
 				<tr id="snapshot-<?=(int)$snapshot['snapshot_created']?>">
 					<td><?=WebBook\Utility\Date::getDate($snapshot['snapshot_created'])?></td>
 					<td><?=WebBook\Utility\Date::getDifference($snapshot['snapshot_created'], Core\Request::server('REQUEST_TIME'))?></td>
-					<td><a href="/book/snapshot/<?=$bookId?>/<?=$snapshot['snapshot_created']?>" target="_blank" class="snapshot-view button white medium">View</a></td>
+					<td><a href="/book/view/snapshot/<?=$snapshot['snapshot_created']?>" target="_blank" class="snapshot-view button white medium">View</a></td>
 					<td><a href="#" class="snapshot-remove button white medium" data-snapshotid="<?=$snapshot['snapshot_created']?>">Remove</a></td>
 				</tr>
 			<?php endforeach; ?>

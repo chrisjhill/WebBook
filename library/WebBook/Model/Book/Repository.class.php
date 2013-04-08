@@ -93,7 +93,7 @@ class Repository extends Core\Repository
 	}
 
 	/**
-	 * Get all the records in a chapter.
+	 * Get all the sections in this book.
 	 *
 	 * @access public
 	 * @return mixed  Array on success, false on failure.
@@ -113,6 +113,33 @@ class Repository extends Core\Repository
 		// And execute query
 		$query->execute(array(
 			':book_id'    => $this->book_id
+		));
+
+		return $query;
+	}
+
+	/**
+	 * Get all the sections for a snapshot.
+	 *
+	 * @access public
+	 * @return mixed  Array on success, false on failure.
+	 */
+	public function getAllSectionsFromSnapshot() {
+		$query = Model\Database::get()->prepare("
+			SELECT   *
+			FROM     `snapshot` s
+			WHERE    s.book_id          = :book_id
+			         AND
+			         s.snapshot_created = :snapshot_created
+			ORDER BY s.chapter_id,
+			         s.section_order,
+			         s.section_id
+		");
+
+		// And execute query
+		$query->execute(array(
+			':book_id'          => $this->book_id,
+			':snapshot_created' => $this->snapshot_created
 		));
 
 		return $query;

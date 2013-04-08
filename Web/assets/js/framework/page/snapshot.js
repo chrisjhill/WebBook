@@ -54,7 +54,7 @@ WEBBOOK.Snapshot = {
 					+ '<td>Today</td>'
 					+ '<td>Just now</td>'
 					+ '<td>'
-					+ '    <a href="/book/snapshot/' + WEBBOOK.Book.bookId + '/' + data + '" target="_blank" class="snapshot-view button white medium">'
+					+ '    <a href="/book/view/snapshot/' + data + '" target="_blank" class="snapshot-view button white medium">'
 					+ '        View'
 					+ '    </a>'
 					+ '</td>'

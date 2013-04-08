@@ -25,15 +25,19 @@ class Instance extends Repository implements \IteratorAggregate
 	 * Setup a book.
 	 *
 	 * @access public
-	 * @param  int    $bookId The book that we wish to setup.
+	 * @param  int    $bookId     The book that we wish to setup.
+	 * @param  int    $snapshotId The ID of the snapshot that has been taken.
 	 */
-	public function __construct($bookId) {
+	public function __construct($bookId, $snapshotId) {
 		// Create a collection of chapters
 		$this->_chapterCollection = new Chapter\Collection();
 
 		// Get the sections in this chapter
 		$this->book_id = $bookId;
-		$sections      = $this->getAllSections();
+		$this->snapshot_created = $snapshotId;
+		$sections = $snapshotId
+			? $this->getAllSectionsFromSnapshot()
+			: $this->getAllSections();
 
 		// Import the book information
 		$this->import($this->get());
