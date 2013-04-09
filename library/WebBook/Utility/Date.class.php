@@ -49,29 +49,18 @@ class Date
 		$end->setTimestamp($timestampEnd);
 
 		// Working out the differents
-		$diff    = $start->diff($end);
-		$years   = $diff->format('%y');
-		$months  = $diff->format('%m');
-		$days    = $diff->format('%d');
-		$hours   = $diff->format('%G');
-		$minutes = $diff->format('%i');
-		$seconds = $diff->format('%s');
+		$diff = $start->diff($end);
 
 		// And return
-		if ($years > 0) {
-			return $years   . ' year'   . ($years   > 1 ? 's' : '') . ' ago';
-		} else if ($months  > 0) {
-			return $years   . ' month'  . ($months  > 1 ? 's' : '') . ' ago';
-		} else if ($days    > 0) {
-			return $days    . ' day'    . ($days    > 1 ? 's' : '') . ' ago';
-		} else if ($hours   > 0) {
-			return $hours   . ' hour'   . ($hours   > 1 ? 's' : '') . ' ago';
-		} else if ($minutes > 0) {
-			return $minutes . ' minute' . ($minutes > 1 ? 's' : '') . ' ago';
-		} else if ($seconds > 0) {
-			return $seconds . ' second' . ($seconds > 1 ? 's' : '') . ' ago';
-		}
+		switch (true) {
+			case $diff->y > 0 : return $diff->y . ' year'   . ($diff->y > 1 ? 's' : '') . ' ago';
+			case $diff->m > 0 : return $diff->m . ' month'  . ($diff->m > 1 ? 's' : '') . ' ago';
+			case $diff->d > 0 : return $diff->d . ' day'    . ($diff->d > 1 ? 's' : '') . ' ago';
+			case $diff->h > 0 : return $diff->h . ' hour'   . ($diff->h > 1 ? 's' : '') . ' ago';
+			case $diff->i > 0 : return $diff->i . ' minute' . ($diff->i > 1 ? 's' : '') . ' ago';
+			case $diff->s > 0 : return $diff->s . ' second' . ($diff->s > 1 ? 's' : '') . ' ago';
 
-		return 'just now';
+			default: return 'Just now';
+		}
 	}
 }
