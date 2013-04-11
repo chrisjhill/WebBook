@@ -6,5 +6,7 @@
 		<span class="chapter-delete">x</span>
 	<?php endif; ?>
 
-	<div class="chapter-insert"><a href="#">new chapter +</a></div>
+	<?php if ($chapterCanAdd): ?>
+		<div class="chapter-insert"><a href="#">new chapter +</a></div>
+	<?php endif; ?>
 </div>

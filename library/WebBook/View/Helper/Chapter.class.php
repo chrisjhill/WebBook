@@ -38,6 +38,7 @@ class Chapter extends Core\ViewHelper
 		return $this->renderPartial('Chapter', array(
 			'chapterId'        => $params['chapterId'],
 			'sectionHtml'      => $sectionHtml,
+			'chapterCanAdd'    => ! $this->view->getVariable('readonly'),
 			'chapterCanRemove' => $params['chapterCanRemove']
 		));
 	}
