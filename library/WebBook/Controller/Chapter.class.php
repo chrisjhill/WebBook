@@ -11,6 +11,15 @@ use Core, WebBook\Model;
 class Chapter extends Core\Controller
 {
 	/**
+	 * View the chapter management page.
+	 *
+	 * @access public
+	 */
+	public function indexAction() {
+		// @todo
+	}
+
+	/**
 	 * Inserts a new chapter into a book.
 	 *
 	 * @access public
