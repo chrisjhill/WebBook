@@ -49,7 +49,6 @@ class Book extends Core\Controller
 	public function editAction() {
 		// Set to readonly
 		$this->view->addVariable['readonly'] = false;
-
 		$this->forward('book');
 	}
 

@@ -1,5 +1,9 @@
 <form>
 	<h1>Chapter overview</h1>
 
-	<?=$this->chapterOverview(array('book' => $book))?>
+	<p><em>A quick glance is all it takes to view the structure of your book.</em></p>
+
+	<ol id="chapter-overview">
+		<?=$this->chapterOverview(array('book' => $book))?>
+	</ol>
 </form>

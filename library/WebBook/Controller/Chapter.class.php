@@ -11,12 +11,12 @@ use Core, WebBook\Model;
 class Chapter extends Core\Controller
 {
 	/**
-	 * View the chapter management page.
+	 * View the chapter overview page.
 	 *
 	 * @access public
 	 */
 	public function indexAction() {
-		// @todo
+		// Do nothing
 	}
 
 	/**

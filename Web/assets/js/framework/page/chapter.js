@@ -1,11 +1,11 @@
 /**
- * Handles the chapter management page.
+ * Handles the chapter overview page.
  *
  * @copyright   2012 Christopher Hill <cjhill@gmail.com>
  * @author      Christopher Hill <cjhill@gmail.com>
  * @since       11/04/2013
  */
-WEBBOOK.ChapterManagement = {
+WEBBOOK.ChapterOverview = {
 	// Vars
 
 	// DOM references
@@ -18,4 +18,4 @@ WEBBOOK.ChapterManagement = {
 	}
 }
 
-WEBBOOK.ChapterManagement.init();
+WEBBOOK.ChapterOverview.init();

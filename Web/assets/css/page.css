@@ -1,8 +1,3 @@
-/* Snapshot */
-#snapshot{margin-top:50px}
-	#snapshot #webBook{font-size:40px}
-	#snapshot .container{float:none;margin:0 auto;width:850px}
-
 /* Page distribution */
 .page-distribution .textbox{margin:0}
 
@@ -15,3 +10,14 @@
 #target-date{width:125px}
 #target-graph{width:690px;height:250px;margin-bottom:40px}
 	#target-graph td{border-bottom:0}
+
+/* Chapter overview */
+#chapter-overview{list-style:none;margin:35px 0 0;padding:0}
+	#chapter-overview li{margin:0 0 20px;padding:0;border-bottom:1px dotted #CCC}
+		#chapter-overview span,#chapter-overview em{display:block;margin-bottom:-8px;padding:0 5px;background:#FFF}
+			#chapter-overview span{float:left}
+			#chapter-overview strong{padding-right:5px}
+			#chapter-overview em{float:right}
+
+/* Snapshots */
+#snapshots{border-radius:8px;overflow:hidden}

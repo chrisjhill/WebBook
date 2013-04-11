@@ -18,6 +18,7 @@ body{position:relative;margin:0;padding:0;background:#EEE}
 .hide{visibility:hidden}
 .left{float:left}
 .right{float:right}
+.clear{clear:both}
 .text-left{text-align:left}
 .text-center{text-align:center}
 .text-right{text-align:right}
