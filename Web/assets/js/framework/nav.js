@@ -17,6 +17,7 @@ WEBBOOK.Nav = {
 	navHideAfterTime:     2000, // How long the navigation is visible before it starts to fade out.
 	navFadeInTime:        200,  // How long it shoud take for the navigation to become visible.
 	navFadeOutTime:       1000, // How long it should take for the navigation to completely fade.
+	navHideTimeout:       undefined,
 
 	pagesLoaded:          {},   // Keeps track of which pages have been loaded in this session.
 
@@ -37,11 +38,15 @@ WEBBOOK.Nav = {
 		this.$navLink = this.$nav.find(this.navLinkSelector);
 
 		// Listeners
-		this.$nav.delay(this.navHideAfterTime).animate({opacity: 0}, this.navFadeOutTime)
-			.on("mouseenter", $.proxy(this.navigationEnter, this))
-			.on("mouseleave", $.proxy(this.navigationLeave, this));
+		this.$nav
+			.on("mouseenter",     $.proxy(this.navigationEnter, this))
+			.on("mouseleave",     $.proxy(this.navigationLeave, this));
+		this.$navLink.on("click", $.proxy(this.navLinkClick,    this));
 
-		this.$navLink.on("click", $.proxy(this.navLinkClick, this));
+		// We want to hide the navigation automatically upon page load
+		this.navHideTimeout = setTimeout(function() {
+			WEBBOOK.Nav.navigationLeave();
+		}, this.navHideAfterTime);
 
 		// Only Webkit supports fullscreen to a satisfactory level
 		// People with Firefox can go View > Fullscreen
@@ -56,6 +61,8 @@ WEBBOOK.Nav = {
 	 * @param Event event
 	 */
 	navigationEnter: function(event) {
+		clearTimeout(this.navHideTimeout);
+
 		this.$nav.stop(true)
 			.animate({opacity: "1"}, this.navFadeInTime);
 	},

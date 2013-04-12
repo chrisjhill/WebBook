@@ -45,27 +45,27 @@ nav{position:fixed;top:50px;left:20px;width:115px;background:#FFF;color:#222;pad
 
 	/* The navigational link styling */
 	nav ul{margin:0;padding:0;list-style:none}
-		nav li{padding:4px 0 4px}
-			nav a{color:#666;text-decoration:none;border-bottom:1px solid #CCC;padding-bottom:2px;padding-right:4px}
-			nav a:hover{border-bottom:1px solid #555}
+		nav li{padding:4px 0 4px;border-left:3px solid transparent}
+			nav a{padding-bottom:2px;padding-right:4px;color:#666;text-decoration:none}
+			nav li:hover{border-left:3px solid #EEE}
 
 	/* Navigational link icons */
 	/* @todo Turn into sprites */
 	nav .icon{padding-left:24px}
-		nav .icon-book      {background:url(../img/icon-book.png)       no-repeat 4px 0}
-		nav .icon-character {background:url(../img/icon-character.png)  no-repeat 4px 0}
-		nav .icon-location  {background:url(../img/icon-location.png)   no-repeat 4px 0}
-		nav .icon-scrapbook {background:url(../img/icon-scrapbook.png)  no-repeat 4px 0}
-		nav .icon-tag       {background:url(../img/icon-tag.png)        no-repeat 4px 0}
-		nav .icon-todo      {background:url(../img/icon-todo.png)       no-repeat 4px 0}
-		nav .icon-timeline  {background:url(../img/icon-timeline.png)   no-repeat 4px 0}
-		nav .icon-snapshot  {background:url(../img/icon-snapshot.png)   no-repeat 4px 0}
-		nav .icon-chapter   {background:url(../img/icon-chapter.png)    no-repeat 4px 0}
-		nav .icon-comment   {background:url(../img/icon-comment.png)    no-repeat 4px 0}
-		nav .icon-private   {background:url(../img/icon-private.png)    no-repeat 4px 0}
-		nav .icon-target    {background:url(../img/icon-target.png)     no-repeat 4px 0}
-		nav .icon-fullscreen{background:url(../img/icon-fullscreen.png) no-repeat 6px 0}
-		nav .icon-settings  {background:url(../img/icon-settings.png)   no-repeat 4px 0}
+		nav .icon-book      {background:url(../img/icon-book.png)       no-repeat 4px -1px}
+		nav .icon-character {background:url(../img/icon-character.png)  no-repeat 4px -1px}
+		nav .icon-location  {background:url(../img/icon-location.png)   no-repeat 4px -1px}
+		nav .icon-scrapbook {background:url(../img/icon-scrapbook.png)  no-repeat 4px -1px}
+		nav .icon-tag       {background:url(../img/icon-tag.png)        no-repeat 4px -1px}
+		nav .icon-todo      {background:url(../img/icon-todo.png)       no-repeat 4px -1px}
+		nav .icon-timeline  {background:url(../img/icon-timeline.png)   no-repeat 4px -1px}
+		nav .icon-snapshot  {background:url(../img/icon-snapshot.png)   no-repeat 4px -1px}
+		nav .icon-chapter   {background:url(../img/icon-chapter.png)    no-repeat 4px -1px}
+		nav .icon-comment   {background:url(../img/icon-comment.png)    no-repeat 4px -1px}
+		nav .icon-private   {background:url(../img/icon-private.png)    no-repeat 4px -1px}
+		nav .icon-target    {background:url(../img/icon-target.png)     no-repeat 4px -1px}
+		nav .icon-fullscreen{background:url(../img/icon-fullscreen.png) no-repeat 6px -1px}
+		nav .icon-settings  {background:url(../img/icon-settings.png)   no-repeat 4px -1px}
 
 
 /* The container */
