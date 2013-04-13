@@ -17,11 +17,17 @@ class Bootstrap
 	 * @access public
 	 * @param  array  $params Parameters passed into this state update.
 	 * @static
+	 *
+	 * @todo Does the user have access to this book?
+	 * @todo If there is no user logged in and the book is private, redirect.
 	 */
 	public static function initRequest($params) {
 		// Get the ID's
+		// Note: All Ajax requests are POST'ed
 		$userId     = 1;
-		$bookId     = Core\Request::post('book_id', 1);
+		$bookId     = Core\Request::isAjax()
+			? Core\Request::post('book_id', false)
+			: Core\Request::get('id', false);
 		$snapshotId = Core\Request::get('snapshot', false);
 
 		// Set the user, book, and settings

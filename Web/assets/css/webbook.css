@@ -31,6 +31,13 @@ h3{font-size:19px}
 em{color:#888}
 hr{background:transparent;color:transparent;border:none;margin:20px 0;padding:0;border-bottom:1px dotted #CCC}
 :focus{outline:0}
+a{color:#000;text-decoration:underline}
+	a:hover{text-decoration:none}
+
+
+/* Public pages */
+#public{padding-top:100px;font:15px/1.6em "Palatino Linotype","Book Antiqua",Palatino,FreeSerif,serif;text-align:center;color:#000;text-shadow:1px 1px 1px #FFF}
+	#public #webbook{font-size:45px}
 
 
 /* Readonly mode */
@@ -40,8 +47,8 @@ hr{background:transparent;color:transparent;border:none;margin:20px 0;padding:0;
 /* The navigation */
 nav{position:fixed;top:50px;left:20px;width:115px;background:#FFF;color:#222;padding:25px;outline:0;border-radius:4px}
 	/* The logo */
-	#webBook{font-size:30px;color:#333;font-weight:bold;letter-spacing:-2px;margin:0;padding:0 0 15px;text-shadow:1px 1px 1px #FFF}
-		#webBook span{font-weight:normal}
+	#webbook{font-size:30px;color:#333;font-weight:bold;letter-spacing:-2px;margin:0;padding:0 0 15px;text-shadow:1px 1px 1px #FFF}
+		#webbook span{font-weight:normal}
 
 	/* The navigational link styling */
 	nav ul{margin:0;padding:0;list-style:none}

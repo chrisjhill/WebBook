@@ -18,6 +18,7 @@ class Book extends Core\Controller
 	 * @access public
 	 */
 	public function init() {
+		$this->setLayout('book');
 		$this->view->addVariable('book', Core\StoreRequest::get('book'));
 		$this->view->addVariable('user', Core\StoreRequest::get('user'));
 	}
