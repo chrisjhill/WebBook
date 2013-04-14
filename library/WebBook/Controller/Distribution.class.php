@@ -1,6 +1,6 @@
 <?php
 namespace WebBook\Controller;
-use Core, WebBook\View\Helper;
+use Core, WebBook\Utility, WebBook\View\Helper;
 
 /**
  * This controller handles the updating of the book privacy setting and
@@ -21,11 +21,8 @@ class Distribution extends Core\Controller
 		// Get the information on the book distribution
 		$book = Core\StoreRequest::get('book');
 
+		$this->view->addVariable('urlBookView',      Utility\Url::bookView($book));
 		$this->view->addVariable('bookDistribution', $book->book_distribution);
-		$this->view->addVariable('bookPassword', substr(
-			md5($book->book_id . $book->book_created),
-			0, 8
-		));
 	}
 
 	/**

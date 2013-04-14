@@ -1,7 +1,6 @@
 <?php
 namespace WebBook\View\Helper;
-use Core;
-use WebBook\Utility;
+use Core, WebBook\Utility;
 
 /**
  * Outputs the snapshot overview table.
@@ -42,6 +41,10 @@ class SnapshotOverview extends Core\ViewHelper
 				'snapshotCreatedAgo' => Utility\Date::getDifference(
 					$snapshot['snapshot_created'],
 					Core\Request::server('REQUEST_TIME')
+				),
+				'urlBookSnapshot'    => Utility\Url::bookViewSnapshot(
+					Core\StoreRequest::get('book'),
+					$snapshot['snapshot_created']
 				)
 			));
 		}

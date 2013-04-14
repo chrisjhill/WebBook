@@ -1,6 +1,6 @@
 <?php
 namespace WebBook\Controller;
-use Core;
+use Core, WebBook\Model, WebBook\Utility;
 
 /**
  * The public aspect of the site.
@@ -26,6 +26,10 @@ class Index extends Core\Controller
 	 * @access public
 	 */
 	public function indexAction() {
-		// Do nothing
+		// Link to the default book
+		$book = new Model\Book\Instance(true, false);
+		$book->book_id    = 1;
+		$book->book_title = 'It\'s a Kind of Magic';
+		$this->view->addVariable('urlBookEdit', Utility\Url::bookEdit($book));
 	}
 }
