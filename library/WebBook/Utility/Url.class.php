@@ -21,7 +21,7 @@ class Url
 	 *     <li>Remove all non alpha-numerical characters</li>
 	 * </ol>
 	 *
-	 * This will convert <code>Title: Foobar</code> to <coe>title-foobar</code>.
+	 * This will convert <code>Title: Foobar</code> to <code>title-foobar</code>.
 	 *
 	 * @access public
 	 * @param  string $string The string that we want to encode.
@@ -58,7 +58,7 @@ class Url
 	}
 
 	/**
-	 * Generates the address to edit a book.
+	 * Generates the address to view a book.
 	 *
 	 * @access public
 	 * @param  Model\Book\Instance $book The book to generate a URL for.
@@ -74,7 +74,7 @@ class Url
 	}
 
 	/**
-	 * Generates the address to edit a book.
+	 * Generates the address to view a book by its snapshot.
 	 *
 	 * @access public
 	 * @param  Model\Book\Instance $book       The book to generate a URL for.
