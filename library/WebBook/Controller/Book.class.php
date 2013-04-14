@@ -1,6 +1,6 @@
 <?php
 namespace WebBook\Controller;
-use Core;
+use Core, WebBook\Utility;
 
 /**
  * This controller handles all of the book specific actions.
@@ -18,6 +18,12 @@ class Book extends Core\Controller
 	 * @access public
 	 */
 	public function init() {
+		// If there is no book then redirect
+		if (! Core\StoreRequest::get('book')->has('book_id')) {
+			$this->forward('index', 'index');
+		}
+
+		// The book exists
 		$this->setLayout('book');
 		$this->view->addVariable('book', Core\StoreRequest::get('book'));
 		$this->view->addVariable('user', Core\StoreRequest::get('user'));
@@ -32,6 +38,11 @@ class Book extends Core\Controller
 	 * @access public
 	 */
 	public function viewAction() {
+		// Can the user read this book?
+		if (! Utility\Permission::canView()) {
+			$this->forward('index', 'index');
+		}
+
 		// Set to readonly and forward onto the book
 		$this->view->addVariable('readonly', true);
 		$this->setLayout('readonly');
@@ -48,6 +59,12 @@ class Book extends Core\Controller
 	 * @access public
 	 */
 	public function editAction() {
+		// Can the user edit this book?
+		if (! Utility\Permission::canEdit()) {
+			// Nope, but they still might be able to view it
+			$this->forward('view');
+		}
+
 		// Set to readonly
 		$this->view->addVariable('readonly', false);
 		$this->forward('book');

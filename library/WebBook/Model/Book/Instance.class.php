@@ -32,6 +32,12 @@ class Instance extends Repository implements \IteratorAggregate
 		// Create a collection of chapters
 		$this->_chapterCollection = new Chapter\Collection();
 
+		// Make sure that the book ID is not boolean true
+		// Note: It can be true if the URL is /book/edit/id
+		if ($bookId === true) {
+			return false;
+		}
+
 		// Get the sections in this chapter
 		$this->book_id = $bookId;
 		$this->snapshot_created = $snapshotId;
