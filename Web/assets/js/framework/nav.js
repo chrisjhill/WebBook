@@ -22,8 +22,8 @@ WEBBOOK.Nav = {
 	pagesLoaded:          {},   // Keeps track of which pages have been loaded in this session.
 
 	// DOM references
-	$nav:       undefined,
-	$navLink:   undefined,
+	$nav:     undefined,
+	$navLink: undefined,
 
 	/**
 	 * Sets up the navigation.
@@ -113,7 +113,12 @@ WEBBOOK.Nav = {
 
 		// We have not clicked on the book, hide it and show the secondary
 		WEBBOOK.Book.$book.hide();
-		WEBBOOK.Content.$secondary.show();
+		WEBBOOK.Content.$secondary
+			.show()
+			.html('<div class="loading">'
+				+ '    Loading<br />'
+				+ '    <img src="' + WEBBOOK.App.root + 'assets/img/loading.gif" /><br />'
+				+ '</div>');
 
 		// We only wan to enable local storage in production
 		if (WEBBOOK.App.status != "development") {

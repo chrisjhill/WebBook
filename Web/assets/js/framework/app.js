@@ -7,5 +7,6 @@
  */
 WEBBOOK.App = {
 	// Vars
-	status: undefined
+	status: undefined,
+	root:   undefined
 }

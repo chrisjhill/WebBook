@@ -80,6 +80,9 @@ nav{position:fixed;top:50px;left:20px;width:115px;background:#FFF;color:#222;pad
 	/* Secondary pages */
 	#secondary{display:none;position:relative;z-index:3;border-radius:4px}
 		#secondary h2,.secondary h3{border-bottom:1px solid #CCC;padding-top:20px}
+		.loading{text-align:center;text-transform:uppercase;font-size:12px;padding-top:20px}
+		.loading::first-letter{font-size:18px}
+		.loading img{position:relative;top:-60px}
 
 
 /* The book */
