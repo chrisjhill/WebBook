@@ -1,5 +1,5 @@
 <?php
-namespace WebBook\View\Helper;
+namespace WebBook\View\Helper\Page\Snapshot;
 use Core, WebBook\Utility;
 
 /**
@@ -8,7 +8,7 @@ use Core, WebBook\Utility;
  * @copyright   2012 Christopher Hill <cjhill@gmail.com>
  * @author      Christopher Hill <cjhill@gmail.com>
  */
-class SnapshotOverview extends Core\ViewHelper
+class Overview extends Core\ViewHelper
 {
 	/**
 	 * Outputs the chapter overview view.
@@ -26,7 +26,7 @@ class SnapshotOverview extends Core\ViewHelper
 	public function render($params = array()) {
 		// Has the user actually created any snapshots?
 		if (count($params['bookSnapshots']) <= 0) {
-			return $this->renderPartial('SnapshotOverviewEmpty');
+			return $this->renderPartial('Page/Snapshot/OverviewEmpty');
 		}
 
 		// Create a container for the snapshot table HTML
@@ -34,7 +34,7 @@ class SnapshotOverview extends Core\ViewHelper
 
 		// Loop over each snapshot and generate its HTML
 		foreach ($params['bookSnapshots'] as $snapshot) {
-			$snapshotHtml .= $this->renderPartial('SnapshotOverviewItem', array(
+			$snapshotHtml .= $this->renderPartial('Page/Snapshot/OverviewItem', array(
 				'bookId'             => Core\StoreRequest::get('book')->book_id,
 				'snapshotId'         => $snapshot['snapshot_created'],
 				'snapshotCreated'    => Utility\Date::getDate($snapshot['snapshot_created']),

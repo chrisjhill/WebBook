@@ -1,5 +1,5 @@
 <?php
-namespace WebBook\View\Helper;
+namespace WebBook\View\Helper\Book;
 use Core;
 
 /**
@@ -27,7 +27,7 @@ class Book extends Core\ViewHelper
 		// Loop through the chapters
 		foreach ($book as $chapterId => $chapter) {
 			// Place the chapter's sections into a chapter
-			$chapterHtml .= $this->view->chapter(array(
+			$chapterHtml .= $this->view->book_Chapter(array(
 				'chapter'          => $chapter,
 				'chapterId'        => $chapterId,
 				'chapterCanRemove' => ! empty($chapterHtml)

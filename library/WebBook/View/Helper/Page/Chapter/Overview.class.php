@@ -1,5 +1,5 @@
 <?php
-namespace WebBook\View\Helper;
+namespace WebBook\View\Helper\Page\Chapter;
 use Core;
 
 /**
@@ -8,7 +8,7 @@ use Core;
  * @copyright   2012 Christopher Hill <cjhill@gmail.com>
  * @author      Christopher Hill <cjhill@gmail.com>
  */
-class ChapterOverview extends Core\ViewHelper
+class Overview extends Core\ViewHelper
 {
 	/**
 	 * Outputs the chapter overview view.
@@ -38,7 +38,7 @@ class ChapterOverview extends Core\ViewHelper
 				}
 
 				// Place the chapter's sections into a chapter
-				$chapterHtml .= $this->renderPartial('ChapterOverviewItem', array(
+				$chapterHtml .= $this->renderPartial('Page/Chapter/OverviewItem', array(
 					'chapterNumber'    => $chapterNumber++,
 					'chapterId'        => $section->chapter_id,
 					'chapterTitle'     => $section->section_content,

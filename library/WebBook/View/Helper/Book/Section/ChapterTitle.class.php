@@ -1,14 +1,14 @@
 <?php
-namespace WebBook\View\Helper;
+namespace WebBook\View\Helper\Book\Section;
 use Core;
 
 /**
- * Outputs a chapter subtitle.
+ * Outputs a chapter.
  *
  * @copyright   2012 Christopher Hill <cjhill@gmail.com>
  * @author      Christopher Hill <cjhill@gmail.com>
  */
-class SectionSubtitle extends Core\ViewHelper
+class ChapterTitle extends Core\ViewHelper
 {
 	/**
 	 * Outputs a book title.
@@ -24,7 +24,7 @@ class SectionSubtitle extends Core\ViewHelper
 	 * @return string         A rendered View Helper Partial template file.
 	 */
 	public function render($params = array()) {
-		return $this->renderPartial('Section/Subtitle', array(
+		return $this->renderPartial('Book/Section/ChapterTitle', array(
 			'sectionId'      => $params['section']->section_id,
 			'sectionOrder'   => $params['section']->section_order,
 			'wordCount'      => $params['section']->section_word_count,

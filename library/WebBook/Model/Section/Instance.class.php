@@ -31,11 +31,11 @@ class Instance extends Repository
 	 */
 	public function output() {
 		switch ($this->section_type) {
-			case 'booktitle'    : $partial = new Helper\SectionBookTitle();    break;
-			case 'author'       : $partial = new Helper\SectionAuthor();       break;
-			case 'chaptertitle' : $partial = new Helper\SectionChapterTitle(); break;
-			case 'subtitle'	    : $partial = new Helper\SectionSubtitle();     break;
-			case 'content'	    : $partial = new Helper\SectionContent();      break;
+			case 'booktitle'    : $partial = new Helper\Book\Section\BookTitle();    break;
+			case 'author'       : $partial = new Helper\Book\Section\Author();       break;
+			case 'chaptertitle' : $partial = new Helper\Book\Section\ChapterTitle(); break;
+			case 'subtitle'	    : $partial = new Helper\Book\Section\Subtitle();     break;
+			case 'content'	    : $partial = new Helper\Book\Section\Content();      break;
 		}
 
 		return $partial->render(array(

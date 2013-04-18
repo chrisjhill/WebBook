@@ -1,14 +1,14 @@
 <?php
-namespace WebBook\View\Helper;
+namespace WebBook\View\Helper\Book\Section;
 use Core;
 
 /**
- * Outputs an author.
+ * Outputs a piece of content.
  *
  * @copyright   2012 Christopher Hill <cjhill@gmail.com>
  * @author      Christopher Hill <cjhill@gmail.com>
  */
-class SectionAuthor extends Core\ViewHelper
+class Content extends Core\ViewHelper
 {
 	/**
 	 * Outputs a book title.
@@ -24,7 +24,7 @@ class SectionAuthor extends Core\ViewHelper
 	 * @return string         A rendered View Helper Partial template file.
 	 */
 	public function render($params = array()) {
-		return $this->renderPartial('Section/Author', array(
+		return $this->renderPartial('Book/Section/Content', array(
 			'sectionId'      => $params['section']->section_id,
 			'sectionOrder'   => $params['section']->section_order,
 			'wordCount'      => $params['section']->section_word_count,

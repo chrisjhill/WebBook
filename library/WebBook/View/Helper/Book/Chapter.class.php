@@ -1,5 +1,5 @@
 <?php
-namespace WebBook\View\Helper;
+namespace WebBook\View\Helper\Book;
 use Core;
 
 /**
@@ -35,7 +35,7 @@ class Chapter extends Core\ViewHelper
 		}
 
 		// Place the chapter's sections into a chapter
-		return $this->renderPartial('Chapter', array(
+		return $this->renderPartial('Book/Chapter', array(
 			'chapterId'        => $params['chapterId'],
 			'sectionHtml'      => $sectionHtml,
 			'chapterCanAdd'    => ! $this->view->getVariable('readonly'),

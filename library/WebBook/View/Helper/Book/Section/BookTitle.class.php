@@ -1,5 +1,5 @@
 <?php
-namespace WebBook\View\Helper;
+namespace WebBook\View\Helper\Book\Section;
 use Core;
 
 /**
@@ -8,7 +8,7 @@ use Core;
  * @copyright   2012 Christopher Hill <cjhill@gmail.com>
  * @author      Christopher Hill <cjhill@gmail.com>
  */
-class SectionBookTitle extends Core\ViewHelper
+class BookTitle extends Core\ViewHelper
 {
 	/**
 	 * Outputs a book title.
@@ -24,7 +24,7 @@ class SectionBookTitle extends Core\ViewHelper
 	 * @return string         A rendered View Helper Partial template file.
 	 */
 	public function render($params = array()) {
-		return $this->renderPartial('Section/BookTitle', array(
+		return $this->renderPartial('Book/Section/BookTitle', array(
 			'sectionId'      => $params['section']->section_id,
 			'sectionOrder'   => $params['section']->section_order,
 			'wordCount'      => $params['section']->section_word_count,
