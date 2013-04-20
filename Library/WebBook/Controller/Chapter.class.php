@@ -67,7 +67,7 @@ class Chapter extends Core\Controller
 		$chapter->add($section);
 
 		// And output
-		echo $this->view->chapter(array(
+		echo $this->view->book_Chapter(array(
 			'chapter'          => $chapter,
 			'chapterId'        => Core\Request::post('chapter_id'),
 			'chapterCanRemove' => true
