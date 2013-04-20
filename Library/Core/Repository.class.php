@@ -36,7 +36,7 @@ class Repository
 	 * @return boolean
 	 */
 	public function has($variable) {
-		return isset($this->_store[$variable]);
+		return array_key_exists($variable, $this->_store);
 	}
 
 	/**
@@ -59,7 +59,7 @@ class Repository
 	 */
 	public function __get($variable) {
 		// Do we even have this piece of data?
-		if (! isset($this->_store[$variable])) {
+		if (! array_key_exists($variable, $this->_store)) {
 			throw new \Exception('Could not locate the ' . $variable . ' in repository.');
 		}
 

@@ -1,9 +1,9 @@
 <?php
 namespace WebBook\Controller;
-use Core, WebBook\Model, WebBook\View\Helper;
+use Core, WebBook\Model;
 
 /**
- * Handles the interaction with the characters.
+ * This controller handles the output of the character overview page.
  *
  * @copyright 2013 Christopher Hill <cjhill@gmail.com>
  * @author    Christopher Hill <cjhill@gmail.com>
@@ -11,82 +11,21 @@ use Core, WebBook\Model, WebBook\View\Helper;
 class Character extends Core\Controller
 {
 	/**
-	 * Generates the snapshot information.
+	 * View the character overview page.
 	 *
 	 * @access public
-	 * @ajax
 	 */
 	public function indexAction() {
-		// The book and user information
+		// Get the book
 		$book = Core\StoreRequest::get('book');
-		$user = Core\StoreRequest::get('user');
 
-		// Get the characters in the book
-		$this->view->addVariable('characters', true);
-	}
-
-	/**
-	 * Insert a new character.
-	 *
-	 * @access public
-	 * @ajax
-	 */
-	public function insertAction() {
-		// Set the new character's information
-		$character = new Model\Character\Instance(array(
-			'book'           => Core\Request::post('book'),
-			'entity_type'    => 'character',
-			'entity_title'   => Core\Request::post('book'),
-			'entity_image'   => Core\Request::post('book'),
-			'entity_content' => Core\Request::post('book'),
-			'entity_content' => Core\Request::server('REQUEST_TIME')
+		// Get the entities
+		$characters = new Model\EntityGroup\Instance(array(
+			'book_id'     => $book->book_id,
+			'entity_type' => 'character'
 		));
-		$character->save();
 
-		// Output when the snapshot was created
-		die($character->output());
-	}
-
-	/**
-	 * Update a character.
-	 *
-	 * @access public
-	 * @ajax
-	 */
-	public function updateAction() {
-		// Set the new character's information
-		$character = new Model\Character\Instance(array(
-			'book_id'        => Core\Request::post('book'),
-			'character_id'   => Core\Request::post('character_id'),
-			'entity_type'    => 'character',
-			'entity_title'   => Core\Request::post('book'),
-			'entity_image'   => Core\Request::post('book'),
-			'entity_content' => Core\Request::post('book'),
-			'entity_content' => Core\Request::server('REQUEST_TIME')
-		));
-		$character->save();
-
-		// Output when the snapshot was created
-		echo new Helper\Notice('success', 'Character information has been successfully updated.');
-		die();
-	}
-
-	/**
-	 * Remove a character.
-	 *
-	 * @access public
-	 * @ajax
-	 */
-	public function removeAction() {
-		// Set the character and then remove
-		$character = new Model\Character\Instance(array(
-			'book_id'   => Core\Request::post('book'),
-			'entity_id' => Core\Request::post('entity_id')
-		));
-		$character->delete();
-
-		// Display notice
-		echo new Helper\Notice('success', 'Character has been successfully removed.');
-		die();
+		// And setup the view
+		$this->view->addVariable('characters', $characters);
 	}
 }
