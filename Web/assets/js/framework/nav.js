@@ -88,8 +88,6 @@ WEBBOOK.Nav = {
 	 *
 	 * @param  Event   event
 	 * @return boolean
-	 * @todo   Move the pageStore into a content object.
-	 * @todo   Use local storage instead of local variables, LS = persistence!
 	 *
 	 * @triggers Content_Retrieved If our Ajax function succeeded.
 	 */

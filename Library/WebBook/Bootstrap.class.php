@@ -2,6 +2,12 @@
 namespace WebBook;
 use Core, WebBook\Model;
 
+/**
+ * Handles certain triggers from the Core MVC.
+ *
+ * @copyright 2012 Christopher Hill <cjhill@gmail.com>
+ * @author    Christopher Hill <cjhill@gmail.com>
+ */
 class Bootstrap
 {
 	/**
@@ -17,9 +23,6 @@ class Bootstrap
 	 * @access public
 	 * @param  array  $params Parameters passed into this state update.
 	 * @static
-	 *
-	 * @todo Does the user have access to this book?
-	 * @todo If there is no user logged in and the book is private, redirect.
 	 */
 	public static function initRequest($params) {
 		// Get the ID's

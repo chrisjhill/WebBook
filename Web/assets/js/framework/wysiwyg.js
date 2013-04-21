@@ -48,7 +48,6 @@ WEBBOOK.Wysiwyg = {
 	 * </ul>
 	 *
 	 * @param Event event
-	 * @todo  There is a bug with WebKit where removeFormat does not remove backColor.
 	 */
 	hideShowWysiwyg: function(event) {
 		// Get the range

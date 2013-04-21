@@ -4,6 +4,8 @@
  * @copyright   2012 Christopher Hill <cjhill@gmail.com>
  * @author      Christopher Hill <cjhill@gmail.com>
  * @since       01/02/2013
+ *
+ * @todo        Pasting can cause problems, see stackoverflow.com/a/6804718
  */
 WEBBOOK.Section = {
 	// Vars
@@ -90,7 +92,7 @@ WEBBOOK.Section = {
 
 		// There are sections to save
 		// Loop over and update
-		for (sectionId in this.sectionsUpdated) {
+		for (var sectionId in this.sectionsUpdated) {
 			// Reference to the section
 			$.ajax({
 				url:  "/section/update",
@@ -99,7 +101,7 @@ WEBBOOK.Section = {
 					book_id:         WEBBOOK.Book.bookId,
 					section_id:      this.sectionsUpdated[sectionId].data("sectionid"),
 					section_order:   this.sectionsUpdated[sectionId].data("order"),
-					section_content: this.sectionsUpdated[sectionId].html(),
+					section_content: this.sectionsUpdated[sectionId].html()
 				}
 			});
 		}
@@ -256,12 +258,11 @@ WEBBOOK.Section = {
 		var $el = this.$section.filter("#section-" + sectionId);
 
 		// Do not allow deletion of chapter titles
-		// @todo This needs to be made into a proper Notice trigger
 		if ($el.hasClass("chapter-title")) {
-			$(document).trigger({ type: "Notice" },
-				'<p class="notice notice-error">'
-					+ '<strong>Sorry, you cannot remove chapter titles</strong>'
-					+ '</p>');
+			$(document).trigger({ type: "Notice" }, {
+				status:  "error",
+				message: "Sorry, you cannot remove chapter titles"
+			});
 			return false;
 		}
 

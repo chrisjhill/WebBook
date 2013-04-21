@@ -15,7 +15,6 @@ class Section extends Core\Controller
 	 *
 	 * @access public
 	 * @ajax
-	 * @todo   Update the order of sections.
 	 */
 	public function insertAction() {
 		// Get the book ID this is for
@@ -55,7 +54,6 @@ class Section extends Core\Controller
 		$section->import($section->get());
 
 		// Update
-		// @todo str_word_count() might not be the most appropriate function.
 		$section->section_order      = Core\Request::post('section_order');
 		$section->section_content    = Core\Request::post('section_content');
 		$section->section_word_count = str_word_count(Core\Request::post('section_content'));

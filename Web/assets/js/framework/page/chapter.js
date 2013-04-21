@@ -11,11 +11,9 @@ WEBBOOK.ChapterOverview = {
 	// DOM references
 
 	/**
-	 *
+	 * This object is a placeholder for future.
 	 */
-	init: function() {
-		// @todo
-	}
+	init: function() { /* Do nothing */ }
 }
 
 WEBBOOK.ChapterOverview.init();
