@@ -57,7 +57,6 @@ namespace Core;
  * @todo        Integrate with a Core\Notice class.
  * @todo        Import data from a request and "bolt" on tests.
  * @todo        Regex testing.
- * @todo        Look into making the 'is' parameter class constants?
  */
 class Validate
 {
@@ -143,7 +142,7 @@ class Validate
 			foreach ($inputInfo['tests'] as $testName => $testParams) {
 				// Run the test
 				// Note: The function to test might not exist, so we can catch with __call.
-				if (! self::$testName($inputInfo['value'], (array)$testParams)) {
+				if (! self::$testName($inputInfo['value'], $testParams)) {
 					// The test was unsuccessful, report error
 					$this->addError($inputName, $testName);
 				}
@@ -227,7 +226,7 @@ class Validate
 		}
 
 		// Length is more than the maximum
-		else if (isset($testParams['max']) && $length < $testParams['max']) {
+		else if (isset($testParams['max']) && $length > $testParams['max']) {
 			return false;
 		}
 
@@ -244,9 +243,14 @@ class Validate
 	 * @static
 	 */
 	public static function is($inputValue, $testParams) {
+		// Due to a bug in filter_var we handle booleans differently
+		// @see https://bugs.php.net/bug.php?id=49510
+		if ($testParams == 'boolean') {
+			return is_bool($inputValue);
+		}
+
 		// Work out which filter we should use
 		switch ($testParams) {
-			case 'boolean' : $filter = \FILTER_VALIDATE_BOOLEAN; break;
 			case 'email'   : $filter = \FILTER_VALIDATE_EMAIL;   break;
 			case 'float'   : $filter = \FILTER_VALIDATE_FLOAT;   break;
 			case 'int'     : $filter = \FILTER_VALIDATE_INT;     break;
@@ -336,7 +340,7 @@ class Validate
 	 * @return boolean
 	 */
 	public function isValid() {
-		return count($this->_error) >= 1;
+		return count($this->_error) <= 0;
 	}
 
 	/**
