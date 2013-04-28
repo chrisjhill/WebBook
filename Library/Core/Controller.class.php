@@ -39,10 +39,12 @@ class Controller
 	/**
 	 * Change the layout from the default.
 	 *
+	 * To not use a layout pass in boolean false.
+	 *
 	 * @access public
-	 * @param  string $layout Which layout we wish to use.
-	 * @return string
-	 * @throws Exception      If the layout does not exist.
+	 * @param  mixed     $layout Which layout we wish to use.
+	 * @return boolean
+	 * @throws Exception         If the layout does not exist.
 	 */
 	public function setLayout($layout) {
 		// Do we actually want a layout?
@@ -78,6 +80,9 @@ class Controller
 	 * @throws Exception          From the Router if the controller/action does not exist.
 	 */
 	public function forward($action = 'index', $controller = '') {
+		// Reregister the action in the profile
+		Profiler::deregister('Action', $this->view->action);
+
 		// Is this an controller forward or an action forward?
 		// Controller forward = A new controller
 		// Action redirect    = Same controller, different action
@@ -86,6 +91,7 @@ class Controller
 			$this->child->render();
 		} else {
 			// And start a new router to the desired controller/action
+			Profiler::deregister('Controller', $this->view->controller);
 			Router::loadController($controller, $action);
 		}
 	}

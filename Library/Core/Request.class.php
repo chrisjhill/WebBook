@@ -61,8 +61,8 @@ class Request
 
 		// Start to piece back together and create a nice, usable, array
 		$url = array(
-			'controller' => isset($urlBreakdown[0]) ? $urlBreakdown[0] : 'Index',
-			'action'     => isset($urlBreakdown[1]) ? $urlBreakdown[1] : 'index'
+			'controller' => isset($urlBreakdown[0]) ? ucfirst($urlBreakdown[0]) : 'Index',
+			'action'     => isset($urlBreakdown[1]) ? $urlBreakdown[1]          : 'index'
 		);
 
 		// Chunk them into variable->value

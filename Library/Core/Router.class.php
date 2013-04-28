@@ -18,7 +18,9 @@ class Router
 	 */
 	public function route() {
 		// Get the address the user navigated to
+		Profiler::register('Core', 'Request');
 		Request::getUrlBreakdown();
+		Profiler::deregister('Core', 'Request');
 
 		// Inform the bootstrap a request has been initialised
 		Bootstrap::trigger(
@@ -42,13 +44,15 @@ class Router
 	 * @throws Exception             If we cannot load the controller.
      * @static
 	 */
-	public static function loadController($controller, $action = '') {
+	public static function loadController($controllerName, $action = '') {
 		// Format the controller name correctly
-		$controller = Config::get('settings', 'project') . '\\Controller\\' . $controller;
+		$controller = Config::get('settings', 'project') . '\\Controller\\' . $controllerName;
 
 		// Can we load the controller?
 		try {
 			// Instantiate
+			Profiler::register('Controller', $controllerName);
+			Profiler::register('Core', 'Router');
 			$controller = new $controller();
 
 			// We need to set the child to the parent so we can forward
@@ -63,14 +67,19 @@ class Router
 			);
 
 			// Call the init method, if it exists
+			Profiler::deregister('Core', 'Router');
 			if (method_exists($controller, 'init')) {
+				Profiler::register('Controller', 'Init');
 				$controller->init();
+				Profiler::deregister('Controller', 'Init');
 			}
 
 			// Which action shall we run?
-			$action = $action ? $action : Request::get('action');
+			$action = $action ?: Request::get('action');
 		} catch (\Exception $e) {
 			// Forward to the Error's 404
+			Profiler::deregister('Core', 'Router');
+			Profiler::deregister('Controller', $controllerName);
 			Router::loadController('Error', 'notFound');
 		}
 
@@ -88,6 +97,9 @@ class Router
      * @static
 	 */
 	public static function loadAction($controller, $action) {
+		// Start the profiler
+		Profiler::register('Core', 'Router');
+
 		// We want pretty URL's, there might be dashes
 		$action = str_replace('-', '', $action);
 
@@ -98,6 +110,7 @@ class Router
 		if (! $actionExists && $action != 'error') {
 			// There was an error with the action, and we were not running the 404 action
 			// Try and run the 404 action
+			Profiler::deregister('Core', 'Router');
 			Router::loadAction($controller, 'error');
 
 			// No need to go any further
@@ -113,6 +126,8 @@ class Router
 				'action'     => $action
 			)
 		);
+		Profiler::deregister('Core', 'Router');
+		Profiler::register('Action', $action);
 
 		// Set the controller and action that we are heading to
 		$controller->view->controller = str_replace(

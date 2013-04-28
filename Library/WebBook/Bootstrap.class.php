@@ -55,11 +55,12 @@ class Bootstrap
 	 */
 	public static function initController($params) {
 		// Add variables to the view
-		$params['controller']->view->addVariable('book',      Core\StoreRequest::get('book'));
-		$params['controller']->view->addVariable('user',      Core\StoreRequest::get('user'));
-		$params['controller']->view->addVariable('settings',  Core\StoreRequest::get('settings'));
-		$params['controller']->view->addVariable('urlRoot',   Core\Config::get('path',     'root'));
-		$params['controller']->view->addVariable('appStatus', Core\Config::get('settings', 'status'));
+		$params['controller']->view->addVariable('book',       Core\StoreRequest::get('book'));
+		$params['controller']->view->addVariable('user',       Core\StoreRequest::get('user'));
+		$params['controller']->view->addVariable('settings',   Core\StoreRequest::get('settings'));
+		$params['controller']->view->addVariable('urlRoot',    Core\Config::get('path',     'root'));
+		$params['controller']->view->addVariable('appStatus',  Core\Config::get('settings', 'status'));
+		$params['controller']->view->addVariable('appProfile', Core\Config::get('profiler', 'enable'));
 
 		// If it is an ajax request then we just want a snippet of information,
 		// .. we do not want the entire layout.

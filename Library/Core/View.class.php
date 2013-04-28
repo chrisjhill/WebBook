@@ -115,6 +115,10 @@ class View
 			);
 		}
 
+		// This is the end of the controller's work
+		Profiler::deregister('action',     $this->action);
+		Profiler::deregister('controller', $this->controller);
+
 		// Now start to wrap the view content in the layout
 		if (! $this->layout) {
 			// No template, thanks
@@ -122,7 +126,7 @@ class View
 		} else {
 			// Set the action location we need to run
 			$templateUrlLayout = Config::get('path', 'base') . Config::get('path', 'project')
-				. 'layout/' . $this->layout . '.phtml';
+				. 'Layout/' . $this->layout . '.phtml';
 
 			// And parse the action's script
 			$template = $this->parse(
@@ -140,6 +144,14 @@ class View
 			)
 		);
 
+		// Stop the profiling, we're done
+		Profiler::stop();
+
+		// Add the profile to the page output?
+		if (Config::get('profiler', 'enable', true)) {
+			$template .= $this->profiler(Profiler::getProfilerData());
+		}
+
 		// And now, the journey ends
 		// We die so that we do not call other action's render()
 		die($template);
@@ -154,6 +166,14 @@ class View
 	 * @return string
 	 */
 	public function parse($template, $variables, $cacheName = null) {
+		// Start profiling
+		$templateName = str_replace(
+			Config::get('path', 'base') . Config::get('path', 'project'),
+			'',
+			$template
+		);
+		Profiler::register('Parse', $templateName);
+
 		// The view exists
 		// Extract the variables that have been set
 		if ($variables) {
@@ -179,6 +199,7 @@ class View
 		}
 
 		// And return the result of this parse
+		Profiler::deregister('Parse', $templateName);
 		return $content;
 	}
 
@@ -203,6 +224,9 @@ class View
 		$viewHelper = new $viewHelperClassName();
 
 		// Render and return
-		return $viewHelper->render(isset($param[0]) ? $param[0] : array());
+		Profiler::register('Helper', $helperName);
+		$content = $viewHelper->render(isset($param[0]) ? $param[0] : array());
+		Profiler::deregister('Helper', $helperName);
+		return $content;
 	}
 }
