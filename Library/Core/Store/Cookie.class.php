@@ -1,24 +1,16 @@
 <?php
-namespace Core;
+namespace Core\Store;
 
 /**
- * Stores a variable for a single request. Data does not persist.
+ * Stores data within the users own cookie store.
  *
- * @copyright   2012 Christopher Hill <cjhill@gmail.com>
- * @author      Christopher Hill <cjhill@gmail.com>
- * @since       19/01/2013
+ * @copyright Copyright (c) 2012-2013 Christopher Hill
+ * @license   http://www.opensource.org/licenses/mit-license.php The MIT License
+ * @author    Christopher Hill <cjhill@gmail.com>
+ * @package   MVC
  */
-class StoreRequest implements StoreInterface
+class Cookie implements StorageInterface
 {
-	/**
-	 * A store for all the variables set.
-	 *
-	 * @access public
-	 * @var    array
-	 * @static
-	 */
-	public static $store;
-
 	/**
 	 * Check whether the variable exists in the store.
 	 *
@@ -28,26 +20,28 @@ class StoreRequest implements StoreInterface
 	 * @static
 	 */
 	public static function has($variable) {
-		return isset(self::$store[$variable]);
+		return isset($_COOKIE[$variable]);
 	}
 
 	/**
 	 * Store a variable for use.
 	 *
 	 * @access public
-	 * @param  string  $variable The name of the variable to store.
-	 * @param  mixed   $value    The data we wish to store.
-	 * @return boolean           If we managed to store the variable.
-	 * @throws Exception         If the variable already exists when we try not to overwrite it.
+	 * @param  string  $variable  The name of the variable to store.
+	 * @param  mixed   $value     The data we wish to store.
+	 * @param  int     $expires   How many seconds the cookie should be kept.
+	 * @param  boolean $overwrite Whether we are allowed to overwrite the variable.
+	 * @return boolean            If we managed to store the variable.
+	 * @throws Exception          If the variable already exists when we try not to overwrite it.
 	 * @static
 	 */
-	public static function put($variable, $value, $overwrite = false) {
+	public static function put($variable, $value, $expires = 1314000, $overwrite = false) {
 		// If it exists, and we do not want to overwrite, then throw exception
 		if (self::has($variable) && ! $overwrite) {
-			throw new \Exception($variable . ' already exists in the store.');
+			throw new \Exception("{$variable} already exists in the store.");
 		}
 
-		self::$store[$variable] = $value;
+		setcookie($variable, $value, $expires, '/', '.');
 		return self::has($variable);
 	}
 
@@ -63,10 +57,10 @@ class StoreRequest implements StoreInterface
 	public static function get($variable) {
 		// If it exists, and we do not want to overwrite, then throw exception
 		if (! self::has($variable)) {
-			throw new \Exception($variable . ' does not exist in the store.');
+			throw new \Exception("{$variable} does not exist in the store.");
 		}
 
-		return self::$store[$variable];
+		return $_COOKIE[$variable];
 	}
 
 	/**
@@ -74,20 +68,16 @@ class StoreRequest implements StoreInterface
 	 *
 	 * @access public
 	 * @param  string $variable The name of the variable to remove.
-	 * @return boolean          If the variable was removed successfully.
 	 * @throws Exception        If the variable does not exist.
 	 * @static
 	 */
 	public static function remove($variable) {
 		// If it exists, and we do not want to overwrite, then throw exception
 		if (! self::has($variable)) {
-			throw new \Exception($variable . ' does not exist in the store.');
+			throw new \Exception("{$variable} does not exist in the store.");
 		}
 
-		// Unset the variable
-		unset(self::$store[$variable]);
-
-		// Was it removed
-		return ! self::has($variable);
+		// Remove the cookie by setting its expires in the past
+		setcookie($variable, '', (time() - 3600));
 	}
 }

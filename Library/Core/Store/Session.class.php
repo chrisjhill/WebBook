@@ -1,14 +1,15 @@
 <?php
-namespace Core;
+namespace Core\Store;
 
 /**
- * Stores a variable for a single user session.
+ * Stores data for a user session.
  *
- * @copyright   2012 Christopher Hill <cjhill@gmail.com>
- * @author      Christopher Hill <cjhill@gmail.com>
- * @since       19/01/2013
+ * @copyright Copyright (c) 2012-2013 Christopher Hill
+ * @license   http://www.opensource.org/licenses/mit-license.php The MIT License
+ * @author    Christopher Hill <cjhill@gmail.com>
+ * @package   MVC
  */
-class StoreSession implements StoreInterface
+class Session implements StorageInterface
 {
 	/**
 	 * Check whether the variable exists in the store.
@@ -26,10 +27,11 @@ class StoreSession implements StoreInterface
 	 * Store a variable for use.
 	 *
 	 * @access public
-	 * @param  string  $variable The name of the variable to store.
-	 * @param  mixed   $value    The data we wish to store.
-	 * @return boolean           If we managed to store the variable.
-	 * @throws Exception         If the variable already exists when we try not to overwrite it.
+	 * @param  string  $variable  The name of the variable to store.
+	 * @param  mixed   $value     The data we wish to store.
+	 * @param  boolean $overwrite Whether we are allowed to overwrite the variable.
+	 * @return boolean            If we managed to store the variable.
+	 * @throws Exception          If the variable already exists when we try not to overwrite it.
 	 * @static
 	 */
 	public static function put($variable, $value, $overwrite = false) {
@@ -38,7 +40,7 @@ class StoreSession implements StoreInterface
 			throw new \Exception($variable . ' already exists in the store.');
 		}
 
-		$_SESSION[$variable] = $value;
+		$_SESSION[$variable] = serialize($value);
 		return self::has($variable);
 	}
 
@@ -54,10 +56,10 @@ class StoreSession implements StoreInterface
 	public static function get($variable) {
 		// If it exists, and we do not want to overwrite, then throw exception
 		if (! self::has($variable)) {
-			throw new \Exception($variable . ' does not exist in the store.');
+			throw new \Exception("{$variable} does not exist in the store.");
 		}
 
-		return $_SESSION[$variable];
+		return unserialize($_SESSION[$variable]);
 	}
 
 	/**
@@ -72,7 +74,7 @@ class StoreSession implements StoreInterface
 	public static function remove($variable) {
 		// If it exists, and we do not want to overwrite, then throw exception
 		if (! self::has($variable)) {
-			throw new \Exception($variable . ' does not exist in the store.');
+			throw new \Exception("{$variable} does not exist in the store.");
 		}
 
 		// Unset the variable

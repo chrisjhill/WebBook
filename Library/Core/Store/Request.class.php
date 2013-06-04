@@ -1,15 +1,25 @@
 <?php
-namespace Core;
+namespace Core\Store;
 
 /**
- * Stores a variable in PHP APC.
+ * Stores data for a single request, which does not persist.
  *
- * @copyright   2012 Christopher Hill <cjhill@gmail.com>
- * @author      Christopher Hill <cjhill@gmail.com>
- * @since       19/01/2013
+ * @copyright Copyright (c) 2012-2013 Christopher Hill
+ * @license   http://www.opensource.org/licenses/mit-license.php The MIT License
+ * @author    Christopher Hill <cjhill@gmail.com>
+ * @package   MVC
  */
-class StoreApc implements StoreInterface
+class Request implements StorageInterface
 {
+	/**
+	 * A store for all the variables set.
+	 *
+	 * @access public
+	 * @var    array
+	 * @static
+	 */
+	public static $store;
+
 	/**
 	 * Check whether the variable exists in the store.
 	 *
@@ -19,28 +29,27 @@ class StoreApc implements StoreInterface
 	 * @static
 	 */
 	public static function has($variable) {
-		return apc_exists($variable);
+		return isset(self::$store[$variable]);
 	}
 
 	/**
 	 * Store a variable for use.
 	 *
 	 * @access public
-	 * @param  string  $variable The name of the variable to store.
-	 * @param  mixed   $value    The data we wish to store.
-	 * @return boolean           If we managed to store the variable.
-	 * @throws Exception         If the variable already exists when we try not to overwrite it.
+	 * @param  string  $variable  The name of the variable to store.
+	 * @param  mixed   $value     The data we wish to store.
+	 * @param  boolean $overwrite Whether we are allowed to overwrite the variable.
+	 * @return boolean            If we managed to store the variable.
+	 * @throws Exception          If the variable already exists when we try not to overwrite it.
 	 * @static
 	 */
 	public static function put($variable, $value, $overwrite = false) {
 		// If it exists, and we do not want to overwrite, then throw exception
 		if (self::has($variable) && ! $overwrite) {
-			throw new \Exception($variable . ' already exists in the store.');
+			throw new \Exception("{$variable} already exists in the store.");
 		}
 
-		// use apc_store() instead of apc_add()
-		// apc_add() does not overwrite data, we get around this by checking above
-		apc_store($variable, $value);
+		self::$store[$variable] = $value;
 		return self::has($variable);
 	}
 
@@ -56,10 +65,10 @@ class StoreApc implements StoreInterface
 	public static function get($variable) {
 		// If it exists, and we do not want to overwrite, then throw exception
 		if (! self::has($variable)) {
-			throw new \Exception($variable . ' does not exist in the store.');
+			throw new \Exception("{$variable} does not exist in the store.");
 		}
 
-		return apc_fetch($variable);
+		return self::$store[$variable];
 	}
 
 	/**
@@ -74,11 +83,11 @@ class StoreApc implements StoreInterface
 	public static function remove($variable) {
 		// If it exists, and we do not want to overwrite, then throw exception
 		if (! self::has($variable)) {
-			throw new \Exception($variable . ' does not exist in the store.');
+			throw new \Exception("{$variable} does not exist in the store.");
 		}
 
 		// Unset the variable
-		apc_delete($variable);
+		unset(self::$store[$variable]);
 
 		// Was it removed
 		return ! self::has($variable);

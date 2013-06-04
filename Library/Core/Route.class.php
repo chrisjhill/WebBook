@@ -4,14 +4,16 @@ namespace Core;
 /**
  * A single route for the application.
  *
- * Paths match the basics of the request URL. Anything after the route path will
- * be parsed as a GET variable. E.g., The route path of:
+ * Routes can contain variables which are prepended by a colon. Paths are greedy
+ * by default, they will grab any URL that they match irrespective of what comes
+ * after the matched fragments of the request URL. Anything after the route path
+ * will be parsed as a GET variable. E.g., The route path of:
  *
- * <code>/foo/:bar</code>
+ * <code>foo/:bar</code>
  *
  * Will turn the request URL of:
  *
- * <code>/foo/hello/my/variables/go/here/foobar</code>
+ * <code>foo/hello/my/variables/go/here/foobar</code>
  *
  * Into the following GET variables (minus controller/action indexes):
  *
@@ -24,14 +26,15 @@ namespace Core;
  * )
  * </code>
  *
- * @copyright   2013 Christopher Hill <cjhill@gmail.com>
- * @author      Christopher Hill <cjhill@gmail.com>
- * @since       04/05/2013
+ * @copyright Copyright (c) 2012-2013 Christopher Hill
+ * @license   http://www.opensource.org/licenses/mit-license.php The MIT License
+ * @author    Christopher Hill <cjhill@gmail.com>
+ * @package   MVC
  */
 class Route
 {
 	/**
-	 * The name of this route.
+	 * The unique name of this route.
 	 *
 	 * @access public
 	 * @var    string
@@ -49,7 +52,7 @@ class Route
 	/**
 	 * The regex tests for each variable in the URL.
 	 *
-	 * Note: If no regex test is added for a variable then we use \w+
+	 * Note: If no regex test is added for a variable then we use [\w\-]+
 	 *
 	 * @access public
 	 * @var    array
@@ -75,7 +78,7 @@ class Route
 	 * Create the route.
 	 *
 	 * @access public
-	 * @param  string $name The name of the route.
+	 * @param  string $name The unique name of the route.
 	 */
 	public function __construct($name) {
 		$this->name = $name;
@@ -84,20 +87,19 @@ class Route
 	/**
 	 * Set the path for this route.
 	 *
-	 * Paths should start with a forward slash, which will we be worked out
-	 * relative to your path root (as defined in your projects config.ini). They
-	 * can contain any combination of strings or variables. A variable is
-	 * declared by starting with a : and then a series of a-z characters. The
-	 * following are all examples of valid paths.
+	 * Paths will we be worked out relative to your path root (as defined in your
+	 * projects config.ini). They can contain any combination of strings or
+	 * variables. A variable is declared by starting with a colon (:) and then a
+	 * series of a-z characters. The following are all examples of valid paths.
 	 *
 	 * <ul>
-	 *     <li>/foo</li>
-	 *     <li>/foo/bar/:acme</li>
-	 *     <li>/:foo/:bar/:acme</li>
-	 *     <li>/:foo/bar/:acme</li>
+	 *     <li>foo</li>
+	 *     <li>foo/bar/:acme</li>
+	 *     <li>:foo/:bar/:acme</li>
+	 *     <li>:foo/bar/:acme</li>
 	 * </ul>
 	 *
-	 * To set the regex for these variables, use the setParamFormats method.
+	 * To set the regex for these variables, use the setParamFormats() method.
 	 *
 	 * @access public
 	 * @param  string     $route The path for this route.
@@ -111,14 +113,14 @@ class Route
 	/**
 	 * Set the regex patterns for each variable in the route.
 	 *
-	 * If no regex pattern is passed in for a variable then we use \w+
+	 * If no regex pattern is passed in for a variable then we use [\w\-]+
 	 *
 	 * All of your patterns will automatically start with ^, end with $, and will
 	 * include the pattern modifiers i and u. So, if you were to pass in the
 	 * regex pattern on \d+ then it would be evaluated as /^\d+$/iu
 	 *
-	 * If your path is <pre>/foo/:bar/:acme</pre> then your $formats parameter
-	 * will look like:
+	 * If your path is <pre>foo/:bar/:acme</pre> then your $formats array could
+	 * potentially look like:
 	 *
 	 * <code>
 	 * array(

@@ -119,7 +119,7 @@ WEBBOOK.Nav = {
 				+ '</div>');
 
 		// We only wan to enable local storage in production
-		if (WEBBOOK.App.status != "development") {
+		if (WEBBOOK.App.status != "Dev") {
 			// We need to load a new page
 			// First, do we already have it in the page store?
 			if (WEBBOOK.Content.has(page, false)) {
