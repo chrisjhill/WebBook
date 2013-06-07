@@ -19,7 +19,7 @@ class Book extends Core\ViewHelper
 	 */
 	public function render($params = array()) {
 		// Get the book
-		$book = Core\StoreRequest::get('book');
+		$book = Core\Store\Request::get('book');
 
 		// Placeholder for each chapter's HTML
 		$chapterHtml = '';

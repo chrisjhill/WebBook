@@ -18,7 +18,7 @@ class Section extends Core\Controller
 	 */
 	public function insertAction() {
 		// Get the book ID this is for
-		$book = Core\StoreRequest::get('book');
+		$book = Core\Store\Request::get('book');
 
 		// Create a new dummy section
 		$section = new Model\Section\Instance(array(
@@ -82,7 +82,7 @@ class Section extends Core\Controller
 	 */
 	public function deleteAction() {
 		// Get the book ID this is for
-		$book = Core\StoreRequest::get('book');
+		$book = Core\Store\Request::get('book');
 
 		// Get the information for this section
 		$section = new Model\Section\Instance(array(

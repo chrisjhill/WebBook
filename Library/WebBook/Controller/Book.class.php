@@ -19,14 +19,14 @@ class Book extends Core\Controller
 	 */
 	public function init() {
 		// If there is no book then redirect
-		if (! Core\StoreRequest::get('book')->has('book_id')) {
+		if (! Core\Store\Request::get('book')->has('book_id')) {
 			$this->forward('index', 'index');
 		}
 
 		// The book exists
 		$this->setLayout('book');
-		$this->view->addVariable('book', Core\StoreRequest::get('book'));
-		$this->view->addVariable('user', Core\StoreRequest::get('user'));
+		$this->view->addVariable('book', Core\Store\Request::get('book'));
+		$this->view->addVariable('user', Core\Store\Request::get('user'));
 	}
 
 	/**

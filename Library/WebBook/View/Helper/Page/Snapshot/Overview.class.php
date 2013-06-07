@@ -35,7 +35,7 @@ class Overview extends Core\ViewHelper
 		// Loop over each snapshot and generate its HTML
 		foreach ($params['bookSnapshots'] as $snapshot) {
 			$snapshotHtml .= $this->renderPartial('Page/Snapshot/OverviewItem', array(
-				'bookId'             => Core\StoreRequest::get('book')->book_id,
+				'bookId'             => Core\Store\Request::get('book')->book_id,
 				'snapshotId'         => $snapshot['snapshot_created'],
 				'snapshotCreated'    => Utility\Date::getDate($snapshot['snapshot_created']),
 				'snapshotCreatedAgo' => Utility\Date::getDifference(
@@ -43,7 +43,7 @@ class Overview extends Core\ViewHelper
 					Core\Request::server('REQUEST_TIME')
 				),
 				'urlBookSnapshot'    => Utility\Url::bookViewSnapshot(
-					Core\StoreRequest::get('book'),
+					Core\Store\Request::get('book'),
 					$snapshot['snapshot_created']
 				)
 			));

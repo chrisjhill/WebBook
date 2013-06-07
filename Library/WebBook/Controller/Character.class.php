@@ -17,7 +17,7 @@ class Character extends Core\Controller
 	 */
 	public function indexAction() {
 		// Get the book
-		$book = Core\StoreRequest::get('book');
+		$book = Core\Store\Request::get('book');
 
 		// Get the entities
 		$characters = new Model\EntityGroup\Instance(array(

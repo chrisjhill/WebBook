@@ -27,7 +27,7 @@ class Chapter extends Core\Controller
 	 */
 	public function insertAction() {
 		// Get the book ID this is for
-		$book = Core\StoreRequest::get('book');
+		$book = Core\Store\Request::get('book');
 
 		// Increment the chapter ID's
 		$chapter = new Model\Chapter\Instance(array(
@@ -85,7 +85,7 @@ class Chapter extends Core\Controller
 	 */
 	public function deleteAction() {
 		// Get the book ID this is for
-		$book = Core\StoreRequest::get('book');
+		$book = Core\Store\Request::get('book');
 
 		// Create instance from the post information
 		$section = new Model\Chapter\Instance(array(

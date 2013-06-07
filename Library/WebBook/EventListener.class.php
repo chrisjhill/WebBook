@@ -1,5 +1,5 @@
 <?php
-namespace MyProject;
+namespace WebBook;
 use Core;
 
 class EventListener
@@ -28,9 +28,9 @@ class EventListener
 		$snapshotId = Core\Request::get('snapshot', false);
 
 		// Set the user, book, and settings
-		Core\StoreRequest::put('user',     new Model\User\Instance($userId));
-		Core\StoreRequest::put('book',     new Model\Book\Instance($bookId, $snapshotId));
-		Core\StoreRequest::put('settings', new Model\Settings\Instance($bookId));
+		Core\Store\Request::put('user',     new Model\User\Instance($userId));
+		Core\Store\Request::put('book',     new Model\Book\Instance($bookId, $snapshotId));
+		Core\Store\Request::put('settings', new Model\Settings\Instance($bookId));
 	}
 
 	/**
@@ -49,9 +49,9 @@ class EventListener
 	 */
 	public static function initController($params) {
 		// Add variables to the view
-		$params['controller']->view->addVariable('book',       Core\StoreRequest::get('book'));
-		$params['controller']->view->addVariable('user',       Core\StoreRequest::get('user'));
-		$params['controller']->view->addVariable('settings',   Core\StoreRequest::get('settings'));
+		$params['controller']->view->addVariable('book',       Core\Store\Request::get('book'));
+		$params['controller']->view->addVariable('user',       Core\Store\Request::get('user'));
+		$params['controller']->view->addVariable('settings',   Core\Store\Request::get('settings'));
 		$params['controller']->view->addVariable('urlRoot',    Core\Config::get('path',     'root'));
 		$params['controller']->view->addVariable('appStatus',  Core\Config::get('settings', 'status'));
 		$params['controller']->view->addVariable('appProfile', Core\Config::get('profiler', 'enable'));

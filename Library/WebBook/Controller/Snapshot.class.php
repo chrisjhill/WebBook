@@ -18,8 +18,8 @@ class Snapshot extends Core\Controller
 	 */
 	public function indexAction() {
 		// The book and user information
-		$book = Core\StoreRequest::get('book');
-		$user = Core\StoreRequest::get('user');
+		$book = Core\Store\Request::get('book');
+		$user = Core\Store\Request::get('user');
 
 		// Get the snapshot information
 		$snapshot = new Model\snapshot\Instance(array(
@@ -41,7 +41,7 @@ class Snapshot extends Core\Controller
 	public function saveAction() {
 		// Set the new snapshot information and remove
 		$snapshot = new Model\Snapshot\Instance(array(
-			'book'             => Core\StoreRequest::get('book'),
+			'book'             => Core\Store\Request::get('book'),
 			'snapshot_created' => Core\Request::server('REQUEST_TIME')
 		));
 		$snapshot->save();

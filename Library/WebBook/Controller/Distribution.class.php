@@ -19,7 +19,7 @@ class Distribution extends Core\Controller
 	 */
 	public function indexAction() {
 		// Get the information on the book distribution
-		$book = Core\StoreRequest::get('book');
+		$book = Core\Store\Request::get('book');
 
 		$this->view->addVariable('urlBookView',      Utility\Url::bookView($book));
 		$this->view->addVariable('bookDistribution', $book->book_distribution);
@@ -33,7 +33,7 @@ class Distribution extends Core\Controller
 	 */
 	public function updateAction() {
 		// Get the book ID this is for
-		$book = Core\StoreRequest::get('book');
+		$book = Core\Store\Request::get('book');
 		$book->book_distribution = Core\Request::post('book_distribution');
 		$book->save();
 

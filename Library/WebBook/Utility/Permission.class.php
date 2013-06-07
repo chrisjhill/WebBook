@@ -21,8 +21,8 @@ class Permission
 	 */
 	public static function canView($book = null, $user = null) {
 		// If we have not been supplied the data, then gather from store
-		if (! $book) { $book = Core\StoreRequest::get('book'); }
-		if (! $user) { $user = Core\StoreRequest::get('user'); }
+		if (! $book) { $book = Core\Store\Request::get('book'); }
+		if (! $user) { $user = Core\Store\Request::get('user'); }
 
 		// We do not necessarily need require a user to be logged in, because
 		// .. the author could have freely distributed the book (i.e., not private).
@@ -54,8 +54,8 @@ class Permission
 	 */
 	public static function canEdit($book = null, $user = null) {
 		// If we have not been supplied the data, then gather from store
-		if (! $book) { $book = Core\StoreRequest::get('book'); }
-		if (! $user) { $user = Core\StoreRequest::get('user'); }
+		if (! $book) { $book = Core\Store\Request::get('book'); }
+		if (! $user) { $user = Core\Store\Request::get('user'); }
 
 		// To edit a book you must be logged in, and there must be a book!
 		if (! $user->has('user_id') || ! $book->has('book_id')) {

@@ -17,9 +17,9 @@ class Settings extends Core\Controller
 	 * @ajax
 	 */
 	public function indexAction() {
-		$this->view->addVariable('book',     Core\StoreRequest::get('book'));
-		$this->view->addVariable('user',     Core\StoreRequest::get('user'));
-		$this->view->addVariable('settings', Core\StoreRequest::get('settings'));
+		$this->view->addVariable('book',     Core\Store\Request::get('book'));
+		$this->view->addVariable('user',     Core\Store\Request::get('user'));
+		$this->view->addVariable('settings', Core\Store\Request::get('settings'));
 	}
 
 	/**
@@ -32,8 +32,8 @@ class Settings extends Core\Controller
 		// @todo Check that the fields are valid
 
 		// Update settings instance
-		$settings = Core\StoreRequest::get('settings');
-		$book     = Core\StoreRequest::get('book');
+		$settings = Core\Store\Request::get('settings');
+		$book     = Core\Store\Request::get('book');
 
 		$settings->import(array(
 			'book_id'                  => $book->book_id,

@@ -18,7 +18,7 @@ class Target extends Core\Controller
 	 */
 	public function indexAction() {
 		// The book information
-		$book = Core\StoreRequest::get('book');
+		$book = Core\Store\Request::get('book');
 
 		// Get the target the user has made
 		$target = new Model\Target\Instance($book->book_id);
@@ -65,7 +65,7 @@ class Target extends Core\Controller
 		// @todo Check that the fields are valid
 
 		// Update settings instance
-		$book = Core\StoreRequest::get('book');
+		$book = Core\Store\Request::get('book');
 
 		// Set the new target information and save
 		$target = new Model\Target\Instance($book->book_id);
