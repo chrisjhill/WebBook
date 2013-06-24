@@ -24,29 +24,44 @@ namespace Core;
  * // 1. Select a single user very quickly:
  * $user = new Model\User(1);
  *
- * // 2. Finds the users with ID's 1, 2, 3:
- * $users = new Model\User(array(1, 2, 3));
- *
- * // 3. Advanced query selecting:
+ * // 2. Advanced query selecting:
  * $users = new Model\User();
  * $users->where('active', '=', 1)->where('name', '=', 'Dave')->limit(10)->find();
  *
- * // 4. How many users the query found:
+ * // 3. How many users the query found:
  * echo 'I found ' . $users->rowCount() . ' users.';
  *
- * // 5. Loop over the found users:
+ * // 4. Loop over the found users:
  * while ($user = $users->fetch()) {
- *     echo 'Hello, ' . $user['name'];
+ *     echo 'Hello, ' . $user->name;
  * }
  * </code>
  *
  * Updating
  * --------
- * TBC.
+ * <code>
+ * 1. Updating a user programatically:
+ * $user = new Model\User(1);
+ * $user->name = 'Dave';
+ * $user->save();
+ *
+ * 2. Passing in an array of data:
+ * $user = new Model\User(1);
+ * $user->save(array('name' => 'Dave'));
+ *
+ * 3. Advanced updating:
+ * $user = new Model\User();
+ * $user->where('id', '=', array(1, 2))->limit(2)->update(array('name' => 'Dave'));
+ * </code>
  *
  * Deleting
  * --------
  * <code>
+ * // 1. Simple deletion:
+ * $user = new Model\User();
+ * $user->delete(1);
+ *
+ * // 2. Advanced deletion:
  * $user = new Model\User();
  * $user->where('id', '=', 1)->limit(1)->delete();
  *
@@ -54,9 +69,9 @@ namespace Core;
  * ------------------------
  * <code>
  * // 1. In your User Model, for instance:
- * $this->run('SELECT * FROM `user` WHERE `name` = :name', array(':name' => 'Chris'));
+ * $this->run('SELECT * FROM user WHERE name = :name', array(':name' => 'Chris'));
  * $user = $this->fetch();
- * echo 'Hello, ' . $user['name'];
+ * echo 'Hello, ' . $user->name;
  * </code>
  *
  * @copyright Copyright (c) 2012-2013 Christopher Hill
@@ -64,30 +79,10 @@ namespace Core;
  * @author    Christopher Hill <cjhill@gmail.com>
  * @package   MVC
  *
- * @todo      SUM, AVG, etc.
- * @todo      Table joins.
- * @todo      WHERE OR
- * @todo      HAVING
  * @todo      Some kind of config schema.
  */
-class Model
+class Model extends Database
 {
-	/**
-	 * The connection to the database.
-	 *
-	 * @access private
-	 * @var    \PDO
-	 */
-	private $_connection;
-
-	/**
-	 * The query that we have just run.
-	 *
-	 * @access private
-	 * @var    \PDOStatement
-	 */
-	private $_statement;
-
 	/**
 	 * The primary key for the table.
 	 *
@@ -119,12 +114,28 @@ class Model
 	private $_from = array();
 
 	/**
-	 * The where conditions to apply to the query.
+	 * The clause conditions for where and having to apply to the query.
 	 *
 	 * @access private
 	 * @var    array
 	 */
-	private $_where = array();
+	private $_clause = array();
+
+	/**
+	 * The having conditions to apply.
+	 *
+	 * @access private
+	 * @var    array
+	 */
+	private $_having = array();
+
+	/**
+	 * How our queries should be grouped.
+	 *
+	 * @access private
+	 * @var    array
+	 */
+	private $_group = array();
 
 	/**
 	 * How we should order the returned rows.
@@ -151,6 +162,14 @@ class Model
 	private $_store = array();
 
 	/**
+	 * Data that will be passed to the query.
+	 *
+	 * @access private
+	 * @var    array
+	 */
+	private $_data;
+
+	/**
 	 * Setup the model.
 	 *
 	 * If you want to load a row automatically then you can pass an int to this
@@ -159,88 +178,34 @@ class Model
 	 * <code>
 	 * // Load a single user row
 	 * $user = new MyProject\Model\User(1);
-	 *
-	 * // Load x user rows
-	 * $user = new MyProject\Model\User(array(1, 2, 3, 4, 5));
 	 * </code>
 	 *
 	 * @access public
-	 * @param  mixed  $id The ID's to load automatically.
+	 * @param  mixed  $id The ID to load automatically.
 	 */
 	public function __construct($id = null) {
 		if ($id) {
 			$this->where($this->_primaryKey, '=', $id)
-				 ->limit(count($id))
+				 ->limit(1)
 				 ->find();
+			$this->_store = $this->fetch(\PDO::FETCH_ASSOC);
 		}
-	}
-
-	/**
-	 * Connect to the database if we have not already.
-	 *
-	 * @access private
-	 * @todo   Move this into a Core Database class.
-	 */
-	private function connect() {
-		// Get the connection details
-		$host     = Config::get('db', 'host');
-		$database = Config::get('db', 'database');
-		$username = Config::get('db', 'username');
-		$password = Config::get('db', 'password');
-
-		try {
-			// Connect to the database
-			$this->_connection = new \PDO(
-				"mysql:host={$host};dbname={$database};charset=utf8",
-				$username,
-				$password
-			);
-
-			// Work with arrays, not objects
-			$this->_connection->setAttribute(\PDO::ATTR_DEFAULT_FETCH_MODE, \PDO::FETCH_ASSOC);
-		} catch(\PDOException $e) {
-			if (Core::get('settings', 'environment') == 'Dev') {
-				var_dump($e);
-			}
-
-			die('<p>Sorry, we were unable to complete your request.</p>');
-		}
-	}
-
-	/**
-	 * Execute an SQL statement on the database.
-	 *
-	 * @access public
-	 * @param  string  $sql  The SQL statement to run.
-	 * @param  array   $data The data to pass into the prepared statement.
-	 * @return boolean       Whether the query was successful.
-	 */
-	public function run($sql, $data = array()) {
-		// If we do not have a connection then establish one
-		if (! $this->_connection) {
-			$this->connect();
-		}
-
-		// Prepare and execute the statement
-		$this->_statement = $this->_connection->prepare($sql);
-		return $this->_statement->execute($data);
 	}
 
 	/**
 	 * Add a row to the SELECT section.
 	 *
 	 * Note: The table name will always be prefixed to the field name to try and
-	 * mitigate errors. If none is supplied then we assume you are using the
+	 * mitigate errors . If none is supplied then we assume you are using the
 	 * table name that is declared in the extending class.
 	 *
 	 * @access public
 	 * @param  string $field The field name.
-	 * @param  string $table The table this field lives.
 	 * @param  string $as    The name of the field that is supplied to you.
 	 * @return Model         For chainability.
 	 */
-	public function select($field, $table = null, $as = null) {
-		$this->_select[] = array('field' => $field, 'table' => $table ?: $this->_table, 'as' => $as);
+	public function select($field, $as = null) {
+		$this->_select[] = array('field' => $field, 'as' => $as);
 		return $this;
 	}
 
@@ -255,8 +220,13 @@ class Model
 	 * @param  string $table A table that is part of the statement.
 	 * @return Model         For chainability.
 	 */
-	public function from($table) {
-		$this->_from[] = $table;
+	public function from($table, $joinType = null, $tableField = null, $joinField = null) {
+		$this->_from[] = array(
+			'table'      => $table,
+			'joinType'   => $joinType,
+			'tableField' => $tableField,
+			'joinField'  => $joinField
+		);
 		return $this;
 	}
 
@@ -281,11 +251,63 @@ class Model
 	 * @param  string       $field    The field we wish to test.
 	 * @param  string       $operator How we wish to test the field (=, >, etc.)
 	 * @param  string|array $value    The value to test the field against.
+	 * @param  string       $joiner   How to join the where clause to the next.
 	 * @return Model                  For chainability.
 	 */
-	public function where($field, $operator, $value) {
-		$this->_where[] = array('field' => $field, 'operator' => $operator, 'value' => $value);
+	public function where($field, $operator, $value, $joiner = null) {
+		$this->_clause[] = array(
+			'field'    => $field,
+			'operator' => $operator,
+			'value'    => $value,
+			'joiner'   => $joiner
+		);
 		return $this;
+	}
+
+	/**
+	 * Add a having condition to the statement.
+	 *
+	 * @access public
+	 * @param  string       $field    The field we wish to test.
+	 * @param  string       $operator How we wish to test the field (=, >, etc.)
+	 * @param  string|array $value    The value to test the field against.
+	 * @param  string       $joiner   How to join the where clause to the next.
+	 * @param  int          $brace    How many braces to open or close.
+	 * @return Model                  For chainability.
+	 */
+	public function having($field, $operator, $value, $joiner = null, $brace = 0) {
+		$this->_having[] = array(
+			'field'    => $field,
+			'operator' => $operator,
+			'value'    => $value,
+			'joiner'   => $joiner,
+			'brace'    => $brace
+		);
+		return $this;
+	}
+
+	/**
+	 * Group by a field.
+	 *
+	 * @access public
+	 * @param  string $field The field that we want to join on.
+	 * @return Model         For chainability.
+	 */
+	public function group($field) {
+		$this->_group[] = $field;
+		return $this;
+	}
+
+	/**
+	 * Whether to open or close a brace.
+	 *
+	 * @access public
+	 * @param  string $status Either 'open' or 'close'.
+	 * @return Model                  For chainability.
+	 */
+	public function brace($status, $joiner = null) {
+		$this->_clause[] = ($status == 'open' ? '(' : ')')
+			. ($joiner ? " {$joiner} " : '');
 	}
 
 	/**
@@ -319,7 +341,6 @@ class Model
 	 *
 	 * @access public
 	 * @param  array  $data The data to insert into the table.
-	 * @return Model        For chainability.
 	 */
 	public function insert($data = array()) {
 		// If we have been supplied from data then add it to the store.
@@ -329,7 +350,7 @@ class Model
 
 		// If the insert was successful then add the primary key to the store
 		if ($this->run($this->build('insert'), $this->_store)) {
-			$this->_store[$this->_primaryKey] = $this->_connection->lastInsertId();
+			$this->{$this->_primaryKey} = $this->_connection->lastInsertId();
 		}
 	}
 
@@ -339,28 +360,65 @@ class Model
 	 * @access public
 	 */
 	public function find() {
-		$this->run($this->build('select'), $this->_store);
+		$this->run($this->build('select'), $this->_data);
+	}
+
+	/**
+	 * Update a row in the table.
+	 *
+	 * @access public
+	 * @param  array  $data The data to update the table with.
+	 */
+	public function update($data = array()) {
+		// If we have been supplied from data then add it to the store.
+		foreach ($data as $field => $value) {
+			$this->$field = $value;
+		}
+
+		// If the where clause is empty then assume we are updating the user
+		if (! $this->_clause) {
+			$this->where($this->_primaryKey, '=', $this->{$this->_primaryKey});
+		}
+
+		// If the insert was successful then add the primary key to the store
+		$this->run($this->build('update'), $this->_data);
 	}
 
 	/**
 	 * Shorthand for the insert and update functions.
 	 *
 	 * @access public
+	 * @param  array  $data The data to insert or update.
 	 */
-	public function save() {
+	public function save($data = array()) {
 		$this->{$this->_primaryKey}
-			? $this->update()
-			: $this->insert();
+			? $this->update($data)
+			: $this->insert($data);
+	}
+
+	/**
+	 * Delete rows from the table.
+	 *
+	 * @access public
+	 * @param  int    $id The ID of the row we wish to delete.
+	 */
+	public function delete($id = null) {
+		// Is there an ID that we need to delete?
+		if ($id) {
+			$this->where($this->_primaryKey, '=', $id);
+		}
+
+		$this->run($this->build('delete'), $this->_data);
 	}
 
 	/**
 	 * Piece together all of the sections of the query.
 	 *
-	 * @access private
-	 * @param  string  $type What type of query we wish to build.
-	 * @return string        The SQL that has been generated.
+	 * @access public
+	 * @param  string $type What type of query we wish to build.
+	 * @return string       The SQL that has been generated.
 	 */
-	private function build($type) {
+	public function build($type) {
 		switch ($type) {
 			case 'insert' : $sql = $this->buildInsert(); break;
 			case 'select' : $sql = $this->buildSelect(); break;
@@ -379,10 +437,10 @@ class Model
 	 */
 	private function buildInsert() {
 		$keys   = array_keys($this->_store);
-		$fields = implode('`, `', $keys);
+		$fields = implode(', ',   $keys);
 		$values = implode(', :',  $keys);
 
-		return "INSERT INTO `{$this->_table}` (`{$fields}`) VALUES (:{$values})";
+		return "INSERT INTO {$this->_table} ({$fields}) VALUES (:{$values})";
 	}
 
 	/**
@@ -395,6 +453,8 @@ class Model
 		return "SELECT {$this->buildFragmentSelect()}
 			    FROM   {$this->buildFragmentFrom()}
 			           {$this->buildFragmentWhere()}
+			           {$this->buildFragmentWhere('HAVING')}
+			           {$this->buildFragmentGroup()}
 			           {$this->buildFragmentOrder()}
 			           {$this->buildFragmentLimit()}";
 	}
@@ -406,8 +466,10 @@ class Model
 	 * @return string
 	 */
 	private function buildUpdate() {
-		// @todo
-		return "";
+		return "UPDATE {$this->buildFragmentFrom()}
+		        SET    {$this->buildFragmentUpdate()}
+		               {$this->buildFragmentWhere()}
+		               {$this->buildFragmentLimit()}";
 	}
 
 	/**
@@ -437,13 +499,15 @@ class Model
 		// Container for the fields we wish to select
 		$fields = array();
 
-		// Loop over each field that we want to return and build it's SQL
+		// Loop over each field that we want to return and build its SQL
 		foreach ($this->_select as $select) {
 			$as = $select['as']
 				? " AS '{$select['as']}'"
 				: '';
 
-			$fields[] = "`{$select['table']}`.`{$select['field']}` {$as}";
+
+
+			$fields[] = "{$select['field']} {$as}";
 		}
 
 		return implode(', ', $fields);
@@ -456,9 +520,45 @@ class Model
 	 * @return string
 	 */
 	private function buildFragmentFrom() {
-		return empty($this->_from)
-			? $this->_table
-			: '`' . implode('`, `', $this->_from) . '`';
+		// If there are no fields to select from then just return them all
+		if (empty($this->_from)) {
+			return $this->_table;
+		}
+
+		// Container for the tables we wish to use
+		$tables = array();
+
+		// Loop over each table and build its SQL
+		foreach ($this->_from as $from) {
+			$tables[] = $from['tableField'] && $from['joinField']
+				? "{$from['joinType']} JOIN {$from['table']} ON {$from['tableField']} = {$from['joinField']}"
+				: $from['table'];
+		}
+
+		return implode(', ', $tables);
+	}
+
+	/**
+	 * Build the SET portion of the statement.
+	 *
+	 * @access private
+	 * @return string
+	 */
+	private function buildFragmentUpdate() {
+		// Container for the fields that will be updated
+		$fields = array();
+
+		foreach ($this->_store as $field => $value) {
+			// We do not want to update the primary key
+			if ($field == $this->_primaryKey) {
+				continue;
+			}
+
+			$fields[] = "{$field} = :{$field}";
+			$this->_data[$field] = $value;
+		}
+
+		return implode(', ', $fields);
 	}
 
 	/**
@@ -471,46 +571,75 @@ class Model
 	 * @return string
 	 * @todo   Allow for OR's.
 	 */
-	private function buildFragmentWhere() {
+	private function buildFragmentWhere($type = 'WHERE') {
 		// If there are no conditions then return nothing
-		if (empty($this->_where)) {
+		if ($type == 'HAVING' && empty($this->_having)) {
+			return '';
+		} else if (empty($this->_clause)) {
 			return '';
 		}
 
 		// Container for the where conditions
-		$conditions = array();
+		$sql        = '';
+		$sqlClauses = '';
+		$clauses    = $type == 'HAVING' ? $this->_having : $this->_clause;
+		$clauseType = strtolower($type);
 
 		// Loop over each where condition and build its SQL
-		foreach ($this->_where as $whereIndex => $where) {
+		foreach ($clauses as $clauseIndex => $clause) {
+			// Are we opening or closing a brace?
+			if (! is_array($clause)) {
+				$sqlClauses .= $clause;
+				continue;
+			}
+
 			// The basic perpared variable name
-			$variableName = "__where_{$whereIndex}";
+			$clauseVar = "__{$clauseType}_{$clauseIndex}";
+
+			// Reset the SQL for this single clause
+			$sql = '';
 
 			// We are dealing with an IN
-			if (is_array($where['value'])) {
+			if (is_array($clause['value'])) {
 				// We need to create the condition as :a, :b, :c
-				$ins = array();
+				$clauseIn = array();
 
 				// Loop over each value in the array
-				foreach ($where['value'] as $inIndex => $in) {
-					$ins[]      = "{$variableName}_{$inIndex}";
-					$this->_store["{$variableName}_{$inIndex}"] = $in;
+				foreach ($clause['value'] as $index => $value) {
+					$clauseIn[] = ":{$clauseVar}_{$index}";
+					$this->_data["{$clauseVar}_{$index}"] = $value;
 				}
 
 				// The SQL for this IN
-				$sql = "`{$where['field']}` IN (" . implode(', ', $ins) . ")";
+				$sql .= "{$clause['field']} IN (" . implode(', ', $clauseIn) . ")";
 			}
 
 			// A simple where condition
 			else {
-				$sql = "`{$where['field']}` {$where['operator']} :{$variableName}}";
-				$this->_store[$variableName] = $where['value'];
+				$sql .= "{$clause['field']} {$clause['operator']} :{$clauseVar}";
+				$this->_data[$clauseVar] = $clause['value'];
 			}
 
-			// Add this where clause to the SQL
-			$conditions[] = $sql;
+			// Add any joiner (AND, OR< etc) that the user has added
+			$sql .= $clause['joiner'] ? " {$clause['joiner']} " : '';
+
+			// And add to the where clause
+			$sqlClauses .= $sql;
 		}
 
-		return 'WHERE ' . implode(', AND', $conditions);
+		return "{$type} {$sqlClauses}";
+	}
+
+	/**
+	 * Build the GROUP BY portion of the statement.
+	 *
+	 * @access private
+	 * @return string
+	 */
+	private function buildFragmentGroup() {
+		return ! empty($this->_group)
+			? 'GROUP BY ' . implode(', ', $this->_group)
+			: '';
 	}
 
 	/**
@@ -528,7 +657,7 @@ class Model
 		// Container for the order by's
 		$orders = array();
 
-		// Loop over each order by and build it's SQL
+		// Loop over each order by and build its SQL
 		foreach ($this->_order as $order) {
 			$orders[] = "{$order['field']} {$order['direction']}";
 		}
@@ -575,10 +704,29 @@ class Model
 	 * @access public
 	 * @return int|array Array if statement was successful, boolean false otherwise.
 	 */
-	public function fetch() {
+	public function fetch($method = \PDO::FETCH_OBJ) {
 		return $this->_statement
-			? $this->_statement->fetch()
+			? $this->_statement->fetch($method)
 			: false;
+	}
+
+	/**
+	 * Reset the query ready for the next one to avoid contamination.
+	 *
+	 * Note: This function is called everytime we have run a query automatically.
+	 *
+	 * @access public
+	 */
+	public function reset() {
+		$this->_select = array();
+		$this->_from   = array();
+		$this->_clause = array();
+		$this->_having = array();
+		$this->_group  = array();
+		$this->_order  = array();
+		$this->_limit  = array();
+		$this->_data   = array();
+		$this->_store  = array();
 	}
 
 	/**
