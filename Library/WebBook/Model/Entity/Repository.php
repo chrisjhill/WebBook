@@ -142,9 +142,8 @@ class Repository extends Core\Repository
 
 		// And execute query
 		$query->execute(array(
-			':chapter_id' => $this->chapter_id,
-			':entity_id'  => $this->entity_id,
-			':book_id'    => $this->book_id
+			':book_id'   => $this->book_id,
+			':entity_id' => $this->entity_id
 		));
 
 		return $query;

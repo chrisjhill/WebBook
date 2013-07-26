@@ -34,6 +34,26 @@ class Entity extends Core\Controller
 	}
 
 	/**
+	 * Return the information on an entity.
+	 *
+	 * @access public
+	 */
+	public function getAction() {
+		// Get the entity
+		$entity = new Model\Entity\Instance(array(
+			'book_id'   => Core\Request::post('book_id'),
+			'entity_id' => Core\Request::post('entity_id')
+		));
+
+		// Display an update form or is the user just viewing the entity?
+		if (Core\Request::post('book_id') == 'update') {
+			// Display update form
+		} else {
+			// Just display the entity information
+		}
+	}
+
+	/**
 	 * Update an entity.
 	 *
 	 * @access public

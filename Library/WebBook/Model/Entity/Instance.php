@@ -20,5 +20,10 @@ class Instance extends Repository
 	public function __construct($data = array()) {
 		// Set up the collection
 		$this->import($data);
+
+		// If we have been given an ID then fetch right away
+		if (isset($data['entity_id'])) {
+			$this->get();
+		}
 	}
 }
