@@ -35,7 +35,18 @@ WEBBOOK.Character = {
 		var $el = $(event.currentTarget);
 		var characterId = $el.data("entityid");
 
-		// Do something here
+		// Get the character information
+		$.ajax({
+			url:  "/entity/get",
+			type: "post",
+			data: {
+				book_id:   WEBBOOK.Book.bookId,
+				entity_id: characterId
+			},
+			success: function(data) {
+				// Do something here
+			}
+		});
 
 		return false;
 	}

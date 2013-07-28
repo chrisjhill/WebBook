@@ -146,6 +146,6 @@ class Repository extends Core\Repository
 			':entity_id' => $this->entity_id
 		));
 
-		return $query;
+		return $this->import($query->fetch());
 	}
 }

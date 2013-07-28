@@ -44,12 +44,14 @@ class Entity extends Core\Controller
 			'book_id'   => Core\Request::post('book_id'),
 			'entity_id' => Core\Request::post('entity_id')
 		));
+		$entity->get();
 
 		// Display an update form or is the user just viewing the entity?
-		if (Core\Request::post('book_id') == 'update') {
+		if (Core\Request::post('action') == 'update') {
 			// Display update form
 		} else {
 			// Just display the entity information
+			die($this->view->Page_Character_View(array('entity' => $entity)));
 		}
 	}
 
