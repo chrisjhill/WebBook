@@ -7,10 +7,13 @@
  */
 WEBBOOK.Character = {
 	// Vars
-	characterSelector: ".character",
+	charactersExtraSelector: "#characters-extra",
+	charactersSelector:      "#characters",
+	characterSelector:       ".character",
 
 	// DOM references
-	$character: undefined,
+	$charactersExtra: undefined,
+	$characters:      undefined,
 
 	/**
 	 * Set up the event listeners for the characters page.
@@ -19,10 +22,11 @@ WEBBOOK.Character = {
 	 */
 	init: function() {
 		// Set DOM references
-		this.$character = $(this.characterSelector);
+		this.$charactersExtra = $(this.charactersExtraSelector);
+		this.$characters      = $(this.charactersSelector);
 
 		// Listeners
-		this.$character.on("click", $.proxy(this.view, this));
+		$(document).on("click", this.characterSelector, $.proxy(this.view, this));
 	},
 
 	/**
@@ -41,10 +45,14 @@ WEBBOOK.Character = {
 			type: "post",
 			data: {
 				book_id:   WEBBOOK.Book.bookId,
-				entity_id: characterId
+				entity_id: characterId,
+				action:    "view"
 			},
 			success: function(data) {
-				// Do something here
+				// Place the content at the top of the page, slide the old content
+				// .. up, and slide the new content down.
+				$(WEBBOOK.Character.charactersExtraSelector).html(data).slideDown();
+				$(WEBBOOK.Character.charactersSelector).slideUp();
 			}
 		});
 
