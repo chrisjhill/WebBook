@@ -25,7 +25,11 @@
 /* Characters */
 .characters{list-style:none;margin:0;padding:0}
 	.characters li{float:left;margin:0 20px 0 0;padding:0;text-align:center}
-		.characters img{width:90px;height:90px;border:2px solid #FFF;border-radius:100px;box-shadow:0 0 15px #BBB}
+		.characters img{width:90px;height:90px;border:2px solid #FFF;border-radius:90px;box-shadow:0 0 15px #BBB}
 
 	#characters{}
 	#characters-extra{display:none}
+
+	/* Modal view */
+	.modal-character-view{text-align:center}
+		.modal-character-view img{margin-top:10px;width:160px;height:160px;border:2px solid #FFF;border-radius:160px;box-shadow:0 0 15px #BBB}

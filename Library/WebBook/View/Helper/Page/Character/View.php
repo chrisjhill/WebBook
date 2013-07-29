@@ -26,9 +26,9 @@ class View extends Core\ViewHelper
 	public function render($params = array()) {
 		return $this->renderPartial('Page/Character/View', array(
 			'urlRoot'       => Core\Config::get('path', 'root'),
-			'entityTitle'   => $params['entity']->entity_title,
+			'entityTitle'   => Core\Format::safeHtml($params['entity']->entity_title),
 			'entityImage'   => $params['entity']->entity_image,
-			'entityContent' => $params['entity']->entity_content,
+			'entityContent' => nl2br(Core\Format::safeHtml($params['entity']->entity_content)),
 		));
 	}
 }

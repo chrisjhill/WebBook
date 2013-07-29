@@ -7,13 +7,7 @@
  */
 WEBBOOK.Character = {
 	// Vars
-	charactersExtraSelector: "#characters-extra",
-	charactersSelector:      "#characters",
-	characterSelector:       ".character",
-
-	// DOM references
-	$charactersExtra: undefined,
-	$characters:      undefined,
+	characterSelector: ".character",
 
 	/**
 	 * Set up the event listeners for the characters page.
@@ -21,10 +15,6 @@ WEBBOOK.Character = {
 	 * @listens Open character on click
 	 */
 	init: function() {
-		// Set DOM references
-		this.$charactersExtra = $(this.charactersExtraSelector);
-		this.$characters      = $(this.charactersSelector);
-
 		// Listeners
 		$(document).on("click", this.characterSelector, $.proxy(this.view, this));
 	},
