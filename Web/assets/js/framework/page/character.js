@@ -51,8 +51,10 @@ WEBBOOK.Character = {
 			success: function(data) {
 				// Place the content at the top of the page, slide the old content
 				// .. up, and slide the new content down.
-				$(WEBBOOK.Character.charactersExtraSelector).html(data).slideDown();
-				$(WEBBOOK.Character.charactersSelector).slideUp();
+				$(document).trigger({ type: "Modal_Show" }, {
+					content: data,
+					class:   "modal-character-view"
+				});
 			}
 		});
 

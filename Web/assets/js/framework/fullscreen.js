@@ -34,8 +34,10 @@ WEBBOOK.Fullscreen = {
 			.on("Fullscreen_Cancel",  $.proxy(this.fullfullscreenCancelscreenRequest, this));
 
 		// And set the height of the fullscreen background every so often
+		// We also want to run it initially!
+		WEBBOOK.Fullscreen.fullscreenHeight();
 		setInterval(function() {
-			WEBBOOK.Fullscreen.fullscreenHeight()
+			WEBBOOK.Fullscreen.fullscreenHeight();
 		}, this.fullscreenBgLapse);
 	},
 

@@ -16,6 +16,7 @@ WEBBOOK.Loader = {
 		WEBBOOK.Content.init();
 		WEBBOOK.Notice.init();
 		WEBBOOK.Nav.init();
+		WEBBOOK.Modal.init();
 		// Book editing
 		WEBBOOK.Book.init();
 		WEBBOOK.Chapter.init();
