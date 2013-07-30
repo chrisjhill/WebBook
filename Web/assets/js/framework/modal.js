@@ -57,6 +57,11 @@ WEBBOOK.Modal = {
 
 		// Show the modal
 		$("body").addClass(this.modalOpenClass);
+
+		// If there is a callback then fire it up
+		if (typeof data.callback !== "undefined") {
+			data.callback(data.entityId);
+		}
 	},
 
 	hide: function(event) {

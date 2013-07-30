@@ -49,6 +49,7 @@ class Entity extends Core\Controller
 		// Display an update form or is the user just viewing the entity?
 		if (Core\Request::post('action') == 'update') {
 			// Display update form
+			die($this->view->Page_Character_Update(array('entity' => $entity)));
 		} else {
 			// Just display the entity information
 			die($this->view->Page_Character_View(array('entity' => $entity)));

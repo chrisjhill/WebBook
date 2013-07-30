@@ -7,7 +7,8 @@
  */
 WEBBOOK.Character = {
 	// Vars
-	characterSelector: ".character",
+	characterSelector:  ".character",
+	updateLinkSelector: ".entity-update-link",
 
 	/**
 	 * Set up the event listeners for the characters page.
@@ -42,13 +43,45 @@ WEBBOOK.Character = {
 				// Place the content at the top of the page, slide the old content
 				// .. up, and slide the new content down.
 				$(document).trigger({ type: "Modal_Show" }, {
-					content: data,
-					class:   "modal-character-view"
+					content:  data,
+					class:    "modal-character-view",
+					entityId: characterId,
+					callback: function(entityId) {
+						$(WEBBOOK.Character.updateLinkSelector).click(function() {
+							WEBBOOK.Character.updateView(characterId);
+							return false;
+						});
+					}
 				});
 			}
 		});
 
 		return false;
+	},
+
+	/**
+	 * Get and display the form form to update the character.
+	 *
+	 * @param int characterId The ID of the character that we want to update.
+	 */
+	updateView: function(characterId) {
+		$.ajax({
+			url:  "/entity/get",
+			type: "post",
+			data: {
+				book_id:   WEBBOOK.Book.bookId,
+				entity_id: characterId,
+				action:    "update"
+			},
+			success: function(data) {
+				// Place the content at the top of the page, slide the old content
+				// .. up, and slide the new content down.
+				$(document).trigger({ type: "Modal_Show" }, {
+					content:  data,
+					class:    "modal-character-update"
+				});
+			}
+		});
 	}
 }
 
