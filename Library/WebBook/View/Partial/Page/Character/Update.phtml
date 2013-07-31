@@ -3,14 +3,14 @@
 <form action="#" method="post">
 	<p>
 		<label>Character name</label>
-		<input type="text" name="entity-title"   class="textbox" value="<?=$entityTitle?>" /><br />
+		<input type="text" id="entity-title" class="textbox" value="<?=$entityTitle?>" /><br />
 
 		<label>Character image</label>
-		<input type="text" name="entity-image"   class="textbox" value="<?=$entityImage?>" /><br />
+		<input type="text" id="entity-image" class="textbox" value="<?=$entityImage?>" /><br />
 
 		<label>Character description</label>
-		<textarea name="entity-content" class="textbox"><?=$entityContent?></textarea><br />
+		<textarea id="entity-content" class="textbox"><?=$entityContent?></textarea><br />
 
-		<a href="#" id="character-update" class="button orange bigrounded">Save Character</a><br />
+		<a href="#" id="character-update" class="button orange bigrounded" data-entityid="<?=$entityId?>">Save Character</a><br />
 	</p>
 </form>

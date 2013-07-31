@@ -7,8 +7,13 @@
  */
 WEBBOOK.Character = {
 	// Vars
-	characterSelector:  ".character",
-	updateLinkSelector: ".entity-update-link",
+	characterSelector:    ".character",
+	updateLinkSelector:   ".entity-update-link",
+	saveLinkSelector:     "#character-update",
+
+	inputTitleSelector:   "#entity-title",
+	inputImageSelector:   "#entity-image",
+	inputContentSelector: "#entity-content",
 
 	/**
 	 * Set up the event listeners for the characters page.
@@ -17,7 +22,8 @@ WEBBOOK.Character = {
 	 */
 	init: function() {
 		// Listeners
-		$(document).on("click", this.characterSelector, $.proxy(this.view, this));
+		$(document).on("click", this.characterSelector, $.proxy(this.view,   this));
+		$(document).on("click", this.saveLinkSelector,  $.proxy(this.update, this));
 	},
 
 	/**
@@ -80,6 +86,37 @@ WEBBOOK.Character = {
 					content:  data,
 					class:    "modal-character-update"
 				});
+			}
+		});
+	},
+
+	/**
+	 * User has clicked the save button.
+	 *
+	 * @param Event event
+	 */
+	update: function(event) {
+		event.preventDefault();
+
+		// Get the character that we just clicked
+		var $el = $(event.currentTarget);
+		var characterId = $el.data("entityid");
+
+		$.ajax({
+			url:  "/entity/update",
+			type: "post",
+			data: {
+				book_id:         WEBBOOK.Book.bookId,
+				entity_id:       characterId,
+				entity_group_id: 1,
+				entity_type:     "character",
+				entity_title:    $(this.inputTitleSelector).val(),
+				entity_image:    $(this.inputImageSelector).val(),
+				entity_content:  $(this.inputContentSelector).val()
+			},
+			success: function(data) {
+				// Display the notice
+				$(document).trigger({ type: "Notice" }, data);
 			}
 		});
 	}

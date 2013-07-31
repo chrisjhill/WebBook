@@ -32,9 +32,9 @@ WEBBOOK.Modal = {
 		this.$modalBackdrop = $(this.modalBackdropSelector);
 
 		// Listeners
-		$(document).on("Modal_Show",                           $.proxy(this.show, this));
-		$(document).on("Modal_Hide",                           $.proxy(this.hide, this));
-		this.$modal.on("click",      this.$modalCloseSelector, $.proxy(this.hide, this));
+		$(document).on("Modal_Show",                          $.proxy(this.show, this));
+		$(document).on("Modal_Hide",                          $.proxy(this.hide, this));
+		this.$modal.on("click",      this.modalCloseSelector, $.proxy(this.hide, this));
 	},
 
 	/**

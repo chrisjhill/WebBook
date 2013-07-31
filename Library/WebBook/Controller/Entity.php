@@ -66,12 +66,13 @@ class Entity extends Core\Controller
 		// Update the entities information
 		$entity = new Model\Entity\Instance(array(
 			'book_id'         => Core\Request::post('book_id'),
+			'entity_id'       => Core\Request::post('entity_id'),
 			'entity_group_id' => Core\Request::post('entity_group_id'),
 			'entity_type'     => Core\Request::post('entity_type'),
 			'entity_title'    => Core\Request::post('entity_title'),
 			'entity_image'    => Core\Request::post('entity_image'),
 			'entity_content'  => Core\Request::post('entity_content'),
-			'entity_created'  => Core\Request::server('REQUEST_TIME')
+			'entity_updated'  => Core\Request::server('REQUEST_TIME')
 		));
 		$entity->save();
 
