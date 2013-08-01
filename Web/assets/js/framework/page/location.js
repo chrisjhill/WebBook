@@ -1,0 +1,1 @@
+WEBBOOK.Entity.init();
