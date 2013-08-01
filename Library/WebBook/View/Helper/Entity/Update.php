@@ -27,6 +27,7 @@ class Update extends Core\ViewHelper
 		return $this->renderPartial('Entity/Update', array(
 			'urlRoot'       => Core\Config::get('path', 'root'),
 			'entityId'      => $params['entity']->entity_id,
+			'entityGroupId' => $params['entity']->entity_group_id,
 			'entityType'    => $params['entity']->entity_type,
 			'entityTitle'   => Core\Format::safeHtml($params['entity']->entity_title),
 			'entityImage'   => $params['entity']->entity_image,

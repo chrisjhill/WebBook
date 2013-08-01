@@ -16,9 +16,9 @@ WEBBOOK.Entity = {
 	inputContentSelector: "#entity-content",
 
 	/**
-	 * Set up the event listeners for the characters page.
+	 * Set up the event listeners for the entities page.
 	 *
-	 * @listens Open character on click
+	 * @listens Open entity on click
 	 */
 	init: function() {
 		console.log(0);
@@ -33,7 +33,6 @@ WEBBOOK.Entity = {
 	 * @param Event event
 	 */
 	view: function(event) {
-		console.log(1);
 		// Get the entity that we just clicked
 		var $el = $(event.currentTarget);
 		var entityId   = $el.data("entityid");
@@ -75,7 +74,6 @@ WEBBOOK.Entity = {
 	 * @param string entityType The type of entity that we are working with.
 	 */
 	updateView: function(entityId, entityType) {
-		console.log(2);
 		$.ajax({
 			url:  "/entity/get",
 			type: "post",
@@ -101,13 +99,13 @@ WEBBOOK.Entity = {
 	 * @param Event event
 	 */
 	update: function(event) {
-		console.log(3);
 		event.preventDefault();
 
 		// Get the entity that we just clicked
 		var $el = $(event.currentTarget);
-		var entityId   = $el.data("entityid");
-		var entityType = $el.data("entitytype");
+		var entityId      = $el.data("entityid");
+		var entityGroupId = $el.data("entitygroupid");
+		var entityType    = $el.data("entitytype");
 
 		$.ajax({
 			url:  "/entity/update",
@@ -115,7 +113,7 @@ WEBBOOK.Entity = {
 			data: {
 				book_id:         WEBBOOK.Book.bookId,
 				entity_id:       entityId,
-				entity_group_id: 1,
+				entity_group_id: entityGroupId,
 				entity_type:     entityType,
 				entity_title:    $(this.inputTitleSelector).val(),
 				entity_image:    $(this.inputImageSelector).val(),

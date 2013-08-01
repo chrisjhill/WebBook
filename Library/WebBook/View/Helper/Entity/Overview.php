@@ -38,10 +38,11 @@ class Overview extends Core\ViewHelper
 			// Get the entity HTML
 			$entityGroup[$entity->entity_group_id][$entity->entity_id] =
 				$this->renderPartial('Entity/Item', array(
-					'urlRoot'     => $this->view->getVariable('urlRoot'),
-					'entityId'    => $entity->entity_id,
-					'entityImage' => $entity->entity_image,
-					'entityTitle' => $entity->entity_title
+					'urlRoot'       => $this->view->getVariable('urlRoot'),
+					'entityId'      => $entity->entity_id,
+					'entityGroupId' => $entity->entity_group_id,
+					'entityImage'   => $entity->entity_image,
+					'entityTitle'   => $entity->entity_title
 				));
 		}
 
