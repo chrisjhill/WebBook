@@ -162,7 +162,7 @@ table{width:100%;border-collapse:collapse}
 /* Third part styling */
 /* Forms: Thanks to: http://vesess.com/sandbox/form_template.html */
 label,.textbox,textarea{float:left}
-label{width:165px;margin-top:4px}
+label{width:165px;margin-top:4px;text-align:left}
 .textbox,textarea,select{margin-bottom:.75em;padding:3px 5px;width:300px;font:14px/1.5em Helvetica,Arial;color:#111}
 	select,select option{font-size:16px !important}
 .textbox,textarea{border:1px solid #CCC}

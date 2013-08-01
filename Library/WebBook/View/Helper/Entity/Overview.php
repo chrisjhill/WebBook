@@ -1,9 +1,9 @@
 <?php
-namespace WebBook\View\Helper\Page\Character;
+namespace WebBook\View\Helper\Entity;
 use Core;
 
 /**
- * Outputs the character overview view.
+ * Outputs the entity overview view.
  *
  * @copyright   2012 Christopher Hill <cjhill@gmail.com>
  * @author      Christopher Hill <cjhill@gmail.com>
@@ -11,7 +11,7 @@ use Core;
 class Overview extends Core\ViewHelper
 {
 	/**
-	 * Outputs the character overview view.
+	 * Outputs the entity overview view.
 	 *
 	 * <code>
 	 * array(
@@ -31,13 +31,13 @@ class Overview extends Core\ViewHelper
 		$entityReturnHtml = '';
 
 		// Loop over each entity and add them to their respective group
-		foreach ($params['characters'] as $entityId => $entity) {
+		foreach ($params['entities'] as $entityId => $entity) {
 			// Set the title for this group
 			$entityGroupTitle[$entity->entity_id] = $entity->group_title;
 
 			// Get the entity HTML
 			$entityGroup[$entity->entity_group_id][$entity->entity_id] =
-				$this->renderPartial('Page/Character/Item', array(
+				$this->renderPartial('Entity/Item', array(
 					'urlRoot'     => $this->view->getVariable('urlRoot'),
 					'entityId'    => $entity->entity_id,
 					'entityImage' => $entity->entity_image,
@@ -57,7 +57,7 @@ class Overview extends Core\ViewHelper
 			}
 
 			// We have all the entities in this group, generate the containing HTML
-			$entityReturnHtml .= $this->renderPartial('Page/Character/Group', array(
+			$entityReturnHtml .= $this->renderPartial('Entity/Group', array(
 				'entityGroupTitle' => $entityGroupTitle[$entityId],
 				'entityGroupHtml'  => $entityGroupHtml
 			));

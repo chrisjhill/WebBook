@@ -1,17 +1,17 @@
 <?php
-namespace WebBook\View\Helper\Page\Character;
+namespace WebBook\View\Helper\Entity;
 use Core;
 
 /**
- * Outputs the character to update.
+ * Outputs the entity to view.
  *
  * @copyright   2012 Christopher Hill <cjhill@gmail.com>
  * @author      Christopher Hill <cjhill@gmail.com>
  */
-class Update extends Core\ViewHelper
+class View extends Core\ViewHelper
 {
 	/**
-	 * Outputs the character update screen.
+	 * Outputs the entity view.
 	 *
 	 * <code>
 	 * array(
@@ -24,12 +24,13 @@ class Update extends Core\ViewHelper
 	 * @return string         A rendered View Helper Partial template file.
 	 */
 	public function render($params = array()) {
-		return $this->renderPartial('Page/Character/Update', array(
+		return $this->renderPartial('Entity/View', array(
 			'urlRoot'       => Core\Config::get('path', 'root'),
 			'entityId'      => $params['entity']->entity_id,
+			'entityType'    => $params['entity']->entity_type,
 			'entityTitle'   => Core\Format::safeHtml($params['entity']->entity_title),
 			'entityImage'   => $params['entity']->entity_image,
-			'entityContent' => Core\Format::safeHtml($params['entity']->entity_content),
+			'entityContent' => nl2br(Core\Format::safeHtml($params['entity']->entity_content)),
 		));
 	}
 }

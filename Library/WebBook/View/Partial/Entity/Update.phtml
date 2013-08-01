@@ -2,15 +2,15 @@
 
 <form action="#" method="post">
 	<p>
-		<label>Character name</label>
+		<label>Name</label>
 		<input type="text" id="entity-title" class="textbox" value="<?=$entityTitle?>" /><br />
 
-		<label>Character image</label>
+		<label>Image</label>
 		<input type="text" id="entity-image" class="textbox" value="<?=$entityImage?>" /><br />
 
-		<label>Character description</label>
+		<label>Description</label>
 		<textarea id="entity-content" class="textbox"><?=$entityContent?></textarea><br />
 
-		<a href="#" id="character-update" class="button orange bigrounded" data-entityid="<?=$entityId?>">Save Character</a><br />
+		<a href="#" id="entity-update" class="button orange bigrounded" data-entityid="<?=$entityId?>" data-entitytype="<?=$entityType?>">Save Information</a><br />
 	</p>
 </form>

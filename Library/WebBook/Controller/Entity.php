@@ -49,10 +49,10 @@ class Entity extends Core\Controller
 		// Display an update form or is the user just viewing the entity?
 		if (Core\Request::post('action') == 'update') {
 			// Display update form
-			die($this->view->Page_Character_Update(array('entity' => $entity)));
+			die($this->view->Entity_Update(array('entity' => $entity)));
 		} else {
 			// Just display the entity information
-			die($this->view->Page_Character_View(array('entity' => $entity)));
+			die($this->view->Entity_View(array('entity' => $entity)));
 		}
 	}
 
@@ -77,7 +77,10 @@ class Entity extends Core\Controller
 		$entity->save();
 
 		// Output when the snapshot was created
-		echo new Helper\Notice('success', 'Entities information has been successfully updated.');
+		echo new Helper\Notice(
+			'success',
+			ucfirst(Core\Request::post('entity_type')) . ' information has been successfully updated.'
+		);
 		die();
 	}
 
