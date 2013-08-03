@@ -21,7 +21,6 @@ WEBBOOK.Entity = {
 	 * @listens Open entity on click
 	 */
 	init: function() {
-		console.log(0);
 		// Listeners
 		$(document).on("click", this.entitySelector,   $.proxy(this.view,   this));
 		$(document).on("click", this.saveLinkSelector, $.proxy(this.update, this));
@@ -55,9 +54,9 @@ WEBBOOK.Entity = {
 					class:    "modal-entity-view modal-" + entityType + "-view",
 					entityId: entityId,
 					callback: function(entityId) {
-						$(WEBBOOK.Entity.updateLinkSelector).click(function() {
+						$(WEBBOOK.Entity.updateLinkSelector).click(function(event) {
+							event.preventDefault();
 							WEBBOOK.Entity.updateView(entityId, entityType);
-							return false;
 						});
 					}
 				});
