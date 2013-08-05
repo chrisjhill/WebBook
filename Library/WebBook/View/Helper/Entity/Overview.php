@@ -59,6 +59,7 @@ class Overview extends Core\ViewHelper
 
 			// We have all the entities in this group, generate the containing HTML
 			$entityReturnHtml .= $this->renderPartial('Entity/Group', array(
+				'entityGroupId'    => $entityGroupId,
 				'entityGroupTitle' => $entityGroupTitle[$entityId],
 				'entityGroupHtml'  => $entityGroupHtml
 			));
