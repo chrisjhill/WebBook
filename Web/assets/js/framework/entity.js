@@ -7,6 +7,7 @@
  */
 WEBBOOK.Entity = {
 	// Vars
+	addLinkSelector:      ".entity-add",
 	entitySelector:       ".entity",
 	updateLinkSelector:   ".entity-update-link",
 	saveLinkSelector:     "#entity-update",
@@ -18,12 +19,50 @@ WEBBOOK.Entity = {
 	/**
 	 * Set up the event listeners for the entities page.
 	 *
+	 * @listens Add  entity on click
 	 * @listens Open entity on click
+	 * @listens Save entity on click
 	 */
 	init: function() {
 		// Listeners
-		$(document).on("click", this.entitySelector,   $.proxy(this.view,   this));
-		$(document).on("click", this.saveLinkSelector, $.proxy(this.update, this));
+		$(document).on("click", this.addLinkSelector,  $.proxy(this.addView, this));
+		$(document).on("click", this.entitySelector,   $.proxy(this.view,    this));
+		$(document).on("click", this.saveLinkSelector, $.proxy(this.update,  this));
+	},
+
+	/**
+	 * Bring up the add entity modal window.
+	 *
+	 * @param Event event
+	 */
+	addView: function(event) {
+		// Get the group information that we want to add this to
+		var $el = $(event.currentTarget);
+		var entityGroupId = $el.data("entitygroupid");
+
+		// Get the data for the modal
+		$.ajax({
+			url:  "/entity/add-view",
+			type: "post",
+			data: {
+				book_id:         WEBBOOK.Book.bookId,
+				entity_group_id: entityGroupId
+			},
+			success: function(data) {
+				// Place the content at the top of the page, slide the old content
+				// .. up, and slide the new content down.
+				$(document).trigger({ type: "Modal_Show" }, {
+					content:       data,
+					class:         "modal-entity-add",
+					entityGroupId: entityGroupId,
+					callback:      function(entityId) {
+						// To do
+					}
+				});
+			}
+		});
+
+		return false;
 	},
 
 	/**
