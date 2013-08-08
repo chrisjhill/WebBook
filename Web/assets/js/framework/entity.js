@@ -7,7 +7,8 @@
  */
 WEBBOOK.Entity = {
 	// Vars
-	addLinkSelector:      ".entity-add",
+	insertSelector:       ".entity-insert",
+	insertLinkSelector:   "#entity-insert-link",
 	entitySelector:       ".entity",
 	updateLinkSelector:   ".entity-update-link",
 	saveLinkSelector:     "#entity-update",
@@ -25,7 +26,7 @@ WEBBOOK.Entity = {
 	 */
 	init: function() {
 		// Listeners
-		$(document).on("click", this.addLinkSelector,  $.proxy(this.insertView, this));
+		$(document).on("click", this.insertSelector,   $.proxy(this.insertView, this));
 		$(document).on("click", this.entitySelector,   $.proxy(this.view,       this));
 		$(document).on("click", this.saveLinkSelector, $.proxy(this.update,     this));
 	},
@@ -56,13 +57,41 @@ WEBBOOK.Entity = {
 					class:    "modal-entity-insert",
 					entityId: entityGroupId,
 					callback: function(entityId) {
-						// To do
+						$(WEBBOOK.Entity.insertLinkSelector).click(function(event) {
+							event.preventDefault();
+							WEBBOOK.Entity.insert(entityGroupId, entityType);
+						});
 					}
 				});
 			}
 		});
 
 		return false;
+	},
+
+	/**
+	 * Insert an entity into the database.
+	 *
+	 * @param  int    entityGroupId The ID of the group to insert this entity.
+	 * @param  string entityType    The type of entity we are inserting.
+	 */
+	insert: function(entityGroupId, entityType) {
+		$.ajax({
+			url:  "/entity/insert",
+			type: "post",
+			data: {
+				book_id:         WEBBOOK.Book.bookId,
+				entity_group_id: entityGroupId,
+				entity_type:     entityType,
+				entity_title:    $("#entity-title").val(),
+				entity_image:    $("#entity-image").val(),
+				entity_content:  $("#entity-content").val()
+			},
+			success: function(data) {
+				// Display the notice
+				$(document).trigger({ type: "Notice" }, data);
+			}
+		});
 	},
 
 	/**
@@ -119,8 +148,6 @@ WEBBOOK.Entity = {
 				action:    "update"
 			},
 			success: function(data) {
-				// Place the content at the top of the page, slide the old content
-				// .. up, and slide the new content down.
 				$(document).trigger({ type: "Modal_Show" }, {
 					content:  data,
 					class:    "modal-entity-view modal-" + entityType + "-update"

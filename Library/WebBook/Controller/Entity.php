@@ -41,8 +41,12 @@ class Entity extends Core\Controller
 		));
 		$entity->save();
 
-		// Output the entities HTML
-		die($entity->output());
+		// Output the success notice
+		echo new Helper\Notice(
+			'success',
+			ucfirst(Core\Request::post('entity_type')) . ' has been successfully saved.'
+		);
+		die();
 	}
 
 	/**

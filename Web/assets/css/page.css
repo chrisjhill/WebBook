@@ -25,10 +25,10 @@
 /* Entities (Characters, Locations, etc.) */
 .entities{list-style:none;margin:0;padding:0}
 	.entities li{float:left;margin:0 20px 0 0;padding:0;text-align:center}
-		.entity-add,.entities img{width:90px;height:90px;margin-top:10px;border:2px solid #FFF;border-radius:90px;box-shadow:0 0 15px #BBB}
+		.entity-insert,.entities img{width:90px;height:90px;margin-top:10px;border:2px solid #FFF;border-radius:90px;box-shadow:0 0 15px #BBB}
 
-		.entity-add{display:block;height:55px;padding-top:35px;font-size:40px;color:#CCC;text-decoration:none}
-			.entity-add:hover{color:#AAA}
+		.entity-insert{display:block;height:55px;padding-top:35px;font-size:40px;color:#CCC;text-decoration:none}
+			.entity-insert:hover{color:#AAA}
 
 	/* Modal view */
 	.modal-entity-view{text-align:center}
