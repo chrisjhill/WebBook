@@ -19,43 +19,43 @@ WEBBOOK.Entity = {
 	/**
 	 * Set up the event listeners for the entities page.
 	 *
-	 * @listens Add  entity on click
-	 * @listens Open entity on click
-	 * @listens Save entity on click
+	 * @listens Insert entity on click
+	 * @listens Open   entity on click
+	 * @listens Save   entity on click
 	 */
 	init: function() {
 		// Listeners
-		$(document).on("click", this.addLinkSelector,  $.proxy(this.addView, this));
-		$(document).on("click", this.entitySelector,   $.proxy(this.view,    this));
-		$(document).on("click", this.saveLinkSelector, $.proxy(this.update,  this));
+		$(document).on("click", this.addLinkSelector,  $.proxy(this.insertView, this));
+		$(document).on("click", this.entitySelector,   $.proxy(this.view,       this));
+		$(document).on("click", this.saveLinkSelector, $.proxy(this.update,     this));
 	},
 
 	/**
-	 * Bring up the add entity modal window.
+	 * Bring up the insert entity modal window.
 	 *
 	 * @param Event event
 	 */
-	addView: function(event) {
-		// Get the group information that we want to add this to
+	insertView: function(event) {
+		// Get the group information that we want to insert this to
 		var $el = $(event.currentTarget);
 		var entityGroupId = $el.data("entitygroupid");
+		var entityType    = $el.data("entitytype");
 
 		// Get the data for the modal
 		$.ajax({
-			url:  "/entity/add-view",
+			url:  "/entity/insert-view",
 			type: "post",
 			data: {
 				book_id:         WEBBOOK.Book.bookId,
-				entity_group_id: entityGroupId
+				entity_group_id: entityGroupId,
+				entity_type:     entityType
 			},
 			success: function(data) {
-				// Place the content at the top of the page, slide the old content
-				// .. up, and slide the new content down.
 				$(document).trigger({ type: "Modal_Show" }, {
-					content:       data,
-					class:         "modal-entity-add",
-					entityGroupId: entityGroupId,
-					callback:      function(entityId) {
+					content:  data,
+					class:    "modal-entity-insert",
+					entityId: entityGroupId,
+					callback: function(entityId) {
 						// To do
 					}
 				});
@@ -86,8 +86,6 @@ WEBBOOK.Entity = {
 				action:    "view"
 			},
 			success: function(data) {
-				// Place the content at the top of the page, slide the old content
-				// .. up, and slide the new content down.
 				$(document).trigger({ type: "Modal_Show" }, {
 					content:  data,
 					class:    "modal-entity-view modal-" + entityType + "-view",

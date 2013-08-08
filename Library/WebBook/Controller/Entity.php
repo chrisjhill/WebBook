@@ -11,6 +11,18 @@ use Core, WebBook\Model, WebBook\View\Helper;
 class Entity extends Core\Controller
 {
 	/**
+	 * Prepare the view for inserting a new entity.
+	 *
+	 * @access public
+	 * @ajax
+	 */
+	public function insertViewAction() {
+		die($this->view->Entity_Insert(array(
+			'entityType' => Core\Request::post('entity_type')
+		)));
+	}
+
+	/**
 	 * Insert a new entity.
 	 *
 	 * @access public

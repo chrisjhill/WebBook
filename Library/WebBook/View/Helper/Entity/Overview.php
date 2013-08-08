@@ -15,7 +15,8 @@ class Overview extends Core\ViewHelper
 	 *
 	 * <code>
 	 * array(
-	 *     'book' => Model\Book
+	 *     'entityType' => '...',
+	 *     'entities'   => Model\EntityGroup\Instance
 	 * )
 	 * </code>
 	 *
@@ -60,6 +61,7 @@ class Overview extends Core\ViewHelper
 			// We have all the entities in this group, generate the containing HTML
 			$entityReturnHtml .= $this->renderPartial('Entity/Group', array(
 				'entityGroupId'    => $entityGroupId,
+				'entityType'       => $params['entityType'],
 				'entityGroupTitle' => $entityGroupTitle[$entityId],
 				'entityGroupHtml'  => $entityGroupHtml
 			));
