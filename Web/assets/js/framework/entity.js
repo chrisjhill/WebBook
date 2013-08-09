@@ -88,8 +88,10 @@ WEBBOOK.Entity = {
 				entity_content:  $("#entity-content").val()
 			},
 			success: function(data) {
-				// Display the notice
-				$(document).trigger({ type: "Notice" }, data);
+				$(document)
+					.trigger({ type: "Notice"      }, data)
+					.trigger({ type: "Modal_Hide"  })
+					.trigger({ type: "Reload_View" });
 			}
 		});
 	},

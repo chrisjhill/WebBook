@@ -19,7 +19,8 @@ WEBBOOK.Nav = {
 	navFadeOutTime:       1000, // How long it should take for the navigation to completely fade.
 	navHideTimeout:       undefined,
 
-	pagesLoaded:          {},   // Keeps track of which pages have been loaded in this session.
+	pagesLoaded:          {},        // Keeps track of which pages have been loaded in this session.
+	currentPageLoaded:    undefined, // So we can easily reload the view on ajax updates
 
 	// DOM references
 	$nav:     undefined,
@@ -39,9 +40,10 @@ WEBBOOK.Nav = {
 
 		// Listeners
 		this.$nav
-			.on("mouseenter",     $.proxy(this.navigationEnter, this))
-			.on("mouseleave",     $.proxy(this.navigationLeave, this));
-		this.$navLink.on("click", $.proxy(this.navLinkClick,    this));
+			.on("mouseenter",         $.proxy(this.navigationEnter,   this))
+			.on("mouseleave",         $.proxy(this.navigationLeave,   this));
+		this.$navLink.on("click",     $.proxy(this.navLinkClick,      this));
+		$(document).on("Reload_View", $.proxy(this.reloadCurrentPage, this));
 
 		// We want to hide the navigation automatically upon page load
 		this.navHideTimeout = setTimeout(function() {
@@ -94,6 +96,7 @@ WEBBOOK.Nav = {
 	navLinkClick: function(event) {
 		// Set the page that we need to load
 		var page = event.currentTarget.hash.slice(1);
+		this.currentPageLoaded = page;
 
 		// Fullscreen
 		if (page == "fullscreen") {
@@ -166,6 +169,15 @@ WEBBOOK.Nav = {
 			$.getScript("/assets/js/framework/page/" + page + ".js");
 			this.pagesLoaded[page] = true;
 		}
+	},
+
+	/**
+	 * Reload the current page.
+	 *
+	 * @param Event event
+	 */
+	reloadCurrentPage: function(event) {
+		this.$navLink.filter("a[href=#" + this.currentPageLoaded + "]").click();
 	},
 
 	/**
