@@ -2,7 +2,11 @@
 
 <h2>
 	<?=$entityTitle?><br />
-	<small><a href="#" class="entity-update-link" data-entityid="<?=$entityId?>" data-entitytype="<?=$entityType?>">Update</a></small>
+	<small>
+		<a href="#" class="entity-update-link" data-entityid="<?=$entityId?>" data-entitytype="<?=$entityType?>">Update</a>
+		or
+		<a href="#" class="entity-delete-link" data-entityid="<?=$entityId?>" data-entitytype="<?=$entityType?>">Delete</a>
+	</small>
 </h2>
 
 <p><?=$entityContent?></p>

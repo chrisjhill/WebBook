@@ -12,6 +12,7 @@ WEBBOOK.Entity = {
 	entitySelector:       ".entity",
 	updateLinkSelector:   ".entity-update-link",
 	saveLinkSelector:     "#entity-update",
+	deleteLinkSelector:   ".entity-delete-link",
 
 	inputTitleSelector:   "#entity-title",
 	inputImageSelector:   "#entity-image",
@@ -26,9 +27,10 @@ WEBBOOK.Entity = {
 	 */
 	init: function() {
 		// Listeners
-		$(document).on("click", this.insertSelector,   $.proxy(this.insertView, this));
-		$(document).on("click", this.entitySelector,   $.proxy(this.view,       this));
-		$(document).on("click", this.saveLinkSelector, $.proxy(this.update,     this));
+		$(document).on("click", this.insertSelector,     $.proxy(this.insertView, this));
+		$(document).on("click", this.entitySelector,     $.proxy(this.view,       this));
+		$(document).on("click", this.saveLinkSelector,   $.proxy(this.update,     this));
+		$(document).on("click", this.deleteLinkSelector, $.proxy(this.delete,     this));
 	},
 
 	/**
@@ -189,5 +191,19 @@ WEBBOOK.Entity = {
 				$(document).trigger({ type: "Notice" }, data);
 			}
 		});
+	},
+
+	/**
+	 * Delete an entity.
+	 *
+	 * @param Event event
+	 */
+	delete: function(event) {
+		event.preventDefault();
+
+		// Make sure the user knows what they are doing
+		if (confirm("Are you sure you wish to delete this?")) {
+			// Todo
+		}
 	}
 }
