@@ -109,13 +109,17 @@ class Entity extends Core\Controller
 	public function removeAction() {
 		// Set the entity and then remove
 		$entity = new Model\Entity\Instance(array(
-			'book_id'   => Core\Request::post('book'),
-			'entity_id' => Core\Request::post('entity_id')
+			'book_id'        => Core\Request::post('book_id'),
+			'entity_id'      => Core\Request::post('entity_id'),
+			'entity_removed' => Core\Request::server('REQUEST_TIME')
 		));
 		$entity->delete();
 
 		// Display notice
-		echo new Helper\Notice('success', 'Entity has been successfully removed.');
+		echo new Helper\Notice(
+			'success',
+			ucfirst(Core\Request::post('entity_type')) . ' has been successfully removed.'
+		);
 		die();
 	}
 }

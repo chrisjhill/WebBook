@@ -201,9 +201,29 @@ WEBBOOK.Entity = {
 	delete: function(event) {
 		event.preventDefault();
 
+		// Get the entity that we just clicked
+		var $el = $(event.currentTarget);
+		var entityId      = $el.data("entityid");
+		var entityType    = $el.data("entitytype");
+
 		// Make sure the user knows what they are doing
 		if (confirm("Are you sure you wish to delete this?")) {
-			// Todo
+			$.ajax({
+				url:  "/entity/remove",
+				type: "post",
+				data: {
+					book_id:     WEBBOOK.Book.bookId,
+					entity_id:   entityId,
+					entity_type: entityType
+				},
+				success: function(data) {
+					// Display the notice
+					$(document)
+						.trigger({ type: "Notice"      }, data)
+						.trigger({ type: "Modal_Hide"  })
+						.trigger({ type: "Reload_View" });
+				}
+			});
 		}
 	}
 }
