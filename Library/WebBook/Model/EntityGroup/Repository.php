@@ -13,6 +13,56 @@ use Core, WebBook\Model;
 class Repository extends Core\Repository
 {
 	/**
+	 * Saves a record to the database.
+	 *
+	 * This function handles both uppdate and save for an easier Model. If
+	 * there is an ID in the store then we update, otherwise we insert.
+	 *
+	 * @access public
+	 * @return mixed
+	 */
+	public function save() {
+		return $this->insert();
+	}
+
+	/**
+	 * Insert an entity group into the database.
+	 *
+	 * @access public
+	 * @return mixed  False is failure, integer of new record ID if success.
+	 */
+	public function insert() {
+		// Get the new group ID
+		$this->group_order = $this->getNextGroupOrder();
+
+		// Insert a new entity
+		$query = Model\Database::get()->prepare("
+			INSERT INTO `entity_group` (
+				`book_id`,
+				`group_order`,
+				`group_title`,
+				`group_created`
+			) VALUES (
+				:book_id,
+				:group_order,
+				:group_title,
+				:group_created
+			)
+		");
+
+		// And execute query
+		$query->execute(array(
+			':book_id'       => $this->book_id,
+			':group_order'   => $this->group_order,
+			':group_title'   => $this->group_title,
+			':group_created' => $this->group_created
+		));
+
+		// And return the ID of this new group
+		return Model\Database::get()->lastInsertId();
+	}
+
+	/**
 	 * Get all the entities in their group.
 	 *
 	 * @access public
@@ -39,5 +89,30 @@ class Repository extends Core\Repository
 		));
 
 		return $query;
+	}
+
+	/**
+	 * Return the next available group order.
+	 *
+	 * @access private
+	 * @return int
+	 */
+	private function getNextGroupOrder() {
+		$query = Model\Database::get()->prepare("
+			SELECT MAX(g.group_order) as 'max_group_order'
+			FROM   `entity_group` g
+			WHERE  g.book_id        = :book_id
+			       AND
+			       g.group_removed = 0
+		");
+
+		// And execute query
+		$query->execute(array(
+			':book_id'     => $this->book_id
+		));
+
+		// Fetch and return the next group order
+		$query = $query->fetch();
+		return ++$query['max_group_order'];
 	}
 }

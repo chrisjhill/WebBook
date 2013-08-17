@@ -22,18 +22,22 @@ class Instance extends Repository implements \IteratorAggregate
 	 * Sets up the entity, allowing it to contain one or many Entity\Instance's.
 	 *
 	 * @access public
-	 * @param  array  $data All of the information on this entity.
+	 * @param  array   $data           All of the information on this entity.
+	 * @param  boolean $importEntities Whether to automatically import the book's entities.
 	 */
-	public function __construct($data = array()) {
+	public function __construct($data = array(), $importEntities = true) {
 		$this->_entityCollection = new Entity\Collection();
 		$this->import($data);
 
-		// Get the entities in this group
-		$entities = $this->get();
+		// Do we need to import this books entities?
+		if ($importEntities) {
+			// Get the entities in this group
+			$entities = $this->get();
 
-		// Loop over and add to the collection
-		while ($entity = $entities->fetch()) {
-			$this->_entityCollection->add(new Entity\Instance($entity));
+			// Loop over and add to the collection
+			while ($entity = $entities->fetch()) {
+				$this->_entityCollection->add(new Entity\Instance($entity));
+			}
 		}
 	}
 

@@ -29,10 +29,21 @@ class Entity extends Core\Controller
 	 * @ajax
 	 */
 	public function insertAction() {
+		// Do we need to create a new group first?
+		$entityGroupId = null;
+		if (Core\Request::post('entity_group_id') == '0') {
+			$entityGroup = new Model\EntityGroup\Instance(array(
+				'book_id'       => Core\Request::post('book_id'),
+				'group_title'   => 'New character group',
+				'group_created' => Core\Request::server('REQUEST_TIME')
+			), false);
+			$entityGroupId = $entityGroup->save();
+		}
+
 		// Set the new entities information
 		$entity = new Model\Entity\Instance(array(
 			'book_id'         => Core\Request::post('book_id'),
-			'entity_group_id' => Core\Request::post('entity_group_id'),
+			'entity_group_id' => $entityGroupId ?: Core\Request::post('entity_group_id'),
 			'entity_type'     => Core\Request::post('entity_type'),
 			'entity_title'    => Core\Request::post('entity_title'),
 			'entity_image'    => Core\Request::post('entity_image'),
