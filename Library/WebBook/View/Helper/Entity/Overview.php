@@ -67,6 +67,14 @@ class Overview extends Core\ViewHelper
 			));
 		}
 
+		// And add the 'new group' HTML
+		$entityReturnHtml .= $this->renderPartial('Entity/Group', array(
+			'entityGroupId'    => 0,
+			'entityType'       => $params['entityType'],
+			'entityGroupTitle' => 'New ' . $params['entityType'] . ' group',
+			'entityGroupHtml'  => ''
+		));
+
 		// And return the group HTML
 		return $entityReturnHtml;
 	}
