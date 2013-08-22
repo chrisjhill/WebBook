@@ -27,6 +27,8 @@ body{position:relative;margin:0;padding:0;background:#EEE}
 h1,h2,h3{font-weight:normal}
 h1{font-size:45px}
 h2{font-size:24px}
+	h2 small{color:#888;font-size:14px}
+	h2 a{color:#888}
 h3{font-size:19px}
 em{color:#888}
 hr{background:transparent;color:transparent;border:none;margin:20px 0;padding:0;border-bottom:1px dotted #CCC}

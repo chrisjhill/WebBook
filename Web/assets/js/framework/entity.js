@@ -13,6 +13,7 @@ WEBBOOK.Entity = {
 	updateLinkSelector:   ".entity-update-link",
 	saveLinkSelector:     "#entity-update",
 	deleteLinkSelector:   ".entity-delete-link",
+	groupUpdateSelector:  ".entity-group-update",
 
 	inputTitleSelector:   "#entity-title",
 	inputImageSelector:   "#entity-image",
@@ -27,10 +28,11 @@ WEBBOOK.Entity = {
 	 */
 	init: function() {
 		// Listeners
-		$(document).on("click", this.insertSelector,     $.proxy(this.insertView, this));
-		$(document).on("click", this.entitySelector,     $.proxy(this.view,       this));
-		$(document).on("click", this.saveLinkSelector,   $.proxy(this.update,     this));
-		$(document).on("click", this.deleteLinkSelector, $.proxy(this.delete,     this));
+		$(document).on("click", this.insertSelector,      $.proxy(this.insertView, this));
+		$(document).on("click", this.entitySelector,      $.proxy(this.view,       this));
+		$(document).on("click", this.saveLinkSelector,    $.proxy(this.update,     this));
+		$(document).on("click", this.deleteLinkSelector,  $.proxy(this.delete,     this));
+		$(document).on("click", this.groupUpdateSelector, $.proxy(this.groupView,  this));
 	},
 
 	/**
@@ -225,5 +227,34 @@ WEBBOOK.Entity = {
 				}
 			});
 		}
+	},
+
+	/**
+	 * Display the update group view.
+	 *
+	 * @param Event event
+	 */
+	groupView: function(event) {
+		event.preventDefault();
+
+		// Get the entity that we just clicked
+		var $el = $(event.currentTarget);
+		var entityGroupId = $el.data("entitygroupid");
+
+		// Get the group information and display in modal
+		$.ajax({
+			url:  "/entity/group",
+			type: "post",
+			data: {
+				book_id:       WEBBOOK.Book.bookId,
+				entityGroupId: entityGroupId
+			},
+			success: function(data) {
+				$(document).trigger({ type: "Modal_Show" }, {
+					content:  data,
+					class:    "modal-group-entity-view"
+				});
+			}
+		});
 	}
 }

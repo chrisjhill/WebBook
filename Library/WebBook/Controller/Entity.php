@@ -133,4 +133,13 @@ class Entity extends Core\Controller
 		);
 		die();
 	}
+
+	/**
+	 * Display a group ready for updating.
+	 *
+	 * @access public
+	 */
+	public function groupAction() {
+		die('<h2>Content to go here</h2>');
+	}
 }
