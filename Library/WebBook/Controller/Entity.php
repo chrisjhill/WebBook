@@ -64,6 +64,7 @@ class Entity extends Core\Controller
 	 * Return the information on an entity.
 	 *
 	 * @access public
+	 * @ajax
 	 */
 	public function getAction() {
 		// Get the entity
@@ -138,16 +139,40 @@ class Entity extends Core\Controller
 	 * Display a group ready for updating.
 	 *
 	 * @access public
+	 * @ajax
 	 */
 	public function groupAction() {
 		// Get the entity group
 		$entityGroup = new Model\EntityGroup\Instance(array(
 			'book_id'         => Core\Request::post('book_id'),
-			'entity_group_id' => Core\Request::post('entity_group_id'),
+			'entity_group_id' => Core\Request::post('entity_group_id')
 		), false);
 		$entityGroup = $entityGroup->getEntityGroup();
 
 		// Output the updateentity group form
 		die($this->view->Entity_GroupUpdate(array('entityGroup' => $entityGroup)));
+	}
+
+	/**
+	 * Updates an entity group.
+	 *
+	 * @access public
+	 * @ajax
+	 */
+	public function groupUpdateAction() {
+		// Get the entity group
+		$entityGroup = new Model\EntityGroup\Instance(array(
+			'book_id'         => Core\Request::post('book_id'),
+			'entity_group_id' => Core\Request::post('entity_group_id'),
+			'group_updated'   => Core\Request::server('REQUEST_TIME')
+		), false);
+
+		// Update the title and save
+		$entityGroup->group_title = Core\Request::post('group_title');
+		$entityGroup->save();
+
+		// Display notice
+		echo new Helper\Notice('success', 'Group has been successfully updated.');
+		die();
 	}
 }

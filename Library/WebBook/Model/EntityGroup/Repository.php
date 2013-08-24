@@ -22,7 +22,9 @@ class Repository extends Core\Repository
 	 * @return mixed
 	 */
 	public function save() {
-		return $this->insert();
+		return ! $this->has('entity_group_id')
+			? $this->insert()
+			: $this->update();
 	}
 
 	/**
@@ -60,6 +62,32 @@ class Repository extends Core\Repository
 
 		// And return the ID of this new group
 		return Model\Database::get()->lastInsertId();
+	}
+
+	/**
+	 * Updates an entity group.
+	 *
+	 * @access public
+	 * @return boolean
+	 */
+	public function update() {
+		// Insert a new entity
+		$query = Model\Database::get()->prepare("
+			UPDATE `entity_group`
+			SET    `group_title`     = :group_title,
+			       `group_updated`   = :group_updated
+			WHERE  `book_id`         = :book_id
+			       AND
+			       `entity_group_id` = :entity_group_id
+		");
+
+		// And execute query
+		return $query->execute(array(
+			':group_title'     => $this->group_title,
+			':group_updated'   => $this->group_updated,
+			':book_id'         => $this->book_id,
+			':entity_group_id' => $this->entity_group_id
+		));
 	}
 
 	/**

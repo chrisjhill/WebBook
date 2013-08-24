@@ -14,10 +14,12 @@ WEBBOOK.Entity = {
 	saveLinkSelector:     "#entity-update",
 	deleteLinkSelector:   ".entity-delete-link",
 	groupUpdateSelector:  ".entity-group-update",
+	saveGroupSelector:    "#entity-group-update",
 
 	inputTitleSelector:   "#entity-title",
 	inputImageSelector:   "#entity-image",
 	inputContentSelector: "#entity-content",
+	groupTitleSelector:   "#group-title",
 
 	/**
 	 * Set up the event listeners for the entities page.
@@ -28,11 +30,12 @@ WEBBOOK.Entity = {
 	 */
 	init: function() {
 		// Listeners
-		$(document).on("click", this.insertSelector,      $.proxy(this.insertView, this));
-		$(document).on("click", this.entitySelector,      $.proxy(this.view,       this));
-		$(document).on("click", this.saveLinkSelector,    $.proxy(this.update,     this));
-		$(document).on("click", this.deleteLinkSelector,  $.proxy(this.delete,     this));
-		$(document).on("click", this.groupUpdateSelector, $.proxy(this.groupView,  this));
+		$(document).on("click", this.insertSelector,      $.proxy(this.insertView,  this));
+		$(document).on("click", this.entitySelector,      $.proxy(this.view,        this));
+		$(document).on("click", this.saveLinkSelector,    $.proxy(this.update,      this));
+		$(document).on("click", this.deleteLinkSelector,  $.proxy(this.delete,      this));
+		$(document).on("click", this.groupUpdateSelector, $.proxy(this.groupView,   this));
+		$(document).on("click", this.saveGroupSelector,   $.proxy(this.groupUpdate, this));
 	},
 
 	/**
@@ -254,6 +257,37 @@ WEBBOOK.Entity = {
 					content:  data,
 					class:    "modal-group-entity-view"
 				});
+			}
+		});
+	},
+
+	/**
+	 * Update an entity group.
+	 *
+	 * @param Event event
+	 */
+	groupUpdate: function(event) {
+		event.preventDefault();
+
+		// Get the entity that we just clicked
+		var $el = $(event.currentTarget);
+		var entityGroupId = $el.data("entitygroupid");
+
+		// Get the group information and display in modal
+		$.ajax({
+			url:  "/entity/group-update",
+			type: "post",
+			data: {
+				book_id:         WEBBOOK.Book.bookId,
+				entity_group_id: entityGroupId,
+				group_title:     $(this.groupTitleSelector).val()
+			},
+			success: function(data) {
+				// Display the notice
+				$(document)
+					.trigger({ type: "Notice"      }, data)
+					.trigger({ type: "Modal_Hide"  })
+					.trigger({ type: "Reload_View" });
 			}
 		});
 	}
