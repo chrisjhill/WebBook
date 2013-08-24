@@ -92,6 +92,33 @@ class Repository extends Core\Repository
 	}
 
 	/**
+	 * Only retrieves the entity group information, not its entities.
+	 *
+	 * @access public
+	 * @return array
+	 */
+	public function getEntityGroup() {
+		$query = Model\Database::get()->prepare("
+			SELECT `entity_group_id`, `group_title`
+			FROM   `entity_group`
+			WHERE  `book_id`         = :book_id
+			       AND
+			       `entity_group_id` = :entity_group_id
+			       AND
+			       `group_removed`   = 0
+			LIMIT   1
+		");
+
+		// And execute query
+		$query->execute(array(
+			':book_id'         => $this->book_id,
+			':entity_group_id' => $this->entity_group_id
+		));
+
+		return $query->fetch();
+	}
+
+	/**
 	 * Return the next available group order.
 	 *
 	 * @access private

@@ -140,6 +140,14 @@ class Entity extends Core\Controller
 	 * @access public
 	 */
 	public function groupAction() {
-		die('<h2>Content to go here</h2>');
+		// Get the entity group
+		$entityGroup = new Model\EntityGroup\Instance(array(
+			'book_id'         => Core\Request::post('book_id'),
+			'entity_group_id' => Core\Request::post('entity_group_id'),
+		), false);
+		$entityGroup = $entityGroup->getEntityGroup();
+
+		// Output the updateentity group form
+		die($this->view->Entity_GroupUpdate(array('entityGroup' => $entityGroup)));
 	}
 }

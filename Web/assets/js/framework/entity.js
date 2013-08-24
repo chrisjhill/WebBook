@@ -246,8 +246,8 @@ WEBBOOK.Entity = {
 			url:  "/entity/group",
 			type: "post",
 			data: {
-				book_id:       WEBBOOK.Book.bookId,
-				entityGroupId: entityGroupId
+				book_id:         WEBBOOK.Book.bookId,
+				entity_group_id: entityGroupId
 			},
 			success: function(data) {
 				$(document).trigger({ type: "Modal_Show" }, {
