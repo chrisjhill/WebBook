@@ -65,6 +65,11 @@ WEBBOOK.Settings = {
 
 				// Display the notice
 				$(document).trigger({ type: "Notice" }, data);
+
+				// Reload the stylesheet
+				var customStyle = $("#custom-styles").attr("href");
+				customStyle = customStyle.split("?");
+				$("#custom-styles").attr("href", customStyle[0] + "?time=" + new Date().getTime());
 			}
 		});
 

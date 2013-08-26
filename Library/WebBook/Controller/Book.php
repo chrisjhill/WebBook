@@ -80,6 +80,23 @@ class Book extends Core\Controller
 	}
 
 	/**
+	 * Output the custom styles for this book.
+	 *
+	 * @access public
+	 */
+	public function stylesAction() {
+		// This is a CSS page, let the browser know
+		header("Content-type: text/css");
+		header("Pragma: public");
+		header("Expires: " . gmdate("D, d M Y H:i:s", time() + 900) . " GMT");
+		header("Cache-Control: max-age=900, must-revalidate");
+
+		// Just output the CSS, no headers/footers, thanks
+		$this->setLayout(false);
+		$this->view->addVariable('styles', $this->view->Book_Styles());
+	}
+
+	/**
 	 * The error action.
 	 *
 	 * @access public
