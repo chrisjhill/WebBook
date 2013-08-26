@@ -64,7 +64,8 @@ class Overview extends Core\ViewHelper
 				'entityGroupId'    => $entityGroupId,
 				'entityType'       => $params['entityType'],
 				'entityGroupTitle' => $entityGroupTitle[$entityId],
-				'entityGroupHtml'  => $entityGroupHtml
+				'entityGroupHtml'  => $entityGroupHtml,
+				'canUpdate'        => true
 			));
 		}
 
@@ -73,7 +74,8 @@ class Overview extends Core\ViewHelper
 			'entityGroupId'    => 0,
 			'entityType'       => $params['entityType'],
 			'entityGroupTitle' => 'New ' . $params['entityType'] . ' group',
-			'entityGroupHtml'  => ''
+			'entityGroupHtml'  => '',
+			'canUpdate'        => false
 		));
 
 		// And return the group HTML

@@ -64,7 +64,8 @@ WEBBOOK.Entity = {
 					class:    "modal-entity-insert",
 					entityId: entityGroupId,
 					callbackParams: {
-						entityId: entityId
+						entityGroupId: entityGroupId,
+						entityType:    entityType
 					},
 					callback: function(callbackParams) {
 						$(WEBBOOK.Entity.insertLinkSelector).click(function(event) {
