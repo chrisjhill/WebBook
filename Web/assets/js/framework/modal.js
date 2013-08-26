@@ -60,7 +60,7 @@ WEBBOOK.Modal = {
 
 		// If there is a callback then fire it up
 		if (typeof data.callback !== "undefined") {
-			data.callback(data.entityId);
+			data.callback(data.callbackParams);
 		}
 	},
 

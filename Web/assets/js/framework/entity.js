@@ -63,10 +63,13 @@ WEBBOOK.Entity = {
 					content:  data,
 					class:    "modal-entity-insert",
 					entityId: entityGroupId,
-					callback: function(entityId) {
+					callbackParams: {
+						entityId: entityId
+					},
+					callback: function(callbackParams) {
 						$(WEBBOOK.Entity.insertLinkSelector).click(function(event) {
 							event.preventDefault();
-							WEBBOOK.Entity.insert(entityGroupId, entityType);
+							WEBBOOK.Entity.insert(callbackParams);
 						});
 					}
 				});
@@ -82,7 +85,11 @@ WEBBOOK.Entity = {
 	 * @param  int    entityGroupId The ID of the group to insert this entity.
 	 * @param  string entityType    The type of entity we are inserting.
 	 */
-	insert: function(entityGroupId, entityType) {
+	insert: function(callbackParams) {
+		// Assign the callback parameters to make things easier to read
+		var entityGroupId = callbackParams.entityGroupId;
+		var entityType    = callbackParams.entityType;
+
 		$.ajax({
 			url:  "/entity/insert",
 			type: "post",
@@ -125,13 +132,16 @@ WEBBOOK.Entity = {
 			},
 			success: function(data) {
 				$(document).trigger({ type: "Modal_Show" }, {
-					content:  data,
-					class:    "modal-entity-view modal-" + entityType + "-view",
-					entityId: entityId,
-					callback: function(entityId) {
+					content:        data,
+					class:          "modal-entity-view modal-" + entityType + "-view",
+					callbackParams: {
+						entityId:   entityId,
+						entityType: entityType
+					},
+					callback: function(callbackParams) {
 						$(WEBBOOK.Entity.updateLinkSelector).click(function(event) {
 							event.preventDefault();
-							WEBBOOK.Entity.updateView(entityId, entityType);
+							WEBBOOK.Entity.updateView(callbackParams);
 						});
 					}
 				});
@@ -147,7 +157,11 @@ WEBBOOK.Entity = {
 	 * @param int    entityId   The ID of the entity that we want to update.
 	 * @param string entityType The type of entity that we are working with.
 	 */
-	updateView: function(entityId, entityType) {
+	updateView: function(callbackParams) {
+		// Assign the callback parameters to make things easier to read
+		var entityId   = callbackParams.entityId;
+		var entityType = callbackParams.entityType;
+
 		$.ajax({
 			url:  "/entity/get",
 			type: "post",
@@ -193,7 +207,10 @@ WEBBOOK.Entity = {
 			},
 			success: function(data) {
 				// Display the notice
-				$(document).trigger({ type: "Notice" }, data);
+				$(document)
+					.trigger({ type: "Notice"      }, data)
+					.trigger({ type: "Modal_Hide"  })
+					.trigger({ type: "Reload_View" });
 			}
 		});
 	},
