@@ -19,8 +19,11 @@ WEBBOOK.Settings = {
 	settingPagePaddings:    "#setting_page_paddings",
 	settingDisplayComments: "#setting_display_comments",
 
+	customStylesSelector:   "#custom-styles",
+
 	// DOM references
-	$update: undefined,
+	$update:       undefined,
+	$customStyles: undefined,
 
 	/**
 	 * Sets up the event listeners.
@@ -29,7 +32,8 @@ WEBBOOK.Settings = {
 	 */
 	init: function() {
 		// Set DOM references
-		this.$update = $(this.updateSelector);
+		this.$update       = $(this.updateSelector);
+		this.$customStyles = $(this.customStylesSelector);
 
 		// Listeners
 		this.$update.on("click", $.proxy(this.update, this));
@@ -67,9 +71,12 @@ WEBBOOK.Settings = {
 				$(document).trigger({ type: "Notice" }, data);
 
 				// Reload the stylesheet
-				var customStyle = $("#custom-styles").attr("href");
+				var customStyle = WEBBOOK.Settings.$customStyles.attr("href");
 				customStyle = customStyle.split("?");
-				$("#custom-styles").attr("href", customStyle[0] + "?time=" + new Date().getTime());
+				WEBBOOK.Settings.$customStyles.attr(
+					"href",
+					customStyle[0] + "?time=" + new Date().getTime()
+				);
 			}
 		});
 
