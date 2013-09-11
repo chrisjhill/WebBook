@@ -16,6 +16,16 @@ class Timeline extends Core\Controller
 	 * @access public
 	 */
 	public function indexAction() {
-		// Do nothing
+		// Get the book
+		$book = Core\Store\Request::get('book');
+
+		// Get the entities
+		$timeline = new Model\EntityGroup\Instance(array(
+			'book_id'     => $book->book_id,
+			'entity_type' => 'timeline'
+		));
+
+		// And setup the view
+		$this->view->addVariable('timeline', $timeline);
 	}
 }
