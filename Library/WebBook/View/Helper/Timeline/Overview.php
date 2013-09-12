@@ -32,6 +32,7 @@ class Overview extends Core\ViewHelper
 			$timelineHtml .= $this->renderPartial('Timeline/Event', array(
 				'urlRoot'       => $this->view->getVariable('urlRoot'),
 				'entityId'      => $entity->entity_id,
+				'entityGroupId' => $entity->entity_group_id,
 				'entityType'    => $entity->entity_type,
 				'entityImage'   => $entity->entity_image,
 				'entityTitle'   => $entity->entity_title,

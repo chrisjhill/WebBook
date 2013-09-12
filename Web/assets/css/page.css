@@ -33,5 +33,5 @@
 	/* Modal view */
 	.modal-entity-view{text-align:center}
 		.modal-entity-view img{margin-top:10px;width:160px;height:160px;border:2px solid #FFF;border-radius:160px;box-shadow:0 0 15px #BBB}
-	.modal-group-entity-view,.modal-entity-insert,.modal-character-update{width:350px !important;height:470px !important;margin-left:-190px !important}
+	.modal-group-entity-view,.modal-entity-insert,.modal-character-update,.modal-timeline-update{width:350px !important;height:470px !important;margin-left:-190px !important}
 	.modal-group-entity-view{height:180px !important}
