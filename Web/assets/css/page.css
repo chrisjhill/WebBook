@@ -30,6 +30,9 @@
 		.entity-insert{display:block;height:55px;padding-top:35px;font-size:40px;color:#CCC;text-decoration:none}
 			.entity-insert:hover{color:#AAA}
 
+		.entity-insert.entity-insert-timeline{display:inline;color:#555;font-size:14px;border:none;padding:0;box-shadow:none}
+			.entity-insert.entity-insert-timeline:hover{color:#AAA}
+
 	/* Modal view */
 	.modal-entity-view{text-align:center}
 		.modal-entity-view img{margin-top:10px;width:160px;height:160px;border:2px solid #FFF;border-radius:160px;box-shadow:0 0 15px #BBB}
