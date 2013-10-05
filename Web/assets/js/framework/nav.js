@@ -141,7 +141,7 @@ WEBBOOK.Nav = {
 			},
 			success: function(data) {
 				// Set the content
-				WEBBOOK.Content.$secondary.html(data);
+				WEBBOOK.Content.$secondary.html(data).removeClass().addClass("page-" + page);
 				WEBBOOK.Nav.loadJavascript(page);
 
 				// And save the content
