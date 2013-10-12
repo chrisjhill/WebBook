@@ -32,17 +32,20 @@ WEBBOOK.Modal = {
 		this.$modalBackdrop = $(this.modalBackdropSelector);
 
 		// Listeners
-		$(document).on("Modal_Show",                          $.proxy(this.show, this));
-		$(document).on("Modal_Hide",                          $.proxy(this.hide, this));
-		this.$modal.on("click",      this.modalCloseSelector, $.proxy(this.hide, this));
+		$(document).on("Modal_Show",                     $.proxy(this.show, this));
+		$(document).on("Modal_Hide",                     $.proxy(this.hide, this));
+		this.$modal.on("click", this.modalCloseSelector, $.proxy(this.hide, this));
+		this.$modalBackdrop.on("click",                  $.proxy(this.hide, this));
 	},
 
 	/**
 	 * Places the content into the modal and opens.
 	 *
 	 * {
-	 *     content: "The content for the modal window",
-	 *     class:   "modal-class-name"
+	 *     content:        "The content for the modal window",
+	 *     class:          "modal-class-name",
+	 *     callback:       function(data.callbackParams) { ... },
+	 *     callbackParams: { ... }
 	 * }
 	 *
 	 * @param Event  event
