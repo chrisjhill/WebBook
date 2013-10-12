@@ -24,12 +24,14 @@ class Overview extends Core\ViewHelper
 	 * @return string
 	 */
 	public function render($params) {
-		// COntainer for the timeline output
-		$timelineHtml = '';
+		// Container for the timeline output
+		$timelineHtml  = '';
+		$entityGroupId = 0;
 
 		// Loop over each entity and add them to their respective group
 		foreach ($params['entities'] as $entityId => $entity) {
-			$timelineHtml .= $this->renderPartial('Timeline/Event', array(
+			$entityGroupId  = $entity->entity_group_id;
+			$timelineHtml  .= $this->renderPartial('Timeline/Event', array(
 				'urlRoot'       => $this->view->getVariable('urlRoot'),
 				'entityId'      => $entity->entity_id,
 				'entityGroupId' => $entity->entity_group_id,
@@ -40,6 +42,9 @@ class Overview extends Core\ViewHelper
 			));
 		}
 
-		return $timelineHtml;
+		return $this->renderPartial('Timeline/EventContainer', array(
+			'entityGroupId' => $entityGroupId,
+			'timelineHtml'  => $timelineHtml
+		));
 	}
 }
