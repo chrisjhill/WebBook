@@ -22,7 +22,7 @@
 /* Snapshots */
 #snapshots{border-radius:8px;overflow:hidden}
 
-/* Entities (Characters, Locations, etc.) */
+/* Entities (Characters, Locations, Timeline, etc.) */
 .entities{list-style:none;margin:0;padding:0}
 	.entities li{float:left;margin:0 20px 0 0;padding:0;text-align:center}
 		.entity-insert,.entities img{width:90px;height:90px;margin-top:10px;border:2px solid #FFF;border-radius:90px;box-shadow:0 0 15px #BBB}
@@ -38,3 +38,8 @@
 		.modal-entity-view img{margin-top:10px;width:160px;height:160px;border:2px solid #FFF;border-radius:160px;box-shadow:0 0 15px #BBB}
 	.modal-group-entity-view,.modal-entity-insert,.modal-character-update,.modal-timeline-update{width:350px !important;height:470px !important;margin-left:-190px !important}
 	.modal-group-entity-view{height:180px !important}
+
+	/* Timeline view */
+	#timeline-container{border-left:3px solid #EEE;padding-left:20px}
+		.timeline-item{position:relative}
+			.timeline-point{position:absolute;top:27px;left:-30px;width:10px;height:10px;border-radius:10px;background:#BBB;border:4px solid #FFF}
