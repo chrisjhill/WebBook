@@ -56,7 +56,7 @@ WEBBOOK.Entity = {
 			success: function(data) {
 				$(document).trigger({ type: "Modal_Show" }, {
 					content:  data,
-					class:    "modal-entity-insert",
+					class:    "modal-entity-insert modal-" + entityType + "-insert",
 					entityId: entityGroupId,
 					callbackParams: {
 						entityGroupId: entityGroupId,

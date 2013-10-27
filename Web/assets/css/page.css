@@ -43,3 +43,5 @@
 	#timeline-container{border-left:3px solid #EEE;padding-left:20px}
 		.timeline-item{position:relative}
 			.timeline-point{position:absolute;top:27px;left:-30px;width:10px;height:10px;border-radius:10px;background:#BBB;border:4px solid #FFF}
+
+	.modal-timeline-insert #entity-insert-image,.modal-timeline-view img,.modal-timeline-update #entity-update-image{display:none}

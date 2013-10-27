@@ -2,15 +2,23 @@
 
 <form action="#" method="post">
 	<p>
-		<label>Name</label>
-		<input type="text" id="entity-title" class="textbox" value="<?=$entityTitle?>" /><br />
+		<label id="entity-update-title">
+			Name
+			<input type="text" id="entity-title" class="textbox" value="<?=$entityTitle?>" /><br />
+		</label>
 
-		<label>Image</label>
-		<input type="text" id="entity-image" class="textbox" value="<?=$entityImage?>" /><br />
+		<label id="entity-update-image">
+			Image
+			<input type="text" id="entity-image" class="textbox" value="<?=$entityImage?>" /><br />
+		</label>
 
-		<label>Description</label>
-		<textarea id="entity-content" class="textbox"><?=$entityContent?></textarea><br />
+		<label id="entity-update-description">
+			Description
+			<textarea id="entity-content" class="textbox"><?=$entityContent?></textarea><br />
+		</label>
 
-		<a href="#" id="entity-update" class="button orange bigrounded" data-entityid="<?=$entityId?>" data-entitytype="<?=$entityType?>" data-entitygroupid="<?=$entityGroupId?>">Save Information</a><br />
+		<label>
+			<a href="#" id="entity-update" class="button orange bigrounded" data-entityid="<?=$entityId?>" data-entitytype="<?=$entityType?>" data-entitygroupid="<?=$entityGroupId?>">Save Information</a><br />
+		</label>
 	</p>
 </form>

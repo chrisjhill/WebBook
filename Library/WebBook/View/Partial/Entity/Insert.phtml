@@ -2,15 +2,23 @@
 
 <form action="#" method="post">
 	<p>
-		<label>Name</label>
-		<input type="text" id="entity-title" class="textbox" /><br />
+		<label id="entity-insert-title">
+			Name
+			<input type="text" id="entity-title" class="textbox" /><br />
+		</label>
 
-		<label>Image</label>
-		<input type="text" id="entity-image" class="textbox" /><br />
+		<label id="entity-insert-image">
+			Image
+			<input type="text" id="entity-image" class="textbox" /><br />
+		</label>
 
-		<label>Description</label>
-		<textarea id="entity-content" class="textbox"></textarea><br />
+		<label id="entity-insert-description">
+			Description
+			<textarea id="entity-content" class="textbox"></textarea><br />
+		</label>
 
-		<a href="#" id="entity-insert-link" class="button orange bigrounded" data-entitytype="<?=$entityType?>">Insert <?=$entityType?></a><br />
+		<label>
+			<a href="#" id="entity-insert-link" class="button orange bigrounded" data-entitytype="<?=$entityType?>">Insert <?=$entityType?></a><br />
+		</label>
 	</p>
 </form>
